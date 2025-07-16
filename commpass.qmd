@@ -1,8 +1,0 @@
-# The MMRF CoMMpass<sup>SM</sup> Study
-
-The CoMMpass study (Clinical Outcomes in Multiple Myeloma to Personal Assessment of Genetic Profile, NCT01454297), conducted by the Multiple Myeloma Research Foundation (MMRF), represents one of the most comprehensive longitudinal multi-omics initiatives in multiple myeloma (MM) to date. It provides extensive genomic, transcriptomic, and clinical profiling of newly diagnosed MM patients, with longitudinal sampling at multiple time points, including baseline, post-treatment, and relapse.
-
-The dataset includes RNA sequencing (RNA-seq), whole-genome sequencing (WGS), and whole-exome sequencing (WES), accompanied by detailed clinical metadata such as treatment regimens, cytogenetic profiles, survival outcomes, and treatment responses. RNA-seq data were generated from CD138⁺-selected bone marrow plasma cells, while WGS was performed on matched tumor–normal pairs.
-
-Identifiable raw DNA and RNA-seq reads are available through dbGaP under accession number phs000748. We processed the RNA-seq FASTQ files using our in-house pipeline with minimal batch effects. Clinical data and copy number variation (CNV) information were obtained from the supplementary materials of the original Nature Genetics publication (Skerget et al., 2024).
-
