@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.7.31">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Jinyan Huang">
-<title>23&nbsp; sfig11 – Mammalian Organogenesis</title>
+<title>23&nbsp; Supplemental Figure 11 – Mammalian Organogenesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -202,8 +202,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./alignment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Registration</span></span></a>
+  <a href="./registration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Registration</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Unsupervised cluster</span></a>
+ <span class="menu-text">TF Activity</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -219,8 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reduce_dim.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reduce Dim</span></span></a>
+  <a href="./pyscenic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pyscenic</span></span></a>
   </div>
 </li>
       </ul>
@@ -411,13 +411,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#extended-data-fig.-11" id="toc-extended-data-fig.-11" class="nav-link active" data-scroll-target="#extended-data-fig.-11"><span class="header-section-number">23.1</span> Extended Data Fig. 11</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fig1.html">Visualization</a></li><li class="breadcrumb-item"><a href="./sfig11.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Sup Figure 11</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">23</span>&nbsp; <span class="chapter-title">sfig11</span>
+<span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Supplemental Figure 11</span>
 </h1>
 </div>
 
@@ -432,7 +436,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><div class="cell">
+</header><section id="extended-data-fig.-11" class="level2" data-number="23.1"><h2 data-number="23.1" class="anchored" data-anchor-id="extended-data-fig.-11">
+<span class="header-section-number">23.1</span> Extended Data Fig. 11</h2>
+<div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"stringr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>, </span>
 <span>          <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"Seurat"</span>, </span>
 <span>          <span class="st">"viridis"</span><span class="op">)</span>  </span>
@@ -511,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">seu</span><span class="op">$</span><span class="va">sample</span><span class="op">)</span> <span class="op">==</span> <span class="st">"E13.5_S1E1_2nd"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="va">pt_size</span> <span class="op">=</span> <span class="fl">4.8</span></span>
 <span>    <span class="op">}</span></span>
-<span>    <span class="va">feat1</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/SpatialPlot.html">SpatialFeaturePlot</a></span><span class="op">(</span><span class="va">seu</span><span class="op">[</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">seu</span><span class="op">[[</span><span class="va">feat</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>, image.alpha <span class="op">=</span> <span class="fl">0.5</span>, features <span class="op">=</span> <span class="va">feat</span>, </span>
+<span>    <span class="va">feat1</span> <span class="op">&lt;-</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/SpatialPlot.html">SpatialFeaturePlot</a></span><span class="op">(</span><span class="va">seu</span><span class="op">[</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">seu</span><span class="op">[[</span><span class="va">feat</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>, image.alpha <span class="op">=</span> <span class="fl">0.5</span>, features <span class="op">=</span> <span class="va">feat</span>,</span>
 <span>                                        pt.size.factor <span class="op">=</span> <span class="va">pt_size</span>, stroke <span class="op">=</span> <span class="cn">NA</span>, combine <span class="op">=</span> <span class="cn">F</span>, crop <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span>    <span class="va">feat1</span> <span class="op">&lt;-</span> <span class="va">feat1</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">.</span>, \<span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">Seurat</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">DarkTheme</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoGrid</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">NoAxes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>      <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span></span>
@@ -523,13 +529,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="va">p_lst1</span><span class="op">[[</span><span class="va">feat</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html">wrap_plots</a></span><span class="op">(</span><span class="va">plst1</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"sfig12c_rctd_proportion_spatial_feats.pdf"</span>, height <span class="op">=</span> <span class="fl">2</span>, width <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">p_lst1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">p_lst1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -945,7 +950,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

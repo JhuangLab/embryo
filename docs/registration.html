@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.7.31">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Jinyan Huang">
-<title>20&nbsp; Supplemental Figure 7 – Mammalian Organogenesis</title>
+<title>5&nbsp; Registration – Mammalian Organogenesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,8 +62,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./sfig8.html" rel="next">
-<link href="./sfig6.html" rel="prev">
+<link href="./reduce_dim.html" rel="next">
+<link href="./alignment.html" rel="prev">
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fig1.html">Visualization</a></li><li class="breadcrumb-item"><a href="./sfig7.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sup Figure 7</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./qc.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./registration.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Registration</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./registration.html" class="sidebar-item-text sidebar-link">
+  <a href="./registration.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Registration</span></span></a>
   </div>
 </li>
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">TF Activity</span></a>
+ <span class="menu-text">Unsupervised cluster</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -219,8 +219,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pyscenic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pyscenic</span></span></a>
+  <a href="./reduce_dim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reduce Dim</span></span></a>
   </div>
 </li>
       </ul>
@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sfig7.html" class="sidebar-item-text sidebar-link active">
+  <a href="./sfig7.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sup Figure 7</span></span></a>
   </div>
 </li>
@@ -415,13 +415,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#extended-data-fig.-7" id="toc-extended-data-fig.-7" class="nav-link active" data-scroll-target="#extended-data-fig.-7"><span class="header-section-number">20.1</span> Extended Data Fig. 7</a></li>
+<li><a href="#registration" id="toc-registration" class="nav-link active" data-scroll-target="#registration"><span class="header-section-number">5.1</span> Registration</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fig1.html">Visualization</a></li><li class="breadcrumb-item"><a href="./sfig7.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sup Figure 7</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./qc.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./registration.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Registration</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Supplemental Figure 7</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Registration</span>
 </h1>
 </div>
 
@@ -436,86 +436,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="extended-data-fig.-7" class="level2" data-number="20.1"><h2 data-number="20.1" class="anchored" data-anchor-id="extended-data-fig.-7">
-<span class="header-section-number">20.1</span> Extended Data Fig. 7</h2>
+</header><section id="registration" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="registration">
+<span class="header-section-number">5.1</span> Registration</h2>
+<p>To calculate the correlation between gene expression and metabolite abundance, we align the coordinates of the spatial transcriptome and the spatial transcriptome. The specific calculation methods have been described in the Method section. After centralizing the coordinates of the spatial transcriptome spots, we performed scaling, rotation, and translation transformations to make the spatial transcriptome spots as close as possible to the spatial transcriptome pixels. Since spatial transcriptomics and spatial metabolomics are from different omics, we only use the tissue shape for alignment. Although the alignment process was automated, manual validation was still required.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span>new <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"~/sbin/R/R-4.3.0"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"stringr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>, </span>
-<span>          <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"Seurat"</span>, </span>
-<span>          <span class="st">"viridis"</span>, <span class="st">"FELLA"</span><span class="op">)</span>  </span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">pkg</span> <span class="kw">in</span> <span class="va">pkgs</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pkg</span>, character.only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">FNN</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set the parameter range and resolution based on experience.</span></span>
+<span><span class="va">moveplain</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html">expand_grid</a></span><span class="op">(</span></span>
+<span>  a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.9</span>,<span class="fl">1.1</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>  b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.9</span>,<span class="fl">1.1</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>  x0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">3</span><span class="op">)</span>,</span>
+<span>  y0 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">3</span><span class="op">)</span>,</span>
+<span>  eta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3.14</span>, <span class="fl">0.01</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># tissue position from spaceranger</span></span>
+<span><span class="va">tissue_rna</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">input_tissue_pth</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">in_tissue</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">tissue_rna</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col"</span>, <span class="st">"row"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># tissue position from metabolism matrix</span></span>
+<span><span class="va">metabolism_matrix_ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">metabolism_matrix</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span><span class="va">metabolism_df</span> <span class="op">&lt;-</span> <span class="va">metabolism_df</span><span class="op">[</span><span class="va">metabolism_matrix_ft</span>,<span class="op">]</span></span>
+<span><span class="va">metabolism_matrix</span> <span class="op">&lt;-</span> <span class="va">metabolism_matrix</span><span class="op">[</span>,<span class="va">metabolism_matrix_ft</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="va">metabolism_df</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># Scale the data size based on experience.</span></span>
+<span><span class="va">Y</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="fl">80</span></span>
+<span><span class="va">Y</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">Y</span><span class="op">$</span><span class="va">y</span> <span class="op">*</span> <span class="fl">80</span></span>
+<span><span class="va">trainX</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span>, <span class="va">plain</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">eta</span> <span class="op">&lt;-</span> <span class="va">plain</span><span class="op">$</span><span class="va">eta</span></span>
+<span>  <span class="va">a</span> <span class="op">&lt;-</span> <span class="va">plain</span><span class="op">$</span><span class="va">a</span></span>
+<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">plain</span><span class="op">$</span><span class="va">b</span></span>
+<span>  <span class="va">x0</span> <span class="op">&lt;-</span> <span class="va">plain</span><span class="op">$</span><span class="va">x0</span></span>
+<span>  <span class="va">y0</span> <span class="op">&lt;-</span> <span class="va">plain</span><span class="op">$</span><span class="va">y0</span></span>
+<span>  </span>
+<span>  <span class="co"># Centralization</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">$</span><span class="va">col</span><span class="op">)</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">X</span><span class="op">$</span><span class="va">row</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Stretch and pressure</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">*</span> <span class="va">a</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">*</span> <span class="va">b</span></span>
+<span>  </span>
+<span>  <span class="co"># Rotate</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span> <span class="op">-</span> <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span> <span class="op">+</span> <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Translation</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">col</span> <span class="op">-</span> <span class="va">x0</span></span>
+<span>  <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">$</span><span class="va">row</span> <span class="op">-</span> <span class="va">y0</span></span>
+<span>  </span>
+<span>  <span class="va">X</span></span>
 <span><span class="op">}</span></span>
-<span><span class="va">project</span> <span class="op">&lt;-</span> <span class="st">"collabrators"</span></span>
-<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="st">"wangwenjie"</span></span>
-<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="st">"human"</span></span>
-<span><span class="va">workdir</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"~/projects/{project}/analysis/{dataset}/{species}/figures/sfig7"</span><span class="op">)</span></span>
-<span><span class="va">workdir</span> <span class="op">%&gt;%</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html">dir_create</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">yaml_fn</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/code/wangwenjie/human/figures/configs.yaml"</span></span>
-<span><span class="va">cols_tissue</span> <span class="op">&lt;-</span> <span class="fu">jhtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jhtools/man/show_me_the_colors.html">show_me_the_colors</a></span><span class="op">(</span>config_fn<span class="op">=</span> <span class="va">yaml_fn</span>, <span class="st">"tissue"</span><span class="op">)</span></span>
-<span><span class="va">stg_cols</span> <span class="op">&lt;-</span> <span class="fu">jhtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jhtools/man/show_me_the_colors.html">show_me_the_colors</a></span><span class="op">(</span>config_fn <span class="op">=</span> <span class="va">yaml_fn</span>, <span class="st">"stage"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CS12"</span>, <span class="st">"CS14"</span>, <span class="st">"CS18"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">distance_total</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/mclapply.html">mclapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">moveplain</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">plain</span> <span class="op">&lt;-</span> <span class="va">moveplain</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span></span>
+<span>  <span class="va">Y_hat</span> <span class="op">&lt;-</span> <span class="fu">trainX</span><span class="op">(</span><span class="va">X</span>, <span class="va">plain</span><span class="op">)</span></span>
+<span>  <span class="co"># k is set based on experience.</span></span>
+<span>  <span class="va">nnlistab</span> <span class="op">&lt;-</span> <span class="fu">FNN</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FNN/man/get.knn.html">get.knn</a></span><span class="op">(</span><span class="va">Y_hat</span>, <span class="va">Y</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="va">nnlistba</span> <span class="op">&lt;-</span> <span class="fu">FNN</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FNN/man/get.knn.html">get.knn</a></span><span class="op">(</span><span class="va">Y</span>, <span class="va">Y_hat</span>, k <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="va">distance_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">nnlistab</span><span class="op">$</span><span class="va">nn.dist</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">nnlistba</span><span class="op">$</span><span class="va">nn.dist</span><span class="op">)</span></span>
+<span>  <span class="va">distance_total</span></span>
+<span><span class="op">}</span>, mc.cores <span class="op">=</span> <span class="fl">40L</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">moveplain</span><span class="op">$</span><span class="va">distance_total</span> <span class="op">&lt;-</span> <span class="va">distance_total</span></span>
 <span></span>
-<span><span class="va">my_theme1</span> <span class="op">&lt;-</span> <span class="fu">theme_classic</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.key.size <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span>, axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>, </span>
-<span>        axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>, axis.ticks <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># With the most accurate method.</span></span>
+<span><span class="va">best_plain</span> <span class="op">&lt;-</span> <span class="va">moveplain</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">distance_total</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">Y_hat_best</span> <span class="op">&lt;-</span> <span class="fu">trainX</span><span class="op">(</span><span class="va">X</span>, <span class="va">best_plain</span><span class="op">)</span> </span>
 <span></span>
+<span><span class="co"># k is set based on experience.</span></span>
+<span><span class="va">Y_hat_bestnn</span> <span class="op">&lt;-</span> <span class="fu">FNN</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FNN/man/get.knn.html">get.knn</a></span><span class="op">(</span><span class="va">Y_hat_best</span>, <span class="va">Y</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## figS5a: enrichment of each selected tissues in each stage ----</span></span>
-<span><span class="va">xlsx_fn1</span> <span class="op">=</span> </span>
-<span>  <span class="st">"/cluster/home/jhuang/projects/collabrators/data/wangwenjie/human/metabolism/human_adjusted/DZLM2024030584-b2_DZLM2024030572-张进-王文杰-空间代谢组-项目报告/2.定性结果/Qualitative.xlsx"</span></span>
-<span><span class="va">mz_anot_neg</span> <span class="op">=</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">xlsx_fn1</span>, sheet <span class="op">=</span> <span class="st">"neg-all"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"neg"</span><span class="op">)</span></span>
-<span><span class="va">mz_anot_pos</span> <span class="op">=</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">xlsx_fn1</span>, sheet <span class="op">=</span> <span class="st">"pos-all"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span></span>
-<span><span class="va">mz_anot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">mz_anot_neg</span>, <span class="va">mz_anot_pos</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>mz_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">mode</span>, <span class="st">"-"</span>, <span class="va">mz</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">csv_fn1</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/new_label/ren_time_point_2/neg/Liver.csv"</span></span>
-<span><span class="va">mz_hsa</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="va">csv_fn1</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Trend7"</span>, <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">mz_trnd_lst</span> <span class="op">=</span> <span class="va">mz_hsa</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span>f <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
-<span><span class="va">tmpdir</span> <span class="op">&lt;-</span> <span class="st">"~/ref/fella/kegg/hsa/tst2"</span> </span>
-<span><span class="va">fella.data</span> <span class="op">&lt;-</span> <span class="fu">loadKEGGdata</span><span class="op">(</span>databaseDir <span class="op">=</span> <span class="va">tmpdir</span>, internalDir <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>                           loadMatrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>, <span class="st">"hypergeom"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">trnd</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mz_trnd_lst</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">keg_id</span> <span class="op">&lt;-</span> <span class="va">mz_anot</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">mz_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">mz_trnd_lst</span><span class="op">[[</span><span class="va">trnd</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">$</span><span class="va">KEGG</span> <span class="op">%&gt;%</span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">anls</span> <span class="op">&lt;-</span> <span class="fu">enrich</span><span class="op">(</span>compounds <span class="op">=</span> <span class="va">keg_id</span>, data <span class="op">=</span> <span class="va">fella.data</span>, </span>
-<span>                 method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>, <span class="st">"hypergeom"</span><span class="op">)</span>, approx <span class="op">=</span> <span class="st">"normality"</span><span class="op">)</span></span>
-<span>  <span class="fu">getExcluded</span><span class="op">(</span><span class="va">anls</span><span class="op">)</span></span>
-<span>  <span class="va">enrich_res_lst</span> <span class="op">=</span> <span class="fu">pbmcapply</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pbmcapply/man/pbmclapply.html">pbmclapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>, <span class="st">"hypergeom"</span><span class="op">)</span>, \<span class="op">(</span><span class="va">mth</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">res_tbl</span> <span class="op">&lt;-</span> <span class="fu">generateResultsTable</span><span class="op">(</span>method <span class="op">=</span> <span class="va">mth</span>, threshold <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                                    capPscores <span class="op">=</span> <span class="fl">0</span>, object <span class="op">=</span> <span class="va">anls</span>, data <span class="op">=</span> <span class="va">fella.data</span><span class="op">)</span></span>
-<span>    <span class="va">pth_nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"character"</span>, length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">res_tbl</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="kw">for</span><span class="op">(</span><span class="va">idx</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">res_tbl</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>      <span class="va">pth_nms</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">fella.data</span><span class="op">@</span><span class="va">keggdata</span><span class="op">@</span><span class="va">id2name</span><span class="op">[[</span><span class="va">res_tbl</span><span class="op">$</span><span class="va">`KEGG.id`</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span><span class="op">]</span><span class="op">]</span></span>
-<span>    <span class="op">}</span></span>
-<span>    <span class="va">res_tbl</span><span class="op">[[</span><span class="st">"KEGG.name"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">pth_nms</span>, <span class="st">" - Mus mus"</span>, simplify <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span>
-<span>    <span class="va">res_tbl</span> <span class="op">&lt;-</span> <span class="va">res_tbl</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>method <span class="op">=</span> <span class="va">mth</span>, trend <span class="op">=</span> <span class="va">trnd</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>, mc.cores <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span>  <span class="fu">writexl</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/writexl//reference/write_xlsx.html">write_xlsx</a></span><span class="op">(</span><span class="va">enrich_res_lst</span>, path <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"figS5a_enrich_{trnd}.xlsx"</span><span class="op">)</span>, </span>
-<span>                      col_names <span class="op">=</span> <span class="cn">T</span>, format_headers <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co"># figS5f: enrichment of each selected tissues in each stage ----</span></span>
-<span></span>
-<span><span class="va">enrich_res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mz_trnd_lst</span><span class="op">)</span>, \<span class="op">(</span><span class="va">trnd</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">enrich_res</span> <span class="op">=</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx</a></span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"figS5a_enrich_{trnd}.xlsx"</span><span class="op">)</span>, sheet <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> </span>
-<span><span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">hsa_mtb_pth</span> <span class="op">=</span> <span class="fu">read_rds</span><span class="op">(</span><span class="st">"~/ref/kegg/human/hsa_mtb_pth_cpd.rds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">p_tbl1</span> <span class="op">=</span> <span class="va">enrich_res</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">KEGG.id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">hsa_mtb_pth</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">trend</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">p.value</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">trend</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>KEGG.name <span class="op">=</span> <span class="fu">str_split</span><span class="op">(</span><span class="va">KEGG.name</span>, <span class="st">" - Homo"</span>, simplify <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>KEGG.name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">KEGG.name</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fct</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">bar1</span> <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">p_tbl1</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">KEGG.name</span>, fill <span class="op">=</span> <span class="va">trend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> <span class="va">my_theme1</span> <span class="op">+</span> </span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">trend</span> <span class="op">~</span> <span class="va">.</span>, space <span class="op">=</span> <span class="st">"free"</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">cols_tissue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>, </span>
-<span>        axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, panel.border <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, linewidth <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"hsa_liver_trend_mz_enrich_bar1.pdf"</span>, <span class="va">bar1</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">10</span>, unit <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># Generate the metabolome matrix.</span></span>
+<span><span class="va">combined_metabolism</span> <span class="op">&lt;-</span> <span class="va">Y_hat_bestnn</span><span class="op">$</span><span class="va">nn.index</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    barcode <span class="op">=</span> <span class="va">tissue_rna</span><span class="op">$</span><span class="va">barcode</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span> <span class="va">barcode</span>, names_to <span class="op">=</span> <span class="st">"nst_n"</span>, values_to <span class="op">=</span> <span class="st">"metabolism_id"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">metabolism_matrix</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>metabolism_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>      <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span> <span class="va">metabolism_id</span>, names_to <span class="op">=</span> <span class="st">"ion_peak"</span>, values_to <span class="op">=</span> <span class="st">"intensity"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">barcode</span>, <span class="va">ion_peak</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>intensity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">intensity</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>id_cols <span class="op">=</span> <span class="va">ion_peak</span>, names_from <span class="op">=</span> <span class="va">barcode</span>, values_from <span class="op">=</span> <span class="va">intensity</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">ion_peak</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -918,13 +928,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./sfig6.html" class="pagination-link" aria-label="Sup Figure 6">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Sup Figure 6</span></span>
+      <a href="./alignment.html" class="pagination-link" aria-label="Alignment">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Alignment</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./sfig8.html" class="pagination-link" aria-label="Sup Figure 8">
-        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Sup Figure 8</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reduce_dim.html" class="pagination-link" aria-label="Reduce Dim">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reduce Dim</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

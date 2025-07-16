@@ -39,11 +39,11 @@ book:
           text: Alignment
         - href: registration.qmd
           text: Registration
-    - part: Unsupervised cluster
+    - part: TF Activity
       chapters:
 
-        - href: reduce_dim.qmd
-          text: Reduce Dim
+        - href: pyscenic.qmd
+          text: Pyscenic
 
     - part: Analysis
       chapters:

@@ -2,7 +2,7 @@
 title: "Figure 3"
 format: html
 ---
-## Figure 3
+## Figure 3 | Dynamic inter-organ level transcriptional networks and metabolic compartmentalization of human embryos in organogenesis
 
 
 ### 

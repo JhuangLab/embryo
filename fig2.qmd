@@ -2,7 +2,7 @@
 title: "Figure 2"
 format: html
 ---
-## Figure 2
+## Figure 2| Dynamic inter-organ level transcriptional networks and metabolic compartmentalization of mouse embryos in organogenesis
 
 
 ### Load Required Packages

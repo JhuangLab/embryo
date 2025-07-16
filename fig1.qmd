@@ -2,10 +2,7 @@
 title: "Figure 1"
 format: html
 ---
-## Figure 1
-
-
-### Refined 
+## Figure 1 | The spatiotemporal transcriptomic and metabolomic atlases during organogenesis 
 
 The document is self-contained: it installs missing packages (if running on a local machine), loads data, generates all panels, and writes the final PDFs to the working directory that is automatically created. Below is the code generating Figure 1:
 

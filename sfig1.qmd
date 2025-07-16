@@ -1,8 +1,8 @@
 ---
-title: "sfig1"
+title: "Supplemental Figure 1"
 format: html
 ---
-
+## Extended Data Fig. 1
 ```{r, eval = FALSE} 
 
 pkgs <- c("fs", "futile.logger", "configr", "stringr", "ggpubr", "ggthemes", 

@@ -1,7 +1,8 @@
 ---
-title: "sfig3"
+title: "Supplemental Figure 3"
 format: html
 ---
+## Extended Data Fig. 3
 
 ```{r, eval = FALSE} 
 

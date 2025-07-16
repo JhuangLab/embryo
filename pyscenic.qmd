@@ -1,0 +1,426 @@
+---
+title: "pyscenic"
+---
+
+## Pyscenic
+
+### Run pyscenic
+
+We calculated transcription factor activity based on spatial transcriptomics, and the specific calculation method has been described in the Method section.
+
+```{r  eval=FALSE}
+pkgs <- c("jhtools", "glue", "tidyverse", "jhuanglabRNAseq")
+for (pkg in pkgs){
+  suppressPackageStartupMessages(library(pkg, character.only = T))
+}
+project <- "embryo"
+dataset <- "zhangjing"
+species <- "human"
+workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/rnaseq") %>% checkdir()
+setwd(workdir)
+
+tflist <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/tflist/allTFs_hg38.txt"
+glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human") %>% checkdir()
+
+slurmR::Slurm_lapply(c("yao1", "yao2", "yao6", "yao5"), function(sample_id){
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}") %>% checkdir()
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  cmd <- glue::glue("pyscenic grn --num_workers 20 --output {out_dir}/{sample_id}.adj.sc.tsv --method grnboost2 {loom_dir} {tflist}")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+export = c("tflist"),
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human", overwrite = T)
+
+
+feature_dir <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/human/hg38/hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather"
+annotations_dir <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/annotation/motifs-v10nr_clust-nr.hgnc-m0.001-o0.0.tbl"
+slurmR::Slurm_lapply(c("yao1", "yao2", "yao6", "yao5"), function(sample_id){
+  adj.sample_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}.adj.sc.tsv")
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_reg_v10_v10hg38_500_100_rank.csv")
+
+  cmd <- glue::glue("pyscenic ctx {adj.sample_dir} {feature_dir} --annotations_fname {annotations_dir} --expression_mtx_fname {loom_dir} --mode 'dask_multiprocessing' --output {out_dir} --num_workers 20 --mask_dropouts")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+export = c("feature_dir", "annotations_dir"),
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human", overwrite = T)
+adj.sample_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}.adj.sc.tsv")
+loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_reg_v10_v10hg38_500_100_rank.csv")
+
+cmd <- glue::glue("pyscenic ctx {adj.sample_dir} {feature_dir} --annotations_fname {annotations_dir} --expression_mtx_fname {loom_dir} --mode 'dask_multiprocessing' --output {out_dir} --num_workers 20 --mask_dropouts")
+system(cmd)
+
+slurmR::Slurm_lapply(c("yao1", "yao2", "yao6", "yao5"), function(sample_id){
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  reg_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_reg_v10_v10hg38_500_100_rank.csv")
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv")
+  cmd <- glue::glue("pyscenic aucell {loom_dir} {reg_dir} --output {out_dir} --num_workers 8")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+export = c("feature_dir", "annotations_dir"),
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human", overwrite = T)
+
+
+tflist <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/tflist/allTFs_mm.txt"
+glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse") %>% checkdir()
+
+slurmR::Slurm_lapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}") %>% checkdir()
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  cmd <- glue::glue("pyscenic grn --num_workers 20 --output {out_dir}/{sample_id}.adj.sc.tsv --method grnboost2 {loom_dir} {tflist}")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+export = c("tflist"),
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse", overwrite = T)
+
+
+feature_dir <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/mouse/mm10/mm10_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather"
+annotations_dir <- "/cluster/home/ztao_jh/projects/be_a_rich_man/RcisTarget/annotation/motifs-v10nr_clust-nr.mgi-m0.001-o0.0.tbl"
+slurmR::Slurm_lapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  adj.sample_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}.adj.sc.tsv")
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_reg_v10_v10mm10_500_100_rank.csv")
+
+  cmd <- glue::glue("pyscenic ctx {adj.sample_dir} {feature_dir} --annotations_fname {annotations_dir} --expression_mtx_fname {loom_dir} --mode 'dask_multiprocessing' --output {out_dir} --num_workers 20 --mask_dropouts")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+export = c("feature_dir", "annotations_dir"),
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse", overwrite = T)
+
+
+slurmR::Slurm_lapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  loom_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/Spatial_counts/{sample_id}.csv.loom")
+  reg_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_reg_v10_v10mm10_500_100_rank.csv")
+  out_dir <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.loom")
+  cmd <- glue::glue("pyscenic aucell {loom_dir} {reg_dir} --output {out_dir} --num_workers 8")
+  system(cmd)
+}, mc.cores = 4L, njobs = 60L, plan = "collect",
+tmp_path = "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse", overwrite = T)
+```
+
+### Check TF on tissue and Run TF Moran's I
+
+To identify transcription factors associated with embryonic development, we computed the Moran's Index scores of transcription factor activity scores across different stages of embryonic development. We clustered transcription factor scores and mapped their distribution and associated modules across tissues.
+
+```{r eval=FALSE}
+
+pkgs <- c("jhtools", "glue", "tidyverse", "jhuanglabRNAseq","Seurat","viridis","ComplexHeatmap")
+for (pkg in pkgs){
+  suppressPackageStartupMessages(library(pkg, character.only = T))
+}
+project <- "embryo"
+dataset <- "zhangjing"
+species <- "human"
+workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/rnaseq") %>% checkdir()
+setwd(workdir)
+
+gene_human_mouse <- read_rds("./MoransI/gene_human_mouseq.rds")
+gene_ml_hu <- gene_human_mouse[["gene_ml_hu"]]
+huch <- tibble(tissue_label = names(gene_ml_hu), new = c("yao1", "yao2", "yao5", "yao6"))
+names(gene_ml_hu) <- huch$new
+gene_ml_hu <- gene_ml_hu[c("yao1", "yao6", "yao5")]
+
+gene_ml_mu <- gene_human_mouse[["gene_ml_mu"]]
+much <- tibble(tissue_label = names(gene_ml_mu), new = c("ME9.5", "ME13.5", "ME11.5x2", "ME11.5x1"))
+names(gene_ml_mu) <- much$new
+gene_ml_mu <- gene_ml_mu[c("ME9.5", "ME11.5x1", "ME13.5")]
+
+humanobj <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/human/visium/manual_anot/seu_mrg2.rds" %>% read_rds()
+DefaultAssay(humanobj) <- "Spatial"
+humanobj <- JoinLayers(humanobj)
+humanobj <- humanobj %>% NormalizeData() %>% ScaleData()
+humanobj@meta.data$tissue_label <- paste0(humanobj$orig.ident, humanobj$stage)
+rn <- rownames(humanobj@meta.data)
+humanobj@meta.data <- humanobj@meta.data %>% left_join(as.data.frame(huch))
+rownames(humanobj@meta.data) <- rn
+
+mouseobj <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/visium/integrat/mtb_genes/anot_new/seu_mrg2.rds" %>% read_rds()
+delbarcode <- read_csv("delE95.csv")
+mouseobj <- mouseobj[,!colnames(mouseobj) %in% delbarcode[[1]]]
+
+DefaultAssay(mouseobj) <- "Spatial"
+mouseobj <- JoinLayers(mouseobj)
+mouseobj <- mouseobj %>% NormalizeData() %>% ScaleData()
+mouseobj@meta.data$tissue_label <- paste0(mouseobj$orig.ident, mouseobj$stage)
+rn <- rownames(mouseobj@meta.data)
+mouseobj@meta.data <- mouseobj@meta.data %>% left_join(as.data.frame(much))
+rownames(mouseobj@meta.data) <- rn
+
+humanobjlist <- Seurat::SplitObject(humanobj, split.by = "new")
+mouseobjlist <- Seurat::SplitObject(mouseobj, split.by = "new")
+
+parallel::mclapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- mouseobjlist[[sample_id]]
+  SCENIC <- SCENIC %>% column_to_rownames(var = "Cell") %>% t() %>% as.data.frame()
+  SCENIC <- SCENIC[,colnames(obj)]
+  SCENIC <- SCENIC[rowSums(SCENIC) > 0,]
+  # SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  TFl <- rownames(SCENIC)
+  
+  obj[["SCENIC"]] <- Seurat::CreateAssayObject(data = as.matrix(SCENIC))
+
+  pth <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/TF_tissue") 
+  dir.create(pth, recursive = T)
+  parallel::mclapply(TFl, function(i){
+  p <- Seurat::SpatialFeaturePlot(obj, features = i, pt.size.factor = 3) + 
+      theme_classic()+
+      ggtitle(i)  +
+      coord_fixed() +
+      scale_fill_viridis() 
+    pdf(glue("{pth}/{i}.pdf"), width = 5, height = 5)
+    print(p)
+    dev.off()
+  }, mc.cores = 10L)
+}, mc.cores = 4L)
+
+
+parallel::mclapply(c("yao1", "yao2", "yao5", "yao6"), function(sample_id){
+  SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- humanobjlist[[sample_id]]
+  SCENIC <- SCENIC %>% column_to_rownames(var = "Cell") %>% t() %>% as.data.frame()
+  SCENIC <- SCENIC[,colnames(obj)]
+  SCENIC <- SCENIC[rowSums(SCENIC) > 0,]
+  TFl <- rownames(SCENIC)
+  
+  obj[["SCENIC"]] <- Seurat::CreateAssayObject(data = as.matrix(SCENIC))
+  
+  pth <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/TF_tissue") 
+  dir.create(pth, recursive = T)
+  parallel::mclapply(TFl, function(i){
+    if(sample_id %in% c("yao5", "yao6")){
+      p <- Seurat::SpatialFeaturePlot(obj, features = i, pt.size.factor = 2) + 
+        theme_classic()+
+        ggtitle(i)  +
+        coord_fixed() +
+        scale_fill_viridis() 
+    }else{
+      p <- Seurat::SpatialFeaturePlot(obj, features = i, pt.size.factor = 3) + 
+        theme_classic()+
+        ggtitle(i)  +
+        coord_fixed() +
+        scale_fill_viridis() 
+    }
+
+    pdf(glue("{pth}/{i}.pdf"), width = 5, height = 5)
+    print(p)
+    dev.off()
+  }, mc.cores = 10L)
+}, mc.cores = 4L)
+
+
+molI_frame <- parallel::mclapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- mouseobjlist[[sample_id]]
+  SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  SCENIC <- SCENIC[SCENIC$Cell %in% colnames(obj),]
+  pos <- obj@images[[1]]@coordinates[,c("imagerow", "imagecol")]
+  molI <- Seurat::RunMoransI(scale(SCENIC[-1]) %>% t(), pos = pos)
+  molI
+}, mc.cores = 4L)
+names(molI_frame) <- c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5")
+
+molI_frame_hu <- parallel::mclapply(c("yao1", "yao2", "yao5", "yao6"), function(sample_id){
+  SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- humanobjlist[[sample_id]]
+  SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  SCENIC <- SCENIC[SCENIC$Cell %in% colnames(obj),]
+  pos <- obj@images[[1]]@coordinates[,c("imagerow", "imagecol")]
+  molI <- Seurat::RunMoransI(SCENIC[-1] %>% scale() %>% t(), pos = pos)
+  molI
+}, mc.cores = 4L)
+names(molI_frame_hu) <- c("yao1", "yao2", "yao5", "yao6")
+
+write_rds(molI_frame, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/mouse_MoransI.rds") )
+write_rds(molI_frame_hu, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/human_MoransI.rds") )
+
+molI_frame_ft <- lapply(molI_frame, function(x){
+  x %>% dplyr::filter(observed > 0.2) %>% rownames_to_column("TF")
+})
+molI_frame_hu_ft <- lapply(molI_frame_hu, function(x){
+  x %>% dplyr::filter(observed > 0.2) %>% rownames_to_column("TF")
+})
+
+cluster_tf <- function(obj, spmolI, k = 7, fn){
+  SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  SCENIC <- SCENIC[SCENIC$Cell %in% colnames(obj),]
+  SCENIC <- SCENIC %>% column_to_rownames(var = "Cell") %>% dplyr::select(any_of(spmolI))
+  
+  SCENIC_scale <- SCENIC %>% scale
+  corm <- cor(SCENIC_scale, method = "spearman")
+  hc <- hclust(as.dist(1-corm), method = "ward.D2")
+  
+  htd <- Heatmap(corm,
+                 cluster_columns = hc, 
+                 cluster_rows = hc, 
+                 column_split = k,
+                 row_split = k)
+  pdf(fn, width = 30, height = 30)
+  print(htd)
+  dev.off()
+
+  odc <- column_order(htd)
+  dev.off()
+  lapply(1:length(odc), function(i){
+    tibble(
+      tf = colnames(corm)[odc[[i]]],
+      group = paste0("cluster_", i)
+    )
+  }) %>% 
+    list_rbind()
+}
+aggrated_value <- function(SCENIC, cluster_tf_df, obj){
+  summarise_tf_cluster <- SCENIC %>% 
+    pivot_longer(cols = -Cell, names_to = "tf") %>% 
+    left_join(cluster_tf_df) %>% 
+    na.omit() %>% 
+    group_by(group, Cell) %>% 
+    summarise(value = mean(value)) %>% 
+    ungroup()
+  img_summarise_tf_cluster <- summarise_tf_cluster %>%
+    left_join(
+      obj@images[[1]]@coordinates[,c("imagerow", "imagecol")] %>% rownames_to_column(var = "Cell")
+    )
+  img_summarise_tf_cluster
+}
+plot_sp <- function(img_summarise_tf_cluster){
+  p <- img_summarise_tf_cluster %>% 
+    ggplot(aes(x = imagecol, y = imagerow, color = value)) +
+    geom_point()  +
+    theme_classic()+
+    scale_color_viridis() +
+    facet_wrap(~group, ncol = 4) +
+    coord_fixed()
+  p
+}
+
+c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5")
+sample_id <- "ME9.5"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- mouseobjlist[[sample_id]]
+spmolI <- molI_frame_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.pdf"),
+    width = 10, height = 5)
+print(p)
+dev.off()
+
+sample_id <- "ME11.5x1"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- mouseobjlist[[sample_id]]
+spmolI <- molI_frame_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.pdf"),
+    width = 15, height = 10)
+print(p)
+dev.off()
+
+sample_id <- "ME11.5x2"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- mouseobjlist[[sample_id]]
+spmolI <- molI_frame_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.pdf"),
+    width = 15, height = 10)
+print(p)
+dev.off()
+
+sample_id <- "ME13.5"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- mouseobjlist[[sample_id]]
+spmolI <- molI_frame_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/mouse/{sample_id}/cluster_tf.pdf"),
+    width = 20, height = 18)
+print(p)
+dev.off()
+
+
+c("yao1", "yao2", "yao5", "yao6")
+sample_id <- "yao1"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- humanobjlist[[sample_id]]
+spmolI <- molI_frame_hu_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.pdf"),
+    width = 14, height = 7)
+print(p)
+dev.off()
+
+sample_id <- "yao2"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- humanobjlist[[sample_id]]
+spmolI <- molI_frame_hu_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.pdf"),
+    width = 14, height = 10)
+print(p)
+dev.off()
+
+
+sample_id <- "yao6"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- humanobjlist[[sample_id]]
+spmolI <- molI_frame_hu_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.pdf"),
+    width = 20, height = 12)
+print(p)
+dev.off()
+
+
+sample_id <- "yao5"
+SCENIC <- glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+  read_csv()
+obj <- humanobjlist[[sample_id]]
+spmolI <- molI_frame_hu_ft[[sample_id]]$TF
+cluster_tf_df <- cluster_tf(obj, spmolI, k = 7, fn = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_heatmap.pdf"))
+write_csv(cluster_tf_df, file = glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.csv"))
+img_summarise_tf_cluster <- aggrated_value(SCENIC, cluster_tf_df, obj)
+p <- plot_sp(img_summarise_tf_cluster)
+
+pdf(glue::glue("/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/pyscenic/human/{sample_id}/cluster_tf.pdf"),
+    width = 30, height = 17)
+print(p)
+dev.off()
+```

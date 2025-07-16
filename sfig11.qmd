@@ -1,7 +1,8 @@
 ---
-title: "sfig11"
+title: "Supplemental Figure 11"
 format: html
 ---
+## Extended Data Fig. 11
 
 ```{r, eval = FALSE} 
 
@@ -83,7 +84,7 @@ for(feat in sel_types) {
     } else if (unique(seu$sample) == "E13.5_S1E1_2nd") {
       pt_size = 4.8
     }
-    feat1 <- Seurat::SpatialFeaturePlot(seu[, !is.na(seu[[feat]])], image.alpha = 0.5, features = feat, 
+    feat1 <- Seurat::SpatialFeaturePlot(seu[, !is.na(seu[[feat]])], image.alpha = 0.5, features = feat,
                                         pt.size.factor = pt_size, stroke = NA, combine = F, crop = T)
     feat1 <- feat1 %>% lapply(., \(p) p + Seurat::DarkTheme() + NoGrid() + NoAxes()) %>% 
       patchwork::wrap_plots() &
@@ -95,9 +96,7 @@ for(feat in sel_types) {
   p_lst1[[feat]] <- patchwork::wrap_plots(plst1, nrow = 1)
 }
 pdf("sfig12c_rctd_proportion_spatial_feats.pdf", height = 2, width = 8)
-print(p_lst1)
+  print(p_lst1)
 dev.off()
-
-
 
 ```
