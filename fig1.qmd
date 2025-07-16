@@ -4,435 +4,286 @@ format: html
 ---
 ## Figure 1
 
-<!-- ![Figure 1a Overview of the study]("figure1.png")  -->
 
-### Refined molecular subtypes of MM
+### Refined 
 
-Below is the code generating Figure 1B:
+The document is self-contained: it installs missing packages (if running on a local machine), loads data, generates all panels, and writes the final PDFs to the working directory that is automatically created. Below is the code generating Figure 1:
 
 ```{r, eval = FALSE} 
 
-pkgs <- c("fs", "futile.logger", "configr", "ggpubr", "ggthemes",
-          "jhtools", "glue", "ggsci", "patchwork", "tidyverse",
-          "circlize", "ComplexHeatmap", "GenomicRanges",
-          "jhuanglabRNAseq", "ggh4x")
-for (pkg in pkgs){
-  suppressPackageStartupMessages(library(pkg, character.only = T))
-}
-project <- "mm"
-dataset <- "meta"
-species <- "human"
-workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap") |> checkdir()
-setwd(workdir)
-seeds <- 2023
-
-df <- "/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds" %>%
-  read_rds
-df <- df %>% mutate(PrimaryCluster_bk = PrimaryCluster,
-                    PrimaryCluster = case_when(
-                      PrimaryCluster_bk == "new_cluster1" ~ "HRD",
-                      PrimaryCluster_bk == "IgD_like" ~ "IgD",
-                      T ~ PrimaryCluster_bk
-                    ))
-jinlin_commpass_heatmap_only <- "/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/jinlin_commpass_heatmap_only.rds" %>% read_rds
-# 这个东西反正应该是mm1199，可能要改一下
-mm1199 <- "/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/mm1199.rds" %>%
-  read_rds() |> convert_df_plot()
-cogene <- base::intersect(rownames(mm1199), rownames(jinlin_commpass_heatmap_only))
-
-subdf <- tibble(
-  sample_id = colnames(mm1199)
-) %>%
-  left_join(df)
-subdf$IRF4_mut <- subdf$irf4_pos == 394972
-
-
-
-config_fn = "/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/configs/colors.yaml"
-config_list <- show_me_the_colors(config_fn, "all")
-
-col <- config_list[c(
-  "batch","Clinical_IgH", "RNA_Subtype_Name",
-  "PrimaryCluster", "Tx_MAF","Tx_MAFA","Tx_MAFB",
-  "Tx_CCND1", "Tx_CCND2", "Tx_CCND3", "Tx_NSD2"
-)]
-col$Dom_IgH_Type <- col$Clinical_IgH
-names(col$Dom_IgH_Type) <- c("IGHE", "IGHA", "IGHD", "IGHG", "IGHM", "others")
-col$PrimaryCluster <- c(col$PrimaryCluster, "IgD" = "#FF00FF")
-col$datasets <- c(col$batch, "EGAD00001007813" = "green", "angang" = "red")
-col$IRF4_mut <- c("TRUE" = "#DC143C" , "FALSE" = "grey")
-col$subtypes <- jhuanglabRNAseq:::inner_group_colors(12)
-names(col$subtypes) <- subdf$subtypes |> unique() |> na.omit()
-all_scores <- c(
-  "Zhan_et_al_CD-1","Zhan_et_al_CD-2","Zhan_et_al_HP","Zhan_et_al_LB","Zhan_et_al_MF",
-  "Zhan_et_al_MS","Zhan_et_al_PR","Broyl_et_al_MF","Broyl_et_al_CTA","Broyl_et_al_CD2",
-  "Broyl_et_al_LB","Broyl_et_al_Myeloid","Broyl_et_al_CD1","Broyl_et_al_MS","Broyl_et_al_PR",
-  "Broyl_et_al_HP","Broyl_et_al_NFKB","Broyl_et_al_PRL3","GEP70","Sheri_et_al_MAF",
-  "Sheri_et_al_CD1","Sheri_et_al_CD2a","Sheri_et_al_CD2b","Sheri_et_al_MS",
-  "Sheri_et_al_1q gain","Sheri_et_al_PR","Sheri_et_al_HRD, MYC, low NFkB",
-  "Sheri_et_al_Low purity","Sheri_et_al_HRD, low TP53","Sheri_et_al_HRD, ++15",
-  "Sheri_et_al_HRD, ++15, MYC"
+# Install any missing packages automatically -----------------------------
+pkgs <- c(
+  "fs", "futile.logger", "configr", "stringr", "ggpubr", "ggthemes",
+  "jhtools", "glue", "ggsci", "patchwork", "tidyverse", "dplyr", "Seurat",
+  "paletteer", "cowplot", "ComplexHeatmap", "circlize", "plot1cell"
 )
-all_cnvs <- c(
-  "chr1p_fish",  "chr1q_fish",
-  "chr3p_fish","chr3q_fish",
-  "chr5p_fish","chr5q_fish",
-  "chr7p_fish","chr7q_fish",
-  "chr9p_fish","chr9q_fish",
-  "chr11p_fish","chr11q_fish",
-  "chr14q_fish","chr13q_fish",
-  "chr15q_fish",
-  "chr17q_fish",
-  "chr19p_fish","chr19q_fish",
-  "chr21_fish","chr21q_fish")
-for(i in all_scores){
-  col[[i]] <- circlize::colorRamp2(quantile(subdf[[i]], c(0.1,0.5,0.9), na.rm = T), colors = c("#1E90FF", "white", "#DC143C"))
-}
-for(i in all_cnvs){
-  col[[i]] <- c("-1"="#1E90FF", "0"="white", "1"="#DC143C")
-}
+to_install <- pkgs[!pkgs %in% installed.packages()[, "Package"]]
+if (length(to_install)) install.packages(to_install, repos = "https://cloud.r-project.org")
 
-out_dir <- "./check_new_cluster_addsamples/ljp/fixed_samples" %>% checkdir
-all_col <- c("datasets",
-             "Dom_IgH_Type", "Clinical_IgH","subtypes", "PrimaryCluster","RNA_Subtype_Name", "IRF4_mut","GEP70",
-             "Tx_MAF","Tx_MAFA","Tx_MAFB", "Tx_CCND1", "Tx_CCND2", "Tx_CCND3", "Tx_NSD2",
-             all_cnvs,
-             all_scores)
-hasub2 <- HeatmapAnnotation(df = subdf[,all_col] %>%
-                              as.data.frame(),
-                            annotation_name_side = "left",
-                            show_legend = all_col %in% c("datasets", "Dom_IgH_Type","subtypes",
-                                                         "Clinical_IgH", "PrimaryCluster",
-                                                         "RNA_Subtype_Name"),
-                            col = col)
-quick_heatmap(mm1199[cogene,subdf$sample_id], hasub2, outdir = out_dir,
-              hdf = subdf[,c("sample_id","cn_name","PrimaryCluster","RNA_Subtype_Name", "tumor_descriptor", "Tx_CCND1", "Tx_CCND2", "Tx_CCND3")] %>%
-                mutate(
-                  CCNDx = Tx_CCND1|Tx_CCND2|Tx_CCND3,
-                  cn_name = case_when(
-                    is.na(cn_name) ~ str_extract(sample_id, pattern = "MMRF_\\d+|MM\\d+"),
-                    T ~ cn_name
-                  )
-                ) %>%
-                dplyr::select(-c(Tx_CCND1, Tx_CCND2, Tx_CCND3)),
-              top_var_percent = 0.95,
-              keep_annotation = T,
-              column_split = 5,
-              height = 20,
-              out_put_rds = T,
-              cluster_columns = T,
-              show_column_names= F)
+# Load all packages quietly ---------------------------------------------
+suppressPackageStartupMessages(lapply(pkgs, library, character.only = TRUE))
 
-# objht <- "/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds" |>
-#   read_rds
-objht <- "/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds" %>%
-  read_rds
-all_col <- all_col |> unique()
-subdf2 <- tibble::tibble(
-  sample_id = rownames(objht$heatmap2[[6]])
-) |> left_join(subdf[,c(all_col, "sample_id")]) |>
-  dplyr::select(-sample_id)
-hasub2 <- HeatmapAnnotation(df = subdf2 %>%
-                              as.data.frame(),
-                            annotation_name_side = "left",
-                            show_legend = all_col %in% c("datasets", "Dom_IgH_Type","subtypes",
-                                                         "Clinical_IgH", "PrimaryCluster",
-                                                         "RNA_Subtype_Name"),
-                            col = col)
-ht <- Heatmap(t(objht$heatmap2[[6]]),
-              show_column_names = F,
-              show_row_names = F,
-              top_annotation = hasub2,
-              border = T,
-              column_gap = unit(0, "mm"),
-              clustering_method_columns = "ward.D2",
-              clustering_method_rows = "ward.D2",
-              column_split = subdf2$subtypes)
+project  <- "collabrators"
+dataset  <- "wangwenjie"
+species  <- "mouse"
 
-pdf("/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/split_subtypes.pdf",
-    width = 20, height = 20)
-draw(ht, annotation_legend_side = "left",
-     heatmap_legend_side = "right")
-dev.off()
-
-```
-
-
-plot:
-
-```{r, echo = FALSE, fig.cap = "figure temp 1b", fig.align = "center", out.width = "100%"}
-knitr::include_graphics("images/split_subtypes.png")
-```
-
-### Transcriptomic similarities of MM samples used in this study
-
-code:
-
-```{r, eval = FALSE} 
-
-pkgs <- c("fs", "futile.logger", "configr", "ggpubr", "ggthemes",
-          "jhtools", "glue", "ggsci", "patchwork", "tidyverse", "GSVA",
-          "limma", "circlize", "ComplexHeatmap", "jhuanglabRNAseq")
-for (pkg in pkgs){
-  suppressPackageStartupMessages(library(pkg, character.only = T))
-}
-project <- "mm"
-dataset <- "meta"
-species <- "human"
-workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap") |> checkdir()
+workdir  <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/fig1")
+fs::dir_create(workdir)
 setwd(workdir)
-seeds <- 2023
 
-tmp_out_dir <- "./MMyeloMap/inst/extdata/tmp" |> checkdir()
-fig_out_dir <- "./MMyeloMap/inst/extdata/figs" |> checkdir()
-gene_sets_out_dir <- "./MMyeloMap/inst/extdata/gene_sets" |> checkdir()
-test_data_out_dir <- "./MMyeloMap/inst/extdata/test_data" |> checkdir()
-# ------------------ color ----------------------------------
-df <- "/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds" |> read_rds()
-color_plate <- c(
-  '1q_gain' = "#7713a0", "CD_no_IgH" = "#09e409", "CD1" = "#129a71", "CD2" = "#035e03",
-  "HRD" = "#0e06ee", "HRD_1q_gain" = "#1E90FF", "HRD_chr11" = "#5653a5", "IgD"  = "#FF00FF",
-  "Low_purity" = "grey60", "MAF" = "pink", "MS" = "#ebb415", "PR" = "#8d0a4f"
-)
-write_rds(color_plate, file = glue("{fig_out_dir}/color_plate.rds"))
-# ------------------------ UMAP -----------------------------------------
-hvg <- readxl::read_xlsx("/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/sampleinfo_0.95.xlsx", sheet = 2)
-obj <- "/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds" |> read_rds()
+yaml_fn  <- "/cluster/home/danyang_jh/projects/collabrators/code/wangwenjie/mouse/figures/configs.yaml"
 
-# UMAP
-umapobj <- uwot::umap(obj$heatmap2[[6]])
-pdf(glue("{tmp_out_dir}/umap.pdf"))
-umapobj %>%
-  as.data.frame() %>%
-  rownames_to_column(var = "sample_id") %>%
-  left_join(df[,c("sample_id", "subtypes")]) %>%
-  ggplot(aes(x = V1, y = V2, color = subtypes)) +
-  geom_point() +
-  scale_color_manual(values = color_plate)
-dev.off()
+# Retrieve colour palettes from YAML -------------------------------------
+cols_tissue <- jhtools::show_me_the_colors(config_fn = yaml_fn, "tissue")
+stg_cols    <- jhtools::show_me_the_colors(config_fn = yaml_fn, "stage")
 
-```
-
-plot:
-
-```{r, echo = FALSE, fig.cap = "figure temp 1c", fig.align = "center", out.width = "100%"}
-knitr::include_graphics("images/umap.png")
-```
-
-
-
-
-### Dominant Ig subtypes of the refined groups
-
-code:
-
-```{r, eval = FALSE} 
-
-pkgs <- c("fs", "futile.logger", "configr", "ggpubr", "ggthemes",
-          "jhtools", "glue", "ggsci", "patchwork", "tidyverse",
-          "circlize", "ComplexHeatmap", "GenomicRanges",
-          "jhuanglabRNAseq", "ggh4x")
-for (pkg in pkgs){
-  suppressPackageStartupMessages(library(pkg, character.only = T))
-}
-project <- "mm"
-dataset <- "meta"
-species <- "human"
-workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap") |> checkdir()
-setwd(workdir)
-seeds <- 2023
-
-df <- "/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds" %>%
-  read_rds
-df <- df %>%
-  dplyr::select(-irf4_pos) %>%
-  dplyr::distinct() %>%
-  left_join(
-    df %>% dplyr::select(sample_id, irf4_pos) %>%
-      dplyr::distinct() %>%
-      group_by(sample_id) %>%
-      summarise(irf4_pos = paste0(irf4_pos, collapse = ","))
+# Shared ggplot theme -----------------------------------------------------
+my_theme1 <- theme_classic(base_size = 8) +
+  theme(
+    legend.key.size = unit(3, "mm"),
+    axis.text       = element_text(color = "black"),
+    axis.ticks      = element_line(color = "black"),
+    plot.title      = element_text(hjust = 0.5)
   )
-# ==============================================================================
-commpass_human_counts <- "/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/exp/tables/commpass_human_counts.csv"%>%
-  read_csv()
-commpass_human_counts$gene_name[is.na(commpass_human_counts$gene_name)] <- commpass_human_counts$gene_id[is.na(commpass_human_counts$gene_name)]
-jilin_human_counts <- "/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/exp/tables/jilin_human_counts.csv" %>%
-  read_csv()
-jilin_human_counts$gene_name[is.na(jilin_human_counts$gene_name)] <- jilin_human_counts$gene_id[is.na(jilin_human_counts$gene_name)]
 
-depth_rna <- tibble(
-  sample_id = c(colnames(commpass_human_counts)[-c(1,2)], colnames(jilin_human_counts)[-c(1,2)]),
-  depth = c(colSums(commpass_human_counts[,-c(1,2)]), colSums(jilin_human_counts[,-c(1,2)]))
-)
-# ==============================================================================
-allfiles <- c(
-  list.files("/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/", pattern = ".clones_IGH.tsv", full.names = T, recursive = T),
-  list.files("/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/", pattern = ".clones_IGH.tsv", full.names = T, recursive = T),
-  list.files("/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/", pattern = ".clones_IGK.tsv", full.names = T, recursive = T),
-  list.files("/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/", pattern = ".clones_IGK.tsv", full.names = T, recursive = T),
-  list.files("/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/", pattern = ".clones_IGL.tsv", full.names = T, recursive = T),
-  list.files("/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/", pattern = ".clones_IGL.tsv", full.names = T, recursive = T))
-alldfes <- read_tsv(allfiles, id = "pth")
-alldfes$pth <- basename(alldfes$pth)
-alldfes <- alldfes %>%
-  tidyr::separate_wider_delim(cols = pth, delim = ".", names = c("sample_id", "clone", "x")) %>%
-  dplyr::select(-x) %>%
-  mutate(clone = str_remove(clone, pattern = 'clones_')) %>%
-  left_join(depth_rna) %>%
-  mutate(relate_clone_number = readCount/depth * 10^7)
+```
 
-allCHitsWithScore_list <- str_extract_all(alldfes$allCHitsWithScore, pattern = "IG.+?(?=\\*)")
+## Figure 1B – Mouse tissue atlas (VISIUM)
 
-allCHitsWithScore_list <- parallel::mclapply(allCHitsWithScore_list, function(x){
-  x <- x %>%
-    str_remove(pattern = "\\d$") %>%
-    unique()
-  x[!x %in% c("IGHGP", "IGHEP")]
-}, mc.cores = 10L)
+```{r, eval = FALSE} 
+rds_fn1   <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_obj_lst.rds"
+mmu_visium <- readr::read_rds(rds_fn1)
+samples_mmu <- c("E95", "E115", "E135")
+# Generate each spatial panel and save individual PDFs -------------------
+plst1 <- lapply(samples_mmu, \(samp) {
+  obj1 <- mmu_visium[[samp]]
 
-alldfes$raw_igtype <- lapply(allCHitsWithScore_list, function(x){
-  paste0(x %>% sort, collapse = ",")
-}) %>% unlist()
-table(alldfes$raw_igtype)
-
-alldfes$igtype <- lapply(allCHitsWithScore_list, function(x){
-  if(length(x) == 0){
-    return("others")
-  }else if(length(x) == 2){
-    return("others")
-  } else if(is.na(x)){
-    return("others")
+  # Dynamic sizing per sample
+  if (samp == "E95") {
+    scale_fct <- 1.6;  plot_width <- 2; plot_height <- 2
+  } else if (samp == "E115") {
+    scale_fct <- 1.1;  plot_width <- 4; plot_height <- 4
   } else {
-    return(x)
+    scale_fct <- 2.0;  plot_width <- 6; plot_height <- 6
   }
-}) %>% unlist()
+
+  p <- SpatialDimPlot(obj1,
+                      pt.size.factor = scale_fct,
+                      image.alpha    = 0,
+                      group.by       = "tissuetype") &
+       scale_fill_manual(values = cols_tissue) &
+       my_theme1 & NoAxes() & NoLegend()
+
+  ggsave(glue("fig1b_mouse_tissuetype_spatial_{samp}.pdf"), p,
+         width = plot_width, height = plot_height)
+  p
+}) |> setNames(samples_mmu)
 
 
+# Build universal legend -------------------------------------------------
+tbl1 <- bind_rows(lapply(samples_mmu, \(samp) {
+  tibble(tissuetype = unique(mmu_visium[[samp]]$tissuetype))
+}))
+
+pt1 <- ggplot(tbl1, aes(1, tissuetype, color = tissuetype)) +
+  geom_point(size = 0.4) +
+  scale_color_manual(values = cols_tissue) +
+  my_theme1 +
+  coord_fixed() +
+  labs(color = "")
+
+legend <- cowplot::get_legend(pt1)
+plst1[["legend"]] <- cowplot::plot_grid(NULL, legend, NULL,
+                                        ncol = 3, rel_widths = c(.1, 1, .1))
+ggsave("fig1b_legend_mouse_tissuetype_spatial.pdf", plst1[["legend"]],
+       width = 2, height = 2)
+
+# Assemble final panel ----------------------------------------------------
+fig1b_mouse <- cowplot::plot_grid(plotlist = plst1, nrow = 1,
+                                  rel_widths = c(.8, 1, 1.2, 1))
+ggsave("fig1b_mouse_tissuetype.pdf", fig1b_mouse,
+       width = unit(8, "cm"), height = unit(3, "cm"))
+
+```
+
+## Figure 1C – Human tissue atlas (VISIUM)
+
+```{r, eval = FALSE} 
+samples_hsa <- c("yao1", "yao2", "yao5")
+rds_fn2 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/hsa_visium_obj_lst.rds"
+hsa_visium <- readr::read_rds(rds_fn2)
+
+plst1 <- lapply(samples_hsa, \(samp) {
+  obj1 <- hsa_visium[[samp]]
+
+  if (samp == "yao1") {
+    scale_fct <- 1.8; plot_width <- 2; plot_height <- 2
+  } else if (samp == "yao2") {
+    scale_fct <- 1.3; plot_width <- 4; plot_height <- 4
+  } else {
+    scale_fct <- 1.5; plot_width <- 6; plot_height <- 6
+  }
+
+  p <- SpatialDimPlot(obj1,
+                      pt.size.factor = scale_fct,
+                      image.alpha    = 0,
+                      group.by       = "tissue") &
+       scale_fill_manual(values = cols_tissue) &
+       my_theme1 & NoAxes() & NoLegend()
+
+  ggsave(glue("fig1c_human_tissue_spatial_{samp}.pdf"), p,
+         width = plot_width, height = plot_height)
+  p
+}) |> setNames(samples_hsa)
+
+tbl1 <- lapply(samples_hsa, \(samp) {
+  tibble(tissue = unique(hsa_visium[[samp]]$tissue))
+}) |> bind_rows() |> dplyr::distinct()
+
+pt1 <- ggplot(tbl1, aes(1, tissue, color = tissue)) +
+  geom_point(size = 0.4) +
+  scale_color_manual(values = cols_tissue) +
+  my_theme1 +
+  coord_fixed() +
+  labs(color = "")
+
+legend <- cowplot::get_legend(pt1)
+plst1[["legend"]] <- cowplot::plot_grid(NULL, legend, NULL,
+                                        ncol = 3, rel_widths = c(.1, 1, .1))
+ggsave("fig1c_legend_human_tissue_spatial.pdf", plst1[["legend"]],
+       width = 2, height = 2)
 
 
-se <- "/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/20250523/jinlin_commpass_se.rds" %>% read_rds
-igtype_color <- metadata(se)$color$Clinical_IgH
-names(igtype_color) <- c("IGHE", "IGHA", "IGHD", "IGHG", "IGHM", "others")
-igtype_color[6] <- "grey60"
-igltype_color <- metadata(se)$color$Clinical_IgL
-names(igltype_color) <- c("IGKC", "IGLC", "xx", "others")
-# ==============================================================================
+fig1c_human <- cowplot::plot_grid(plotlist = plst1, nrow = 1,
+                                  rel_widths = c(.6, 1, 1.2, 1))
+ggsave("fig1c_human_tissue.pdf", fig1c_human,
+       width = unit(8, "cm"), height = unit(3, "cm"))
 
-igtype_number <- alldfes %>%
-  group_by(sample_id, igtype) %>%
-  summarise(relate_clone_number = sum(relate_clone_number)) %>%
-  ungroup() %>%
-  dplyr::filter(sample_id != "GC8J2") %>%
-  pivot_wider(id_cols = sample_id, names_from = igtype, values_from = relate_clone_number)
-igtype_number[is.na(igtype_number)] <- 0
+```
 
-S_IGH <- alldfes  %>%
-  dplyr::filter(sample_id != "GC8J2") %>%
-  dplyr::filter(clone == "IGH") %>%
-  group_by(sample_id) %>%
-  mutate(relate_clone_number_pct = relate_clone_number/sum(relate_clone_number)) %>%
-  summarise(S_IGH = sum(-log(relate_clone_number_pct) * relate_clone_number_pct)) %>%
-  ungroup()
-S_IGL <- alldfes  %>%
-  dplyr::filter(sample_id != "GC8J2") %>%
-  dplyr::filter(clone %in% c("IGK", "IGL")) %>%
-  group_by(sample_id) %>%
-  mutate(relate_clone_number_pct = relate_clone_number/sum(relate_clone_number)) %>%
-  summarise(S_IGL = sum(-log(relate_clone_number_pct) * relate_clone_number_pct)) %>%
-  ungroup()
+## Figure 1D – plot1cell circle plots
+Mouse – all genes
+```{r, eval = FALSE} 
 
-Ex_IGH <- alldfes  %>%
-  dplyr::filter(sample_id != "GC8J2") %>%
-  dplyr::filter(clone == "IGH") %>%
-  group_by(sample_id) %>%
-  mutate(relate_clone_number_median = median(relate_clone_number),
-         Ex_IGH = log10(relate_clone_number / relate_clone_number_median),
-         rank = paste0("TheIGH_", dplyr::row_number(-Ex_IGH))) %>%
-  slice_max(order_by = Ex_IGH, n = 3, with_ties = F) %>%
-  ungroup() %>%
-  pivot_wider(id_cols = sample_id, names_from = rank, values_from = Ex_IGH)
+rds_fn4 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_merged_obj.rds"
+visium_mmu_mrg <- readr::read_rds(rds_fn4)
 
-Ex_IGL <- alldfes  %>%
-  dplyr::filter(sample_id != "GC8J2") %>%
-  dplyr::filter(clone %in% c("IGK", "IGL")) %>%
-  group_by(sample_id) %>%
-  mutate(relate_clone_number_median = median(relate_clone_number),
-         Ex_IGL = log10(relate_clone_number / relate_clone_number_median),
-         rank = paste0("TheIGL_", dplyr::row_number(- Ex_IGL))) %>%
-  slice_max(order_by = Ex_IGL, n = 3, with_ties = F) %>%
-  ungroup()%>%
-  pivot_wider(id_cols = sample_id, names_from = rank, values_from = Ex_IGL)
+circ_dat   <- prepare_circlize_data(visium_mmu_mrg, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissuetype))]
+lgd_squre  <- Legend(at = names(stg_cols), type = "grid",
+                     legend_gp = gpar(fill = stg_cols),
+                     title_position = "topleft", title = "stage")
 
+pdf("fig1d_mouse_plot1cell_all_genes.pdf", width = 8, height = 8)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.5,
+              col.use = clust_cols, bg.color = "white",
+              kde2d.n = 200, repel = TRUE, label.cex = 0.9)
+add_track(circ_dat, group = "stage",
+          colors = stg_cols[order(names(stg_cols))], track_num = 2)
+draw(lgd_squre, x = unit(40, "mm"), y = unit(12, "mm"),
+     just = c("right", "bottom"))
+dev.off()
 
+```
+## Mouse – metabolic genes
+```{r, eval = FALSE} 
 
-config_fn = "/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/configs/colors.yaml"
-config_list <- show_me_the_colors(config_fn, "all")
+rds_fn5 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_mtb_gene_merged_obj.rds"
+seu_new3_mrg <- readr::read_rds(rds_fn5)
 
-htobj <- read_rds(glue("./paper_check_ht/heatmap/heatmap_0.95_groups29.rds"))
-htvalue <- t(htobj$complexheatmap[[6]])
-primarysamples <- df %>% dplyr::filter(!is.na(PrimaryCluster)) %>% arrange(cluster_order) %>% pull(sample_id)
-dfwen <- df[,c("sample_id", "RNA_Subtype_Name","PrimaryCluster", "detal_20250512", "init_subcluster", "batch")]
+circ_dat   <- prepare_circlize_data(seu_new3_mrg, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissuetype))]
 
-
-primarysamples_modelsup_annodf <- tibble(sample_id = primarysamples) %>%
-  left_join(dfwen) %>%
-  left_join(igtype_number) %>%
-  left_join(S_IGH) %>% left_join(S_IGL) %>%
-  left_join(Ex_IGH) %>% left_join(Ex_IGL)
-used_cols <- colnames(primarysamples_modelsup_annodf)[-1]
-col <- config_list[c("PrimaryCluster", "RNA_Subtype_Name")]
-col$PrimaryCluster <- c(col$PrimaryCluster, "IgD_like" = "#FF00FF")
-
-init_subcluster_color <- jhuanglabRNAseq:::inner_group_colors(29)
-names(init_subcluster_color) <- df$init_subcluster %>% na.omit() %>% unique
-detal_20250512_color <- jhuanglabRNAseq:::inner_group_colors(22)
-names(detal_20250512_color) <- df$detal_20250512 %>% na.omit() %>% unique
-
-col$init_subcluster <- init_subcluster_color
-col$detal_20250512 <- detal_20250512_color
-col$batch <- c("jilin" = "#DC143C", "commpass" = "grey")
-
-
-for(i in used_cols[-c(1,2, 3, 4, 5)]){
-  col[[i]] <- circlize::colorRamp2(breaks = quantile(primarysamples_modelsup_annodf[[i]] %>% na.omit(),
-                                                     c(0.01,0.5,0.99)),
-                                   colors = c("#1E90FF", "white", "#DC143C" ))
-}
-
-
-ha_commpassbasesample_modelsup_annodf <- HeatmapAnnotation(df = primarysamples_modelsup_annodf[used_cols],
-                                                           col = col,border = T,
-                                                           show_legend = used_cols %in% c("RNA_Subtype_Name","PrimaryCluster"))
-commpassbasesampleht <- htvalue[, primarysamples]
-
-order_tb <- tibble(
-  detal_20250512 = primarysamples_modelsup_annodf$detal_20250512,
-  cod = factor(primarysamples_modelsup_annodf$detal_20250512,
-               levels = unique(primarysamples_modelsup_annodf$detal_20250512))
-)
-ht <- Heatmap(commpassbasesampleht,
-              show_row_names = F, show_column_names = F,
-              use_raster = F,
-              show_heatmap_legend = FALSE,
-              row_names_max_width = unit(20, "cm"),
-              column_split = order_tb$cod,
-              column_title = unique(order_tb$detal_20250512),
-              cluster_rows = F, cluster_columns = F,
-              column_title_rot = 90,
-              border = T,column_gap = unit(0, "mm"), row_gap = unit(0, "mm"),
-              top_annotation = ha_commpassbasesample_modelsup_annodf)
-pdf(glue("{mixcr_figs}/detal_20250512_ht.pdf"), width = 20, height = 20)
-draw(ht, annotation_legend_side = "left")
+pdf("fig1d_mouse_plot1cell_mtb_genes.pdf", width = 8, height = 8)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.5,
+              col.use = clust_cols, bg.color = "white",
+              kde2d.n = 200, repel = TRUE, label.cex = 0.9)
+add_track(circ_dat, group = "stage", colors = stg_cols, track_num = 2)
+draw(lgd_squre, x = unit(40, "mm"), y = unit(12, "mm"),
+     just = c("right", "bottom"))
 dev.off()
 
 ```
 
-plot:
+## Mouse – M/Z data
+```{r, eval = FALSE} 
+
+rds_fn2 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mouse_mz_obj_merged.rds"
+mz_obj_mrg <- readr::read_rds(rds_fn2)
+
+circ_dat   <- prepare_circlize_data(mz_obj_mrg, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissuetype))]
+
+pdf("fig1c_plot1cell_all_mz_mrg.pdf", width = 5.5, height = 5.5)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.4,
+              col.use = clust_cols, bg.color = "white",
+              contour.nlevels = 100, kde2d.n = 2000,
+              repel = TRUE, label.cex = 0.7)
+add_track(circ_dat, group = "stage",
+          colors = stg_cols[sort(unique(circ_dat$stage))], track_num = 2)
+draw(lgd_squre, x = unit(25, "mm"), y = unit(8, "mm"),
+     just = c("right", "bottom"))
+dev.off()
+
+```
+## Human – all genes
+```{r, eval = FALSE} 
+
+rds_fn6 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/human_visium_obj_merged.rds"
+seu_new2_mrg <- readr::read_rds(rds_fn6)
+
+circ_dat   <- prepare_circlize_data(seu_new2_mrg, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissue))]
+
+pdf("fig1d_human_plot1cell_all_genes.pdf", width = 8, height = 8)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.5,
+              col.use = clust_cols, bg.color = "white",
+              kde2d.n = 200, repel = TRUE, label.cex = 0.9)
+add_track(circ_dat, group = "stage",
+          colors = stg_cols[order(names(stg_cols))], track_num = 2)
+draw(lgd_squre, x = unit(40, "mm"), y = unit(12, "mm"),
+     just = c("right", "bottom"))
+dev.off()
+
+```
+## Human – metabolic genes
+```{r, eval = FALSE} 
+rds_fn8 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/hsa_visium_mtb_gene_merged_obj.rds"
+seu_new3_mrg <- readr::read_rds(rds_fn8)
+
+circ_dat   <- prepare_circlize_data(seu_new3_mrg, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissue))]
+
+pdf("fig1d_human_plot1cell_mtb_genes_merged.pdf", width = 8, height = 8)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.5,
+              col.use = clust_cols, bg.color = "white",
+              kde2d.n = 200, repel = TRUE, label.cex = 0.9)
+add_track(circ_dat, group = "stage",
+          colors = stg_cols[order(names(stg_cols))], track_num = 2)
+draw(lgd_squre, x = unit(40, "mm"), y = unit(12, "mm"),
+     just = c("right", "bottom"))
+dev.off()
 
 
-![figure temp 1d.](images/mixcr_lgh_temp.png){fig-alt="figure temp 1d" .align-center width=600px fig-cap="Figure: overall cnv" .lightbox}
+```
+## Human – M/Z data
+```{r, eval = FALSE} 
 
+rds_fn4 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/human_mz_obj_merged.rds"
+seu_mrg2 <- readr::read_rds(rds_fn4)
 
+circ_dat   <- prepare_circlize_data(seu_mrg2, scale = 0.7)
+clust_cols <- cols_tissue[sort(unique(circ_dat$tissue))]
 
+pdf("fig1d_human_plot1cell_all_mz_mrg.pdf", width = 5.5, height = 5.5)
+plot_circlize(circ_dat, do.label = TRUE, pt.size = 0.4,
+              col.use = clust_cols, bg.color = "white",
+              contour.nlevels = 100, kde2d.n = 2000,
+              repel = TRUE, label.cex = 0.7)
+add_track(circ_dat, group = "stage",
+          colors = stg_cols[sort(unique(circ_dat$stage))], track_num = 2)
+draw(lgd_squre, x = unit(25, "mm"), y = unit(8, "mm"),
+     just = c("right", "bottom"))
+dev.off()
 
+```

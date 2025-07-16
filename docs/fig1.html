@@ -72,10 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -226,13 +223,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./drug.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Treatment Response</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Treatment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mmyelomap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Mmyelomap R package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Mmyelomap</span></span></a>
   </div>
 </li>
       </ul>
@@ -335,11 +332,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>
 <a href="#figure-1" id="toc-figure-1" class="nav-link active" data-scroll-target="#figure-1"><span class="header-section-number">7.1</span> Figure 1</a>
   <ul class="collapse">
-<li><a href="#refined-molecular-subtypes-of-mm" id="toc-refined-molecular-subtypes-of-mm" class="nav-link" data-scroll-target="#refined-molecular-subtypes-of-mm"><span class="header-section-number">7.1.1</span> Refined molecular subtypes of MM</a></li>
-  <li><a href="#transcriptomic-similarities-of-mm-samples-used-in-this-study" id="toc-transcriptomic-similarities-of-mm-samples-used-in-this-study" class="nav-link" data-scroll-target="#transcriptomic-similarities-of-mm-samples-used-in-this-study"><span class="header-section-number">7.1.2</span> Transcriptomic similarities of MM samples used in this study</a></li>
-  <li><a href="#dominant-ig-subtypes-of-the-refined-groups" id="toc-dominant-ig-subtypes-of-the-refined-groups" class="nav-link" data-scroll-target="#dominant-ig-subtypes-of-the-refined-groups"><span class="header-section-number">7.1.3</span> Dominant Ig subtypes of the refined groups</a></li>
+<li><a href="#refined" id="toc-refined" class="nav-link" data-scroll-target="#refined"><span class="header-section-number">7.1.1</span> Refined</a></li>
   </ul>
 </li>
+  <li><a href="#figure-1b-mouse-tissue-atlas-visium" id="toc-figure-1b-mouse-tissue-atlas-visium" class="nav-link" data-scroll-target="#figure-1b-mouse-tissue-atlas-visium"><span class="header-section-number">7.2</span> Figure 1B – Mouse tissue atlas (VISIUM)</a></li>
+  <li><a href="#figure-1c-human-tissue-atlas-visium" id="toc-figure-1c-human-tissue-atlas-visium" class="nav-link" data-scroll-target="#figure-1c-human-tissue-atlas-visium"><span class="header-section-number">7.3</span> Figure 1C – Human tissue atlas (VISIUM)</a></li>
+  <li><a href="#figure-1d-plot1cell-circle-plots" id="toc-figure-1d-plot1cell-circle-plots" class="nav-link" data-scroll-target="#figure-1d-plot1cell-circle-plots"><span class="header-section-number">7.4</span> Figure 1D – plot1cell circle plots</a></li>
+  <li><a href="#mouse-metabolic-genes" id="toc-mouse-metabolic-genes" class="nav-link" data-scroll-target="#mouse-metabolic-genes"><span class="header-section-number">7.5</span> Mouse – metabolic genes</a></li>
+  <li><a href="#mouse-mz-data" id="toc-mouse-mz-data" class="nav-link" data-scroll-target="#mouse-mz-data"><span class="header-section-number">7.6</span> Mouse – M/Z data</a></li>
+  <li><a href="#human-all-genes" id="toc-human-all-genes" class="nav-link" data-scroll-target="#human-all-genes"><span class="header-section-number">7.7</span> Human – all genes</a></li>
+  <li><a href="#human-metabolic-genes" id="toc-human-metabolic-genes" class="nav-link" data-scroll-target="#human-metabolic-genes"><span class="header-section-number">7.8</span> Human – metabolic genes</a></li>
+  <li><a href="#human-mz-data" id="toc-human-mz-data" class="nav-link" data-scroll-target="#human-mz-data"><span class="header-section-number">7.9</span> Human – M/Z data</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -362,414 +365,276 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header><section id="figure-1" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="figure-1">
 <span class="header-section-number">7.1</span> Figure 1</h2>
-<!-- ![Figure 1a Overview of the study]("figure1.png")  -->
-<section id="refined-molecular-subtypes-of-mm" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="refined-molecular-subtypes-of-mm">
-<span class="header-section-number">7.1.1</span> Refined molecular subtypes of MM</h3>
-<p>Below is the code generating Figure 1B:</p>
+<section id="refined" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="refined">
+<span class="header-section-number">7.1.1</span> Refined</h3>
+<p>The document is self-contained: it installs missing packages (if running on a local machine), loads data, generates all panels, and writes the final PDFs to the working directory that is automatically created. Below is the code generating Figure 1:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>,</span>
-<span>          <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>,</span>
-<span>          <span class="st">"circlize"</span>, <span class="st">"ComplexHeatmap"</span>, <span class="st">"GenomicRanges"</span>,</span>
-<span>          <span class="st">"jhuanglabRNAseq"</span>, <span class="st">"ggh4x"</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">pkg</span> <span class="kw">in</span> <span class="va">pkgs</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pkg</span>, character.only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">project</span> <span class="op">&lt;-</span> <span class="st">"mm"</span></span>
-<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="st">"meta"</span></span>
-<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="st">"human"</span></span>
-<span><span class="va">workdir</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="va">workdir</span><span class="op">)</span></span>
-<span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fl">2023</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds"</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="va">read_rds</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>PrimaryCluster_bk <span class="op">=</span> <span class="va">PrimaryCluster</span>,</span>
-<span>                    PrimaryCluster <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
-<span>                      <span class="va">PrimaryCluster_bk</span> <span class="op">==</span> <span class="st">"new_cluster1"</span> <span class="op">~</span> <span class="st">"HRD"</span>,</span>
-<span>                      <span class="va">PrimaryCluster_bk</span> <span class="op">==</span> <span class="st">"IgD_like"</span> <span class="op">~</span> <span class="st">"IgD"</span>,</span>
-<span>                      <span class="cn">T</span> <span class="op">~</span> <span class="va">PrimaryCluster_bk</span></span>
-<span>                    <span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">jinlin_commpass_heatmap_only</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/jinlin_commpass_heatmap_only.rds"</span> <span class="op">%&gt;%</span> <span class="va">read_rds</span></span>
-<span><span class="co"># 这个东西反正应该是mm1199，可能要改一下</span></span>
-<span><span class="va">mm1199</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/mm1199.rds"</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">read_rds</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">convert_df_plot</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">cogene</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">mm1199</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">jinlin_commpass_heatmap_only</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">subdf</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
-<span>  sample_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mm1199</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="va">subdf</span><span class="op">$</span><span class="va">IRF4_mut</span> <span class="op">&lt;-</span> <span class="va">subdf</span><span class="op">$</span><span class="va">irf4_pos</span> <span class="op">==</span> <span class="fl">394972</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="va">config_fn</span> <span class="op">=</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/configs/colors.yaml"</span></span>
-<span><span class="va">config_list</span> <span class="op">&lt;-</span> <span class="fu">show_me_the_colors</span><span class="op">(</span><span class="va">config_fn</span>, <span class="st">"all"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">config_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"batch"</span>,<span class="st">"Clinical_IgH"</span>, <span class="st">"RNA_Subtype_Name"</span>,</span>
-<span>  <span class="st">"PrimaryCluster"</span>, <span class="st">"Tx_MAF"</span>,<span class="st">"Tx_MAFA"</span>,<span class="st">"Tx_MAFB"</span>,</span>
-<span>  <span class="st">"Tx_CCND1"</span>, <span class="st">"Tx_CCND2"</span>, <span class="st">"Tx_CCND3"</span>, <span class="st">"Tx_NSD2"</span></span>
-<span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">Dom_IgH_Type</span> <span class="op">&lt;-</span> <span class="va">col</span><span class="op">$</span><span class="va">Clinical_IgH</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">col</span><span class="op">$</span><span class="va">Dom_IgH_Type</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGHE"</span>, <span class="st">"IGHA"</span>, <span class="st">"IGHD"</span>, <span class="st">"IGHG"</span>, <span class="st">"IGHM"</span>, <span class="st">"others"</span><span class="op">)</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">PrimaryCluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">col</span><span class="op">$</span><span class="va">PrimaryCluster</span>, <span class="st">"IgD"</span> <span class="op">=</span> <span class="st">"#FF00FF"</span><span class="op">)</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">col</span><span class="op">$</span><span class="va">batch</span>, <span class="st">"EGAD00001007813"</span> <span class="op">=</span> <span class="st">"green"</span>, <span class="st">"angang"</span> <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">IRF4_mut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span> <span class="op">=</span> <span class="st">"#DC143C"</span> , <span class="st">"FALSE"</span> <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">subtypes</span> <span class="op">&lt;-</span> <span class="fu">jhuanglabRNAseq</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/jhuanglabRNAseq/man/inner_group_colors.html">inner_group_colors</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">col</span><span class="op">$</span><span class="va">subtypes</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">subdf</span><span class="op">$</span><span class="va">subtypes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">all_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Zhan_et_al_CD-1"</span>,<span class="st">"Zhan_et_al_CD-2"</span>,<span class="st">"Zhan_et_al_HP"</span>,<span class="st">"Zhan_et_al_LB"</span>,<span class="st">"Zhan_et_al_MF"</span>,</span>
-<span>  <span class="st">"Zhan_et_al_MS"</span>,<span class="st">"Zhan_et_al_PR"</span>,<span class="st">"Broyl_et_al_MF"</span>,<span class="st">"Broyl_et_al_CTA"</span>,<span class="st">"Broyl_et_al_CD2"</span>,</span>
-<span>  <span class="st">"Broyl_et_al_LB"</span>,<span class="st">"Broyl_et_al_Myeloid"</span>,<span class="st">"Broyl_et_al_CD1"</span>,<span class="st">"Broyl_et_al_MS"</span>,<span class="st">"Broyl_et_al_PR"</span>,</span>
-<span>  <span class="st">"Broyl_et_al_HP"</span>,<span class="st">"Broyl_et_al_NFKB"</span>,<span class="st">"Broyl_et_al_PRL3"</span>,<span class="st">"GEP70"</span>,<span class="st">"Sheri_et_al_MAF"</span>,</span>
-<span>  <span class="st">"Sheri_et_al_CD1"</span>,<span class="st">"Sheri_et_al_CD2a"</span>,<span class="st">"Sheri_et_al_CD2b"</span>,<span class="st">"Sheri_et_al_MS"</span>,</span>
-<span>  <span class="st">"Sheri_et_al_1q gain"</span>,<span class="st">"Sheri_et_al_PR"</span>,<span class="st">"Sheri_et_al_HRD, MYC, low NFkB"</span>,</span>
-<span>  <span class="st">"Sheri_et_al_Low purity"</span>,<span class="st">"Sheri_et_al_HRD, low TP53"</span>,<span class="st">"Sheri_et_al_HRD, ++15"</span>,</span>
-<span>  <span class="st">"Sheri_et_al_HRD, ++15, MYC"</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install any missing packages automatically -----------------------------</span></span>
+<span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"stringr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>,</span>
+<span>  <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"Seurat"</span>,</span>
+<span>  <span class="st">"paletteer"</span>, <span class="st">"cowplot"</span>, <span class="st">"ComplexHeatmap"</span>, <span class="st">"circlize"</span>, <span class="st">"plot1cell"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">all_cnvs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"chr1p_fish"</span>,  <span class="st">"chr1q_fish"</span>,</span>
-<span>  <span class="st">"chr3p_fish"</span>,<span class="st">"chr3q_fish"</span>,</span>
-<span>  <span class="st">"chr5p_fish"</span>,<span class="st">"chr5q_fish"</span>,</span>
-<span>  <span class="st">"chr7p_fish"</span>,<span class="st">"chr7q_fish"</span>,</span>
-<span>  <span class="st">"chr9p_fish"</span>,<span class="st">"chr9q_fish"</span>,</span>
-<span>  <span class="st">"chr11p_fish"</span>,<span class="st">"chr11q_fish"</span>,</span>
-<span>  <span class="st">"chr14q_fish"</span>,<span class="st">"chr13q_fish"</span>,</span>
-<span>  <span class="st">"chr15q_fish"</span>,</span>
-<span>  <span class="st">"chr17q_fish"</span>,</span>
-<span>  <span class="st">"chr19p_fish"</span>,<span class="st">"chr19q_fish"</span>,</span>
-<span>  <span class="st">"chr21_fish"</span>,<span class="st">"chr21q_fish"</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">all_scores</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">col</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">circlize</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/colorRamp2.html">colorRamp2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">subdf</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">0.5</span>,<span class="fl">0.9</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#1E90FF"</span>, <span class="st">"white"</span>, <span class="st">"#DC143C"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">all_cnvs</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">col</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"-1"</span><span class="op">=</span><span class="st">"#1E90FF"</span>, <span class="st">"0"</span><span class="op">=</span><span class="st">"white"</span>, <span class="st">"1"</span><span class="op">=</span><span class="st">"#DC143C"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
+<span><span class="va">to_install</span> <span class="op">&lt;-</span> <span class="va">pkgs</span><span class="op">[</span><span class="op">!</span><span class="va">pkgs</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>, <span class="st">"Package"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">to_install</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">to_install</span>, repos <span class="op">=</span> <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">out_dir</span> <span class="op">&lt;-</span> <span class="st">"./check_new_cluster_addsamples/ljp/fixed_samples"</span> <span class="op">%&gt;%</span> <span class="va">checkdir</span></span>
-<span><span class="va">all_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasets"</span>,</span>
-<span>             <span class="st">"Dom_IgH_Type"</span>, <span class="st">"Clinical_IgH"</span>,<span class="st">"subtypes"</span>, <span class="st">"PrimaryCluster"</span>,<span class="st">"RNA_Subtype_Name"</span>, <span class="st">"IRF4_mut"</span>,<span class="st">"GEP70"</span>,</span>
-<span>             <span class="st">"Tx_MAF"</span>,<span class="st">"Tx_MAFA"</span>,<span class="st">"Tx_MAFB"</span>, <span class="st">"Tx_CCND1"</span>, <span class="st">"Tx_CCND2"</span>, <span class="st">"Tx_CCND3"</span>, <span class="st">"Tx_NSD2"</span>,</span>
-<span>             <span class="va">all_cnvs</span>,</span>
-<span>             <span class="va">all_scores</span><span class="op">)</span></span>
-<span><span class="va">hasub2</span> <span class="op">&lt;-</span> <span class="fu">HeatmapAnnotation</span><span class="op">(</span>df <span class="op">=</span> <span class="va">subdf</span><span class="op">[</span>,<span class="va">all_col</span><span class="op">]</span> <span class="op">%&gt;%</span></span>
-<span>                              <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                            annotation_name_side <span class="op">=</span> <span class="st">"left"</span>,</span>
-<span>                            show_legend <span class="op">=</span> <span class="va">all_col</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasets"</span>, <span class="st">"Dom_IgH_Type"</span>,<span class="st">"subtypes"</span>,</span>
-<span>                                                         <span class="st">"Clinical_IgH"</span>, <span class="st">"PrimaryCluster"</span>,</span>
-<span>                                                         <span class="st">"RNA_Subtype_Name"</span><span class="op">)</span>,</span>
-<span>                            col <span class="op">=</span> <span class="va">col</span><span class="op">)</span></span>
-<span><span class="fu">quick_heatmap</span><span class="op">(</span><span class="va">mm1199</span><span class="op">[</span><span class="va">cogene</span>,<span class="va">subdf</span><span class="op">$</span><span class="va">sample_id</span><span class="op">]</span>, <span class="va">hasub2</span>, outdir <span class="op">=</span> <span class="va">out_dir</span>,</span>
-<span>              hdf <span class="op">=</span> <span class="va">subdf</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>,<span class="st">"cn_name"</span>,<span class="st">"PrimaryCluster"</span>,<span class="st">"RNA_Subtype_Name"</span>, <span class="st">"tumor_descriptor"</span>, <span class="st">"Tx_CCND1"</span>, <span class="st">"Tx_CCND2"</span>, <span class="st">"Tx_CCND3"</span><span class="op">)</span><span class="op">]</span> <span class="op">%&gt;%</span></span>
-<span>                <span class="fu">mutate</span><span class="op">(</span></span>
-<span>                  CCNDx <span class="op">=</span> <span class="va">Tx_CCND1</span><span class="op">|</span><span class="va">Tx_CCND2</span><span class="op">|</span><span class="va">Tx_CCND3</span>,</span>
-<span>                  cn_name <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
-<span>                    <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cn_name</span><span class="op">)</span> <span class="op">~</span> <span class="fu">str_extract</span><span class="op">(</span><span class="va">sample_id</span>, pattern <span class="op">=</span> <span class="st">"MMRF_\\d+|MM\\d+"</span><span class="op">)</span>,</span>
-<span>                    <span class="cn">T</span> <span class="op">~</span> <span class="va">cn_name</span></span>
-<span>                  <span class="op">)</span></span>
-<span>                <span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>                <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Tx_CCND1</span>, <span class="va">Tx_CCND2</span>, <span class="va">Tx_CCND3</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>              top_var_percent <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>              keep_annotation <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>              column_split <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>              height <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>              out_put_rds <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>              cluster_columns <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>              show_column_names<span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="co"># Load all packages quietly ---------------------------------------------</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pkgs</span>, <span class="va">library</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># objht &lt;- "/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds" |&gt;</span></span>
-<span><span class="co">#   read_rds</span></span>
-<span><span class="va">objht</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds"</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="va">read_rds</span></span>
-<span><span class="va">all_col</span> <span class="op">&lt;-</span> <span class="va">all_col</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">subdf2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>  sample_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">objht</span><span class="op">$</span><span class="va">heatmap2</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">subdf</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_col</span>, <span class="st">"sample_id"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">sample_id</span><span class="op">)</span></span>
-<span><span class="va">hasub2</span> <span class="op">&lt;-</span> <span class="fu">HeatmapAnnotation</span><span class="op">(</span>df <span class="op">=</span> <span class="va">subdf2</span> <span class="op">%&gt;%</span></span>
-<span>                              <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                            annotation_name_side <span class="op">=</span> <span class="st">"left"</span>,</span>
-<span>                            show_legend <span class="op">=</span> <span class="va">all_col</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasets"</span>, <span class="st">"Dom_IgH_Type"</span>,<span class="st">"subtypes"</span>,</span>
-<span>                                                         <span class="st">"Clinical_IgH"</span>, <span class="st">"PrimaryCluster"</span>,</span>
-<span>                                                         <span class="st">"RNA_Subtype_Name"</span><span class="op">)</span>,</span>
-<span>                            col <span class="op">=</span> <span class="va">col</span><span class="op">)</span></span>
-<span><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">Heatmap</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">objht</span><span class="op">$</span><span class="va">heatmap2</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>              show_column_names <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>              show_row_names <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>              top_annotation <span class="op">=</span> <span class="va">hasub2</span>,</span>
-<span>              border <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>              column_gap <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
-<span>              clustering_method_columns <span class="op">=</span> <span class="st">"ward.D2"</span>,</span>
-<span>              clustering_method_rows <span class="op">=</span> <span class="st">"ward.D2"</span>,</span>
-<span>              column_split <span class="op">=</span> <span class="va">subdf2</span><span class="op">$</span><span class="va">subtypes</span><span class="op">)</span></span>
+<span><span class="va">project</span>  <span class="op">&lt;-</span> <span class="st">"collabrators"</span></span>
+<span><span class="va">dataset</span>  <span class="op">&lt;-</span> <span class="st">"wangwenjie"</span></span>
+<span><span class="va">species</span>  <span class="op">&lt;-</span> <span class="st">"mouse"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/split_subtypes.pdf"</span>,</span>
-<span>    width <span class="op">=</span> <span class="fl">20</span>, height <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu">draw</span><span class="op">(</span><span class="va">ht</span>, annotation_legend_side <span class="op">=</span> <span class="st">"left"</span>,</span>
-<span>     heatmap_legend_side <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">workdir</span>  <span class="op">&lt;-</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"~/projects/{project}/analysis/{dataset}/{species}/figures/fig1"</span><span class="op">)</span></span>
+<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html">dir_create</a></span><span class="op">(</span><span class="va">workdir</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="va">workdir</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">yaml_fn</span>  <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/code/wangwenjie/mouse/figures/configs.yaml"</span></span>
+<span></span>
+<span><span class="co"># Retrieve colour palettes from YAML -------------------------------------</span></span>
+<span><span class="va">cols_tissue</span> <span class="op">&lt;-</span> <span class="fu">jhtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jhtools/man/single_cell_colors.html">show_me_the_colors</a></span><span class="op">(</span>config_fn <span class="op">=</span> <span class="va">yaml_fn</span>, <span class="st">"tissue"</span><span class="op">)</span></span>
+<span><span class="va">stg_cols</span>    <span class="op">&lt;-</span> <span class="fu">jhtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jhtools/man/single_cell_colors.html">show_me_the_colors</a></span><span class="op">(</span>config_fn <span class="op">=</span> <span class="va">yaml_fn</span>, <span class="st">"stage"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Shared ggplot theme -----------------------------------------------------</span></span>
+<span><span class="va">my_theme1</span> <span class="op">&lt;-</span> <span class="fu">theme_classic</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span></span>
+<span>    legend.key.size <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    axis.text       <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>    axis.ticks      <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>    plot.title      <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-</section><section id="transcriptomic-similarities-of-mm-samples-used-in-this-study" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="transcriptomic-similarities-of-mm-samples-used-in-this-study">
-<span class="header-section-number">7.1.2</span> Transcriptomic similarities of MM samples used in this study</h3>
-<p>code:</p>
+</section></section><section id="figure-1b-mouse-tissue-atlas-visium" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="figure-1b-mouse-tissue-atlas-visium">
+<span class="header-section-number">7.2</span> Figure 1B – Mouse tissue atlas (VISIUM)</h2>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>,</span>
-<span>          <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>, <span class="st">"GSVA"</span>,</span>
-<span>          <span class="st">"limma"</span>, <span class="st">"circlize"</span>, <span class="st">"ComplexHeatmap"</span>, <span class="st">"jhuanglabRNAseq"</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">pkg</span> <span class="kw">in</span> <span class="va">pkgs</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pkg</span>, character.only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">project</span> <span class="op">&lt;-</span> <span class="st">"mm"</span></span>
-<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="st">"meta"</span></span>
-<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="st">"human"</span></span>
-<span><span class="va">workdir</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="va">workdir</span><span class="op">)</span></span>
-<span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fl">2023</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn1</span>   <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_obj_lst.rds"</span></span>
+<span><span class="va">mmu_visium</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn1</span><span class="op">)</span></span>
+<span><span class="va">samples_mmu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"E95"</span>, <span class="st">"E115"</span>, <span class="st">"E135"</span><span class="op">)</span></span>
+<span><span class="co"># Generate each spatial panel and save individual PDFs -------------------</span></span>
+<span><span class="va">plst1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples_mmu</span>, \<span class="op">(</span><span class="va">samp</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">obj1</span> <span class="op">&lt;-</span> <span class="va">mmu_visium</span><span class="op">[[</span><span class="va">samp</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
-<span><span class="va">tmp_out_dir</span> <span class="op">&lt;-</span> <span class="st">"./MMyeloMap/inst/extdata/tmp"</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">fig_out_dir</span> <span class="op">&lt;-</span> <span class="st">"./MMyeloMap/inst/extdata/figs"</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">gene_sets_out_dir</span> <span class="op">&lt;-</span> <span class="st">"./MMyeloMap/inst/extdata/gene_sets"</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">test_data_out_dir</span> <span class="op">&lt;-</span> <span class="st">"./MMyeloMap/inst/extdata/test_data"</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># ------------------ color ----------------------------------</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds"</span> <span class="op">|&gt;</span> <span class="fu">read_rds</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">color_plate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">'1q_gain'</span> <span class="op">=</span> <span class="st">"#7713a0"</span>, <span class="st">"CD_no_IgH"</span> <span class="op">=</span> <span class="st">"#09e409"</span>, <span class="st">"CD1"</span> <span class="op">=</span> <span class="st">"#129a71"</span>, <span class="st">"CD2"</span> <span class="op">=</span> <span class="st">"#035e03"</span>,</span>
-<span>  <span class="st">"HRD"</span> <span class="op">=</span> <span class="st">"#0e06ee"</span>, <span class="st">"HRD_1q_gain"</span> <span class="op">=</span> <span class="st">"#1E90FF"</span>, <span class="st">"HRD_chr11"</span> <span class="op">=</span> <span class="st">"#5653a5"</span>, <span class="st">"IgD"</span>  <span class="op">=</span> <span class="st">"#FF00FF"</span>,</span>
-<span>  <span class="st">"Low_purity"</span> <span class="op">=</span> <span class="st">"grey60"</span>, <span class="st">"MAF"</span> <span class="op">=</span> <span class="st">"pink"</span>, <span class="st">"MS"</span> <span class="op">=</span> <span class="st">"#ebb415"</span>, <span class="st">"PR"</span> <span class="op">=</span> <span class="st">"#8d0a4f"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu">write_rds</span><span class="op">(</span><span class="va">color_plate</span>, file <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"{fig_out_dir}/color_plate.rds"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># ------------------------ UMAP -----------------------------------------</span></span>
-<span><span class="va">hvg</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx</a></span><span class="op">(</span><span class="st">"/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/sampleinfo_0.95.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/ztao_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/ljp/fixed_samples/heatmap_0.95_groups5.rds"</span> <span class="op">|&gt;</span> <span class="fu">read_rds</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># UMAP</span></span>
-<span><span class="va">umapobj</span> <span class="op">&lt;-</span> <span class="fu">uwot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/uwot/man/umap.html">umap</a></span><span class="op">(</span><span class="va">obj</span><span class="op">$</span><span class="va">heatmap2</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"{tmp_out_dir}/umap.pdf"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">umapobj</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">rownames_to_column</span><span class="op">(</span>var <span class="op">=</span> <span class="st">"sample_id"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"subtypes"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">V1</span>, y <span class="op">=</span> <span class="va">V2</span>, color <span class="op">=</span> <span class="va">subtypes</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">color_plate</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>plot:</p>
-</section><section id="dominant-ig-subtypes-of-the-refined-groups" class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="dominant-ig-subtypes-of-the-refined-groups">
-<span class="header-section-number">7.1.3</span> Dominant Ig subtypes of the refined groups</h3>
-<p>code:</p>
-<div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fs"</span>, <span class="st">"futile.logger"</span>, <span class="st">"configr"</span>, <span class="st">"ggpubr"</span>, <span class="st">"ggthemes"</span>,</span>
-<span>          <span class="st">"jhtools"</span>, <span class="st">"glue"</span>, <span class="st">"ggsci"</span>, <span class="st">"patchwork"</span>, <span class="st">"tidyverse"</span>,</span>
-<span>          <span class="st">"circlize"</span>, <span class="st">"ComplexHeatmap"</span>, <span class="st">"GenomicRanges"</span>,</span>
-<span>          <span class="st">"jhuanglabRNAseq"</span>, <span class="st">"ggh4x"</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">pkg</span> <span class="kw">in</span> <span class="va">pkgs</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pkg</span>, character.only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">project</span> <span class="op">&lt;-</span> <span class="st">"mm"</span></span>
-<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="st">"meta"</span></span>
-<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="st">"human"</span></span>
-<span><span class="va">workdir</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"~/projects/{project}/analysis/{dataset}/{species}/figures/heatmap"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">checkdir</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="va">workdir</span><span class="op">)</span></span>
-<span><span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fl">2023</span></span>
-<span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds"</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="va">read_rds</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">irf4_pos</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span></span>
-<span>    <span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">irf4_pos</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>      <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>      <span class="fu">summarise</span><span class="op">(</span>irf4_pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">irf4_pos</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co"># ==============================================================================</span></span>
-<span><span class="va">commpass_human_counts</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/exp/tables/commpass_human_counts.csv"</span><span class="op">%&gt;%</span></span>
-<span>  <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">commpass_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">commpass_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">commpass_human_counts</span><span class="op">$</span><span class="va">gene_id</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">commpass_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">jilin_human_counts</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/exp/tables/jilin_human_counts.csv"</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">read_csv</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">jilin_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">jilin_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">jilin_human_counts</span><span class="op">$</span><span class="va">gene_id</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">jilin_human_counts</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">depth_rna</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
-<span>  sample_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">commpass_human_counts</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">jilin_human_counts</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">commpass_human_counts</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">jilin_human_counts</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co"># ==============================================================================</span></span>
-<span><span class="va">allfiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGH.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGH.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGK.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGK.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGL.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/immune/mixcr/"</span>, pattern <span class="op">=</span> <span class="st">".clones_IGL.tsv"</span>, full.names <span class="op">=</span> <span class="cn">T</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">alldfes</span> <span class="op">&lt;-</span> <span class="fu">read_tsv</span><span class="op">(</span><span class="va">allfiles</span>, id <span class="op">=</span> <span class="st">"pth"</span><span class="op">)</span></span>
-<span><span class="va">alldfes</span><span class="op">$</span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html">basename</a></span><span class="op">(</span><span class="va">alldfes</span><span class="op">$</span><span class="va">pth</span><span class="op">)</span></span>
-<span><span class="va">alldfes</span> <span class="op">&lt;-</span> <span class="va">alldfes</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html">separate_wider_delim</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">pth</span>, delim <span class="op">=</span> <span class="st">"."</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"clone"</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>clone <span class="op">=</span> <span class="fu">str_remove</span><span class="op">(</span><span class="va">clone</span>, pattern <span class="op">=</span> <span class="st">'clones_'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">depth_rna</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>relate_clone_number <span class="op">=</span> <span class="va">readCount</span><span class="op">/</span><span class="va">depth</span> <span class="op">*</span> <span class="fl">10</span><span class="op">^</span><span class="fl">7</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">allCHitsWithScore_list</span> <span class="op">&lt;-</span> <span class="fu">str_extract_all</span><span class="op">(</span><span class="va">alldfes</span><span class="op">$</span><span class="va">allCHitsWithScore</span>, pattern <span class="op">=</span> <span class="st">"IG.+?(?=\\*)"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">allCHitsWithScore_list</span> <span class="op">&lt;-</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/mclapply.html">mclapply</a></span><span class="op">(</span><span class="va">allCHitsWithScore_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu">str_remove</span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\d$"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGHGP"</span>, <span class="st">"IGHEP"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="op">}</span>, mc.cores <span class="op">=</span> <span class="fl">10L</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">alldfes</span><span class="op">$</span><span class="va">raw_igtype</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">allCHitsWithScore_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">x</span> <span class="op">%&gt;%</span> <span class="va">sort</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">alldfes</span><span class="op">$</span><span class="va">raw_igtype</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">alldfes</span><span class="op">$</span><span class="va">igtype</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">allCHitsWithScore_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"others"</span><span class="op">)</span></span>
-<span>  <span class="op">}</span><span class="kw">else</span> <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"others"</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="st">"others"</span><span class="op">)</span></span>
+<span>  <span class="co"># Dynamic sizing per sample</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">samp</span> <span class="op">==</span> <span class="st">"E95"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">1.6</span>;  <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">samp</span> <span class="op">==</span> <span class="st">"E115"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">1.1</span>;  <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">4</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
 <span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">2.0</span>;  <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">6</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">SpatialDimPlot</span><span class="op">(</span><span class="va">obj1</span>,</span>
+<span>                      pt.size.factor <span class="op">=</span> <span class="va">scale_fct</span>,</span>
+<span>                      image.alpha    <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                      group.by       <span class="op">=</span> <span class="st">"tissuetype"</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>       <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols_tissue</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>       <span class="va">my_theme1</span> <span class="op">&amp;</span> <span class="fu">NoAxes</span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">ggsave</span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"fig1b_mouse_tissuetype_spatial_{samp}.pdf"</span><span class="op">)</span>, <span class="va">p</span>,</span>
+<span>         width <span class="op">=</span> <span class="va">plot_width</span>, height <span class="op">=</span> <span class="va">plot_height</span><span class="op">)</span></span>
+<span>  <span class="va">p</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">samples_mmu</span><span class="op">)</span></span>
 <span></span>
 <span></span>
+<span><span class="co"># Build universal legend -------------------------------------------------</span></span>
+<span><span class="va">tbl1</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples_mmu</span>, \<span class="op">(</span><span class="va">samp</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">tibble</span><span class="op">(</span>tissuetype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">mmu_visium</span><span class="op">[[</span><span class="va">samp</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tissuetype</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pt1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tbl1</span>, <span class="fu">aes</span><span class="op">(</span><span class="fl">1</span>, <span class="va">tissuetype</span>, color <span class="op">=</span> <span class="va">tissuetype</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols_tissue</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="va">my_theme1</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">legend</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/get_legend.html">get_legend</a></span><span class="op">(</span><span class="va">pt1</span><span class="op">)</span></span>
+<span><span class="va">plst1</span><span class="op">[[</span><span class="st">"legend"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">legend</span>, <span class="cn">NULL</span>,</span>
+<span>                                        ncol <span class="op">=</span> <span class="fl">3</span>, rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"fig1b_legend_mouse_tissuetype_spatial.pdf"</span>, <span class="va">plst1</span><span class="op">[[</span><span class="st">"legend"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>       width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Assemble final panel ----------------------------------------------------</span></span>
+<span><span class="va">fig1b_mouse</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plst1</span>, nrow <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                                  rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">1</span>, <span class="fl">1.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"fig1b_mouse_tissuetype.pdf"</span>, <span class="va">fig1b_mouse</span>,</span>
+<span>       width <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">8</span>, <span class="st">"cm"</span><span class="op">)</span>, height <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="figure-1c-human-tissue-atlas-visium" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="figure-1c-human-tissue-atlas-visium">
+<span class="header-section-number">7.3</span> Figure 1C – Human tissue atlas (VISIUM)</h2>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">samples_hsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yao1"</span>, <span class="st">"yao2"</span>, <span class="st">"yao5"</span><span class="op">)</span></span>
+<span><span class="va">rds_fn2</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/hsa_visium_obj_lst.rds"</span></span>
+<span><span class="va">hsa_visium</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plst1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples_hsa</span>, \<span class="op">(</span><span class="va">samp</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">obj1</span> <span class="op">&lt;-</span> <span class="va">hsa_visium</span><span class="op">[[</span><span class="va">samp</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">samp</span> <span class="op">==</span> <span class="st">"yao1"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">1.8</span>; <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">samp</span> <span class="op">==</span> <span class="st">"yao2"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">1.3</span>; <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">4</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="va">scale_fct</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>; <span class="va">plot_width</span> <span class="op">&lt;-</span> <span class="fl">6</span>; <span class="va">plot_height</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">SpatialDimPlot</span><span class="op">(</span><span class="va">obj1</span>,</span>
+<span>                      pt.size.factor <span class="op">=</span> <span class="va">scale_fct</span>,</span>
+<span>                      image.alpha    <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                      group.by       <span class="op">=</span> <span class="st">"tissue"</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>       <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols_tissue</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>       <span class="va">my_theme1</span> <span class="op">&amp;</span> <span class="fu">NoAxes</span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">NoLegend</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">ggsave</span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"fig1c_human_tissue_spatial_{samp}.pdf"</span><span class="op">)</span>, <span class="va">p</span>,</span>
+<span>         width <span class="op">=</span> <span class="va">plot_width</span>, height <span class="op">=</span> <span class="va">plot_height</span><span class="op">)</span></span>
+<span>  <span class="va">p</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">samples_hsa</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">samples_hsa</span>, \<span class="op">(</span><span class="va">samp</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">tibble</span><span class="op">(</span>tissue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">hsa_visium</span><span class="op">[[</span><span class="va">samp</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tissue</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pt1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">tbl1</span>, <span class="fu">aes</span><span class="op">(</span><span class="fl">1</span>, <span class="va">tissue</span>, color <span class="op">=</span> <span class="va">tissue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cols_tissue</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="va">my_theme1</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">legend</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/get_legend.html">get_legend</a></span><span class="op">(</span><span class="va">pt1</span><span class="op">)</span></span>
+<span><span class="va">plst1</span><span class="op">[[</span><span class="st">"legend"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="cn">NULL</span>, <span class="va">legend</span>, <span class="cn">NULL</span>,</span>
+<span>                                        ncol <span class="op">=</span> <span class="fl">3</span>, rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"fig1c_legend_human_tissue_spatial.pdf"</span>, <span class="va">plst1</span><span class="op">[[</span><span class="st">"legend"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>       width <span class="op">=</span> <span class="fl">2</span>, height <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/meta/human/rnaseq/exp/20250523/jinlin_commpass_se.rds"</span> <span class="op">%&gt;%</span> <span class="va">read_rds</span></span>
-<span><span class="va">igtype_color</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">$</span><span class="va">Clinical_IgH</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">igtype_color</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGHE"</span>, <span class="st">"IGHA"</span>, <span class="st">"IGHD"</span>, <span class="st">"IGHG"</span>, <span class="st">"IGHM"</span>, <span class="st">"others"</span><span class="op">)</span></span>
-<span><span class="va">igtype_color</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"grey60"</span></span>
-<span><span class="va">igltype_color</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">$</span><span class="va">Clinical_IgL</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">igltype_color</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGKC"</span>, <span class="st">"IGLC"</span>, <span class="st">"xx"</span>, <span class="st">"others"</span><span class="op">)</span></span>
-<span><span class="co"># ==============================================================================</span></span>
+<span><span class="va">fig1c_human</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">plst1</span>, nrow <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                                  rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.6</span>, <span class="fl">1</span>, <span class="fl">1.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"fig1c_human_tissue.pdf"</span>, <span class="va">fig1c_human</span>,</span>
+<span>       width <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">8</span>, <span class="st">"cm"</span><span class="op">)</span>, height <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">3</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="figure-1d-plot1cell-circle-plots" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="figure-1d-plot1cell-circle-plots">
+<span class="header-section-number">7.4</span> Figure 1D – plot1cell circle plots</h2>
+<p>Mouse – all genes</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn4</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_merged_obj.rds"</span></span>
+<span><span class="va">visium_mmu_mrg</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn4</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">igtype_number</span> <span class="op">&lt;-</span> <span class="va">alldfes</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span>, <span class="va">igtype</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>relate_clone_number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">relate_clone_number</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sample_id</span> <span class="op">!=</span> <span class="st">"GC8J2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>id_cols <span class="op">=</span> <span class="va">sample_id</span>, names_from <span class="op">=</span> <span class="va">igtype</span>, values_from <span class="op">=</span> <span class="va">relate_clone_number</span><span class="op">)</span></span>
-<span><span class="va">igtype_number</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">igtype_number</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">visium_mmu_mrg</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissuetype</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">lgd_squre</span>  <span class="op">&lt;-</span> <span class="fu">Legend</span><span class="op">(</span>at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stg_cols</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"grid"</span>,</span>
+<span>                     legend_gp <span class="op">=</span> <span class="fu">gpar</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">stg_cols</span><span class="op">)</span>,</span>
+<span>                     title_position <span class="op">=</span> <span class="st">"topleft"</span>, title <span class="op">=</span> <span class="st">"stage"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">S_IGH</span> <span class="op">&lt;-</span> <span class="va">alldfes</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sample_id</span> <span class="op">!=</span> <span class="st">"GC8J2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">clone</span> <span class="op">==</span> <span class="st">"IGH"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>relate_clone_number_pct <span class="op">=</span> <span class="va">relate_clone_number</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">relate_clone_number</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>S_IGH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">relate_clone_number_pct</span><span class="op">)</span> <span class="op">*</span> <span class="va">relate_clone_number_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">S_IGL</span> <span class="op">&lt;-</span> <span class="va">alldfes</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sample_id</span> <span class="op">!=</span> <span class="st">"GC8J2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">clone</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGK"</span>, <span class="st">"IGL"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>relate_clone_number_pct <span class="op">=</span> <span class="va">relate_clone_number</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">relate_clone_number</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>S_IGL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">relate_clone_number_pct</span><span class="op">)</span> <span class="op">*</span> <span class="va">relate_clone_number_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">Ex_IGH</span> <span class="op">&lt;-</span> <span class="va">alldfes</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sample_id</span> <span class="op">!=</span> <span class="st">"GC8J2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">clone</span> <span class="op">==</span> <span class="st">"IGH"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>relate_clone_number_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">relate_clone_number</span><span class="op">)</span>,</span>
-<span>         Ex_IGH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">relate_clone_number</span> <span class="op">/</span> <span class="va">relate_clone_number_median</span><span class="op">)</span>,</span>
-<span>         rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"TheIGH_"</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">-</span><span class="va">Ex_IGH</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">slice_max</span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">Ex_IGH</span>, n <span class="op">=</span> <span class="fl">3</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>id_cols <span class="op">=</span> <span class="va">sample_id</span>, names_from <span class="op">=</span> <span class="va">rank</span>, values_from <span class="op">=</span> <span class="va">Ex_IGH</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">Ex_IGL</span> <span class="op">&lt;-</span> <span class="va">alldfes</span>  <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sample_id</span> <span class="op">!=</span> <span class="st">"GC8J2"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">clone</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IGK"</span>, <span class="st">"IGL"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>relate_clone_number_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">relate_clone_number</span><span class="op">)</span>,</span>
-<span>         Ex_IGL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">relate_clone_number</span> <span class="op">/</span> <span class="va">relate_clone_number_median</span><span class="op">)</span>,</span>
-<span>         rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"TheIGL_"</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">-</span> <span class="va">Ex_IGL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">slice_max</span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">Ex_IGL</span>, n <span class="op">=</span> <span class="fl">3</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span><span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>id_cols <span class="op">=</span> <span class="va">sample_id</span>, names_from <span class="op">=</span> <span class="va">rank</span>, values_from <span class="op">=</span> <span class="va">Ex_IGL</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="va">config_fn</span> <span class="op">=</span> <span class="st">"/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/configs/colors.yaml"</span></span>
-<span><span class="va">config_list</span> <span class="op">&lt;-</span> <span class="fu">show_me_the_colors</span><span class="op">(</span><span class="va">config_fn</span>, <span class="st">"all"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">htobj</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"./paper_check_ht/heatmap/heatmap_0.95_groups29.rds"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">htvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">htobj</span><span class="op">$</span><span class="va">complexheatmap</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">primarysamples</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">PrimaryCluster</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">arrange</span><span class="op">(</span><span class="va">cluster_order</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">sample_id</span><span class="op">)</span></span>
-<span><span class="va">dfwen</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_id"</span>, <span class="st">"RNA_Subtype_Name"</span>,<span class="st">"PrimaryCluster"</span>, <span class="st">"detal_20250512"</span>, <span class="st">"init_subcluster"</span>, <span class="st">"batch"</span><span class="op">)</span><span class="op">]</span></span>
-<span></span>
-<span></span>
-<span><span class="va">primarysamples_modelsup_annodf</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>sample_id <span class="op">=</span> <span class="va">primarysamples</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">dfwen</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">igtype_number</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">S_IGH</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">S_IGL</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">Ex_IGH</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">Ex_IGL</span><span class="op">)</span></span>
-<span><span class="va">used_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">primarysamples_modelsup_annodf</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="va">col</span> <span class="op">&lt;-</span> <span class="va">config_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PrimaryCluster"</span>, <span class="st">"RNA_Subtype_Name"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">PrimaryCluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">col</span><span class="op">$</span><span class="va">PrimaryCluster</span>, <span class="st">"IgD_like"</span> <span class="op">=</span> <span class="st">"#FF00FF"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">init_subcluster_color</span> <span class="op">&lt;-</span> <span class="fu">jhuanglabRNAseq</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/jhuanglabRNAseq/man/inner_group_colors.html">inner_group_colors</a></span><span class="op">(</span><span class="fl">29</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">init_subcluster_color</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">init_subcluster</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">unique</span></span>
-<span><span class="va">detal_20250512_color</span> <span class="op">&lt;-</span> <span class="fu">jhuanglabRNAseq</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/jhuanglabRNAseq/man/inner_group_colors.html">inner_group_colors</a></span><span class="op">(</span><span class="fl">22</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">detal_20250512_color</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">detal_20250512</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">unique</span></span>
-<span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">init_subcluster</span> <span class="op">&lt;-</span> <span class="va">init_subcluster_color</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">detal_20250512</span> <span class="op">&lt;-</span> <span class="va">detal_20250512_color</span></span>
-<span><span class="va">col</span><span class="op">$</span><span class="va">batch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"jilin"</span> <span class="op">=</span> <span class="st">"#DC143C"</span>, <span class="st">"commpass"</span> <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">used_cols</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">col</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">circlize</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/circlize/man/colorRamp2.html">colorRamp2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">primarysamples_modelsup_annodf</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                                                     <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.5</span>,<span class="fl">0.99</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                   colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#1E90FF"</span>, <span class="st">"white"</span>, <span class="st">"#DC143C"</span> <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span></span>
-<span><span class="va">ha_commpassbasesample_modelsup_annodf</span> <span class="op">&lt;-</span> <span class="fu">HeatmapAnnotation</span><span class="op">(</span>df <span class="op">=</span> <span class="va">primarysamples_modelsup_annodf</span><span class="op">[</span><span class="va">used_cols</span><span class="op">]</span>,</span>
-<span>                                                           col <span class="op">=</span> <span class="va">col</span>,border <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>                                                           show_legend <span class="op">=</span> <span class="va">used_cols</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"RNA_Subtype_Name"</span>,<span class="st">"PrimaryCluster"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">commpassbasesampleht</span> <span class="op">&lt;-</span> <span class="va">htvalue</span><span class="op">[</span>, <span class="va">primarysamples</span><span class="op">]</span></span>
-<span></span>
-<span><span class="va">order_tb</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
-<span>  detal_20250512 <span class="op">=</span> <span class="va">primarysamples_modelsup_annodf</span><span class="op">$</span><span class="va">detal_20250512</span>,</span>
-<span>  cod <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">primarysamples_modelsup_annodf</span><span class="op">$</span><span class="va">detal_20250512</span>,</span>
-<span>               levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">primarysamples_modelsup_annodf</span><span class="op">$</span><span class="va">detal_20250512</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">ht</span> <span class="op">&lt;-</span> <span class="fu">Heatmap</span><span class="op">(</span><span class="va">commpassbasesampleht</span>,</span>
-<span>              show_row_names <span class="op">=</span> <span class="cn">F</span>, show_column_names <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>              use_raster <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>              show_heatmap_legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>              row_names_max_width <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">20</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
-<span>              column_split <span class="op">=</span> <span class="va">order_tb</span><span class="op">$</span><span class="va">cod</span>,</span>
-<span>              column_title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">order_tb</span><span class="op">$</span><span class="va">detal_20250512</span><span class="op">)</span>,</span>
-<span>              cluster_rows <span class="op">=</span> <span class="cn">F</span>, cluster_columns <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>              column_title_rot <span class="op">=</span> <span class="fl">90</span>,</span>
-<span>              border <span class="op">=</span> <span class="cn">T</span>,column_gap <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mm"</span><span class="op">)</span>, row_gap <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
-<span>              top_annotation <span class="op">=</span> <span class="va">ha_commpassbasesample_modelsup_annodf</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="fu">glue</span><span class="op">(</span><span class="st">"{mixcr_figs}/detal_20250512_ht.pdf"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">20</span>, height <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu">draw</span><span class="op">(</span><span class="va">ht</span>, annotation_legend_side <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1d_mouse_plot1cell_all_genes.pdf"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              kde2d.n <span class="op">=</span> <span class="fl">200</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>,</span>
+<span>          colors <span class="op">=</span> <span class="va">stg_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stg_cols</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">40</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">12</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="images/mixcr_lgh_temp.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="figure temp 1d."><img src="images/mixcr_lgh_temp.png" class="align-center img-fluid figure-img" data-fig-cap="Figure: overall cnv" alt="figure temp 1d" width="600"></a></p>
-<figcaption>figure temp 1d.</figcaption></figure>
+</section><section id="mouse-metabolic-genes" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="mouse-metabolic-genes">
+<span class="header-section-number">7.5</span> Mouse – metabolic genes</h2>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn5</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_mtb_gene_merged_obj.rds"</span></span>
+<span><span class="va">seu_new3_mrg</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">seu_new3_mrg</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissuetype</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1d_mouse_plot1cell_mtb_genes.pdf"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              kde2d.n <span class="op">=</span> <span class="fl">200</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>, colors <span class="op">=</span> <span class="va">stg_cols</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">40</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">12</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="mouse-mz-data" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="mouse-mz-data">
+<span class="header-section-number">7.6</span> Mouse – M/Z data</h2>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn2</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mouse_mz_obj_merged.rds"</span></span>
+<span><span class="va">mz_obj_mrg</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">mz_obj_mrg</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissuetype</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1c_plot1cell_all_mz_mrg.pdf"</span>, width <span class="op">=</span> <span class="fl">5.5</span>, height <span class="op">=</span> <span class="fl">5.5</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              contour.nlevels <span class="op">=</span> <span class="fl">100</span>, kde2d.n <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>              repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>,</span>
+<span>          colors <span class="op">=</span> <span class="va">stg_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">stage</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">8</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="human-all-genes" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="human-all-genes">
+<span class="header-section-number">7.7</span> Human – all genes</h2>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn6</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/human_visium_obj_merged.rds"</span></span>
+<span><span class="va">seu_new2_mrg</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn6</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">seu_new2_mrg</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissue</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1d_human_plot1cell_all_genes.pdf"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              kde2d.n <span class="op">=</span> <span class="fl">200</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>,</span>
+<span>          colors <span class="op">=</span> <span class="va">stg_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stg_cols</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">40</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">12</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="human-metabolic-genes" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="human-metabolic-genes">
+<span class="header-section-number">7.8</span> Human – metabolic genes</h2>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn8</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/hsa_visium_mtb_gene_merged_obj.rds"</span></span>
+<span><span class="va">seu_new3_mrg</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">seu_new3_mrg</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissue</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1d_human_plot1cell_mtb_genes_merged.pdf"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              kde2d.n <span class="op">=</span> <span class="fl">200</span>, repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>,</span>
+<span>          colors <span class="op">=</span> <span class="va">stg_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stg_cols</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">40</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">12</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="human-mz-data" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="human-mz-data">
+<span class="header-section-number">7.9</span> Human – M/Z data</h2>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rds_fn4</span> <span class="op">&lt;-</span> <span class="st">"/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/human_mz_obj_merged.rds"</span></span>
+<span><span class="va">seu_mrg2</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="va">rds_fn4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">circ_dat</span>   <span class="op">&lt;-</span> <span class="fu">prepare_circlize_data</span><span class="op">(</span><span class="va">seu_mrg2</span>, scale <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">clust_cols</span> <span class="op">&lt;-</span> <span class="va">cols_tissue</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">tissue</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/pdf.html">pdf</a></span><span class="op">(</span><span class="st">"fig1d_human_plot1cell_all_mz_mrg.pdf"</span>, width <span class="op">=</span> <span class="fl">5.5</span>, height <span class="op">=</span> <span class="fl">5.5</span><span class="op">)</span></span>
+<span><span class="fu">plot_circlize</span><span class="op">(</span><span class="va">circ_dat</span>, do.label <span class="op">=</span> <span class="cn">TRUE</span>, pt.size <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>              col.use <span class="op">=</span> <span class="va">clust_cols</span>, bg.color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>              contour.nlevels <span class="op">=</span> <span class="fl">100</span>, kde2d.n <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>              repel <span class="op">=</span> <span class="cn">TRUE</span>, label.cex <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="fu">add_track</span><span class="op">(</span><span class="va">circ_dat</span>, group <span class="op">=</span> <span class="st">"stage"</span>,</span>
+<span>          colors <span class="op">=</span> <span class="va">stg_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">circ_dat</span><span class="op">$</span><span class="va">stage</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, track_num <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">draw</span><span class="op">(</span><span class="va">lgd_squre</span>, x <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">25</span>, <span class="st">"mm"</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">8</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>     just <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"right"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">figure temp 1d.</span>
-</div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1156,8 +1021,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./mmyelomap.html" class="pagination-link" aria-label="The Mmyelomap R package">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Mmyelomap R package</span></span>
+      <a href="./mmyelomap.html" class="pagination-link" aria-label="The Mmyelomap">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Mmyelomap</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1178,31 +1043,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
-    }
-  });
-
-};
-          </script>
+</footer>
 
 
 </body></html>
