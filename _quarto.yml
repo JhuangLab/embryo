@@ -1,0 +1,135 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Multiple Myeloma"
+  reader-mode: true
+
+  page-footer:
+    left: |
+      Build by Jhuanglab
+  cover-image: cover.jpg
+  favicon: cover.jpg
+  site-url: https://github.com/jinyancool/
+  repo-url: https://github.com/jinyancool/
+  repo-branch: main
+  repo-actions: [issue]
+  chapters:
+
+    - href: index.qmd
+      text: Preface
+
+    - href: welcome.qmd
+      text: Welcome
+    - href: intro.qmd
+      text: Introduction
+
+    - part: Data Collection
+      chapters:
+        - href: jilin.qmd
+          text: Jilin dataset
+        - href: commpass.qmd
+          text: CoMMpass dataset
+        - href: ngdc.qmd
+          text: Data from NGDC
+        - href: ega.qmd
+          text: Data from EGA
+        - href: geo.qmd
+          text: Data from GEO
+        - href: ddbj.qmd
+          text: Data from DDBJ
+
+    - part: Data Preprocessing
+      chapters:
+        - href: qc.qmd
+          text: Quality Control
+        - href: batchrnaseq.qmd
+          text: Batch RNAseq
+        - href: batchscrnaseq.qmd
+          text: Batch SingleCell
+        - href: clustering.qmd
+          text: Clustering
+    - part: Unsupervised cluster
+      chapters:
+
+        - href: subtypes.qmd
+          text: Subtypes
+        - href: reduce_dim.qmd
+          text: Reduce Dim
+        - href: cnv_subtypes.qmd
+          text: CNV in Subtypes
+        - href: ssgsea.qmd
+          text: ssGSEA
+        - href: gep70.qmd
+          text: GEP70
+        - href: igd.qmd
+          text: New Subtypes
+        - href: subtypes_concordance.qmd
+          text: Concordance
+
+    - part: Analysis
+      chapters:
+
+        - href: clinical_info.qmd
+          text: Clinical features
+        - href: deg.qmd
+          text: DEGs
+        - href: cnv.qmd
+          text: CNVs
+        - href: snvs.qmd
+          text: SNVs
+        - href: cmap.qmd
+          text: CMap
+        - href: rmats.qmd
+          text: rMATS
+        - href: ethnicity_groups.qmd
+          text: Comparisons
+        - href: drug.qmd
+          text: Treatment Response
+        - href: mmyelomap.qmd
+          text: The Mmyelomap R package
+
+    - part: Visualization
+      chapters:
+        - href: fig1.qmd
+          text: "Figure 1"
+        - href: fig2.qmd
+          text: "Figure 2"
+        - href: fig3.qmd
+          text: "Figure 3"
+
+    - part: Communication
+      chapters:
+        - href: faq.qmd
+          text: FAQ
+        - href: contactus.qmd
+          text: Contact us
+
+    - part: Appendix
+      chapters:
+        - href: functions.qmd
+          text: Functions
+        - href: acknowledgement.qmd
+          text: Acknowledgement
+        - href: final.qmd
+          text: Final Words
+
+    - href: references.qmd
+      text: References
+
+format:
+  html:
+    bibliography: references.bib
+    reference-location: document
+    theme:
+      - cosmo
+      - mm.scss
+    code-link: true
+    code-exec-button: false
+    author-meta: "Jinyan Huang"
+    callout-appearance: simple
+execute:
+  eval: false
+  echo: true
+editor: source

@@ -1,0 +1,236 @@
+---
+title: "Figure 2"
+format: html
+---
+## Figure 2
+
+(temp content) mutation status of mm driver genes in coMMpass and Jilin datasets
+
+### gene mutation frequencies of 3 datasets
+
+code:
+
+```{r, eval = FALSE}
+
+pkgs <- c("fs", "futile.logger", "stringr", "jhtools", "glue", "tidyverse", 
+          "dplyr", "readxl", "ggplot2", "knitr")
+for (pkg in pkgs){
+  suppressPackageStartupMessages(library(pkg, character.only = T))
+}
+
+genes <- c("KRAS", "NRAS", "DIS3", "FAM46C", "BRAF", "TP53", "HUWE1", "TRAF3", "ATM", "EGR1", "HIST1H1E", "DUSP2", "FGFR3", 
+           "PRKD2", "UBR5", "CYLD", "MAX", "IRF4", "ZNF292", "ACTG1", "KLHL6", "KMT2C", "SP140", "ARID1A", "CCND1", "CREBBP", 
+           "PTPN11", "KMT2B", "LTB", "ATRX", "TRAF2", "NF1", "EP300", "SETD2", "TET2", "RFTN1", "DNMT3A", "PRDM1", "RB1", 
+           "SAMHD1", "KDM5C", "SF3B1", "KDM6A", "NFKBIA", "XBP1", "ARID2", "NCOR1", "RASA2", "TGDS", "FUBP1", "MAF", "CDKN1B", 
+           "MAN2C1", "NFKB2", "ABCF1", "MAML2", "CDKN2C", "MAFB", "C8orf34", "ZFP36L1", "IDH1", "PIK3CA", "IDH2")
+# commpass rnaseq(855 samples) & wgs (892 samples), total 1068------------------
+commpass_rna_fn <- "/cluster/home/jhuang/projects/mm/analysis/commpass/human/rnaseq/mutations/commpass/summary/rna_all_mut.tsv"
+commpass_rna <- read_tsv(commpass_rna_fn) %>% 
+  select(sample_id, Hugo_Symbol, Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% distinct()
+commpass_wgs_fn <- "/cluster/home/jhuang/projects/mm/analysis/commpass/human/wgs/mutations/summary/commpass/41588_2024_1853_MOESM5_ESM_hg38.txt"
+commpass_wgs <- read_tsv(commpass_wgs_fn) %>% 
+  select(sample_id, GENE, Chromosome, Start_Position, End_Position, REF, ALT, EFFECT) %>% 
+  rename(Hugo_Symbol = GENE, Reference_Allele = REF, Tumor_Seq_Allele2 = ALT, Variant_Classification = EFFECT) %>% 
+  mutate(Variant_Classification = str_replace_all(Variant_Classification, c("missense_variant" = "Missense_Mutation", "stop_gained" = "Nonsense_Mutation", 
+                                                                            "frame" = "Frame", "splice" = "Splice", "stop" = "Stop", "start" = "Start")))
+anno <- rbind(commpass_rna, commpass_wgs) %>% 
+  select(Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% 
+  group_by(Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2) %>% 
+  arrange(Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% 
+  slice_head(n = 1) %>% ungroup()
+
+mut_fn <- "/cluster/home/yjliu_jh/projects/mm/output/merged_mutation.tsv"
+commpass <- read_tsv(mut_fn) %>% 
+  dplyr::filter(grepl("MMRF", sample_id)) %>% distinct() %>% 
+  left_join(anno) %>% 
+  dplyr::filter(grepl("Missense_Mutation|Nonsense_Mutation|Frame|Splice|Stop|Start", Variant_Classification)) %>% 
+  dplyr::filter(Hugo_Symbol %in% genes) %>% 
+  select(sample_id, Hugo_Symbol) %>% distinct() %>% 
+  group_by(Hugo_Symbol) %>% summarise(mutated_samples = n()) %>%
+  mutate(freq = (mutated_samples/1068)*100, 
+         Hugo_Symbol = str_replace_all(Hugo_Symbol, c("TENT5C" = "FAM46C", "H1-4" = "HIST1H1E")))
+
+genes_absent <- setdiff(genes, commpass$Hugo_Symbol) %>% 
+  as.data.frame() %>% 
+  rename(Hugo_Symbol = ".") %>% 
+  mutate(mutated_samples = 0, 
+         freq = 0)
+commpass <- rbind(commpass, genes_absent) %>% 
+  mutate(Hugo_Symbol = factor(Hugo_Symbol, levels = genes), 
+         Dataset = "Commpass")
+# jilin (rnaseq 156 samples) & wgs (46 samples), total 156----------------------
+jinlin_rna_fn <- "/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/mutations/jilin/summary/rna_all_mut.tsv"
+jilin_rna <- read_tsv(jinlin_rna_fn) %>% 
+  select(sample_id, Hugo_Symbol, Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification)
+jilin_wgs_fn <- "/cluster/home/jhuang/projects/mm/analysis/jilin/human/wgs/mutations/summary/wgs_mut.rds"
+jilin_wgs <- read_rds(jilin_wgs_fn) %>% 
+  select(sample_id, Hugo_Symbol, Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% 
+  mutate(sample_id = str_replace(sample_id, "T$", ""))
+anno_jilin <- rbind(jilin_rna, jilin_wgs) %>% 
+  select(Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% 
+  distinct()
+
+jilin <- read_tsv(mut_fn) %>% 
+  dplyr::filter(!grepl("MMRF", sample_id)) %>% distinct() %>% 
+  left_join(anno_jilin) %>% 
+  dplyr::filter(grepl("Missense_Mutation|Nonsense_Mutation|Frame|Splice_Site|Stop|Start", Variant_Classification)) %>% 
+  dplyr::filter(Hugo_Symbol %in% genes) %>% 
+  select(sample_id, Hugo_Symbol) %>% distinct() %>% 
+  group_by(Hugo_Symbol) %>% summarise(mutated_samples = n()) %>%
+  mutate(freq = (mutated_samples/156)*100, 
+         Hugo_Symbol = str_replace_all(Hugo_Symbol, c("TENT5C" = "FAM46C", "H1-4" = "HIST1H1E")))
+
+genes_absent <- setdiff(genes, jilin$Hugo_Symbol) %>% 
+  as.data.frame() %>% 
+  rename(Hugo_Symbol = ".") %>% 
+  mutate(mutated_samples = 0, 
+         freq = 0)
+jilin <- rbind(jilin, genes_absent) %>% 
+  mutate(Hugo_Symbol = factor(Hugo_Symbol, levels = genes), 
+         Dataset = "Jilin")
+# blood rnaseq, 1273 samples----------------------------------------------------
+metadata <- read_excel("blood/blood840132-suppl2.xlsx", sheet = "Data")
+blood_rna_fn <- "blood/mutsiginput.txt"
+blood <- read_tsv(blood_rna_fn) %>% 
+  rename(sample_id = Tumor_Sample_Barcode) %>% 
+  dplyr::filter(sample_id %in% metadata$FullName, 
+                grepl("Missense_Mutation|Nonsense_Mutation|Frame|Splice_Site|Stop|Start", Variant_Classification)) %>% 
+  dplyr::filter(Hugo_Symbol %in% genes) %>% 
+  select(sample_id, Hugo_Symbol) %>% distinct() %>% 
+  group_by(Hugo_Symbol) %>% summarise(mutated_samples = n()) %>%
+  mutate(freq = (mutated_samples/1273)*100)
+
+genes_absent <- setdiff(genes, blood$Hugo_Symbol) %>% 
+  as.data.frame() %>% 
+  rename(Hugo_Symbol = ".") %>% 
+  mutate(mutated_samples = 0, 
+         freq = 0)
+blood <- rbind(blood, genes_absent) %>% 
+  mutate(Hugo_Symbol = factor(Hugo_Symbol, levels = genes), 
+         Dataset = "Blood")
+write_tsv(blood, "rnaseq_driverGenes_blood_freq.txt")
+
+pdf("rnaseq_driverGenes_blood_barplot.pdf", width = 15, height = 5)
+ggplot(blood, aes(x = Hugo_Symbol, y = freq)) +
+  geom_col(fill = "#69b3a2", width = 0.7) +  
+  labs(title = "Driver gene frequencies in blood dataset (N = 1273)",
+       x = "Gene",
+       y = "Percentage of samples (%)") +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 11),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank()
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+dev.off()
+
+#------------------------------plot---------------------------------------------
+
+# jilin & blood & commpass
+all_freq <- rbind(jilin, blood, commpass)
+
+pdf("rna.wgs_driverGenes_jilin.blood.commpass.lyj_barplot.pdf", width = 15, height = 5)
+ggplot(all_freq, aes(x = Hugo_Symbol, y = freq, fill = Dataset)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 0.7) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Driver gene frequencies in Blood/Commpass/Jilin RNAseq/WGS dataset (N = 1273/1068/156)",
+       x = "Gene",
+       y = "Percentage of samples (%)",
+       fill = "Dataset") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    panel.grid.major.x = element_blank(),
+    legend.position = "top"
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+dev.off()
+
+```
+
+plot:
+
+```{r, echo = FALSE, fig.cap = "figure temp 2a", fig.align = "center", out.width = "100%"}
+knitr::include_graphics("images/rna.wgs_driverGenes_jilin.blood.commpass.lyj_barplot.png")
+```
+
+
+
+### gene mutation comparisons among different populations
+
+code:
+
+```{r, eval = FALSE} 
+
+commpass_wgs_fn <- "/cluster/home/jhuang/projects/mm/analysis/commpass/human/wgs/mutations/summary/commpass/41588_2024_1853_MOESM5_ESM_hg38.txt"
+commpass_wgs <- read_tsv(commpass_wgs_fn) %>%
+  select(sample_id, GENE, Chromosome, Start_Position, End_Position, REF, ALT, EFFECT) %>%
+  rename(Hugo_Symbol = GENE, Reference_Allele = REF, Tumor_Seq_Allele2 = ALT, Variant_Classification = EFFECT) %>%
+  mutate(Variant_Classification = str_replace_all(Variant_Classification, c("missense_variant" = "Missense_Mutation", "stop_gained" = "Nonsense_Mutation",
+                                                                            "frame" = "Frame", "splice" = "Splice", "stop" = "Stop", "start" = "Start")))
+commpass_wgs_mut <- commpass_wgs %>% 
+  dplyr::filter(grepl("Missense_Mutation|Nonsense_Mutation|Frame", Variant_Classification)) %>% 
+  select(sample_id, Hugo_Symbol) %>% distinct() %>%
+  group_by(Hugo_Symbol) %>% summarise(mutated_samples = n()) %>%
+  mutate(freq = (mutated_samples/892)*100)
+  
+# jilin-------------------------------------------------------------------------
+jilin_mut_fn <- "/cluster/home/wyye_jh/projects/ngs/analysis/mm/human/rnaseq/jilin_filfs_integrated.rds"
+jilin_mut <- read_rds(jilin_mut_fn) %>% 
+  select(sample_id, Hugo_Symbol, Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification) %>% 
+  #semi_join(commpass_wgs, by = c("Hugo_Symbol", "Chromosome", "Start_Position", "End_Position", "Reference_Allele")) %>% 
+  distinct() %>% 
+  dplyr::filter(grepl("Missense_Mutation|Nonsense_Mutation|Frame", Variant_Classification)) %>% 
+  select(sample_id, Hugo_Symbol) %>% distinct() %>%
+  group_by(Hugo_Symbol) %>% summarise(mutated_samples = n()) %>%
+  mutate(freq = (mutated_samples/156)*100)
+
+
+gene_freq <- jilin_mut %>% 
+  left_join(commpass_wgs_mut, by = "Hugo_Symbol", suffix = c(".jilin", ".cmps")) %>% 
+  dplyr::filter(!is.na(freq.cmps)) %>% 
+  dplyr::filter(Hugo_Symbol %in% genes) %>% 
+  mutate(fold = freq.jilin/freq.cmps) %>% 
+  arrange(desc(freq.jilin))
+
+# plot--------------------------------------------------------------------------
+pdf("jilin.filfs_cmps.wgs_geneFreq.pdf")
+gene_freq <- gene_freq %>% arrange(freq.jilin)
+max_freq <- max(c(gene_freq$freq.jilin, gene_freq$freq.cmps)) %>% round(digits = 0)
+par(mar = c(5, 8, 4, 8) + 0.1)
+barplot(gene_freq$freq.jilin, names.arg = gene_freq$Hugo_Symbol,
+        horiz = TRUE, col = "#4e70bc", border = NA, 
+        xlim = c(-max_freq, max_freq),
+        las = 1,         
+        main = "Alteration frequency (%)",
+        cex.names = 0.5,
+        xlab = "",       
+        axes = FALSE)    
+
+barplot(-gene_freq$freq.cmps, 
+        horiz = TRUE, col = "#ae2318", border = NA, 
+        axes = FALSE, add = TRUE)
+
+axis(1, at = seq(-max_freq, max_freq, length.out = 5),
+     labels = abs(seq(-max_freq, max_freq, length.out = 5)))
+mtext("Commpass.wgs", side = 1, line = 3, at = -max_freq/2)
+mtext("Jilin", side = 1, line = 3, at = max_freq/2)
+
+dev.off()
+
+```
+
+plot:
+
+```{r, echo = FALSE, fig.cap = "figure temp 2b", fig.align = "center", out.width = "100%"}
+knitr::include_graphics("images/jilin.filfs_cmps.wgs_geneFreq.png")
+```
+
+
+
+

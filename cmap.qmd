@@ -1,0 +1,169 @@
+# Connectivity Map Analysis
+
+To explore potential pharmacologic vulnerabilities associated with molecular subtypes of multiple myeloma (MM), we conducted a Connectivity Map (CMap) analysis using the CLUE.io platform, which is powered by data from the LINCS L1000 project. The CMap framework aims to identify small molecules that may reverse or mimic transcriptional signatures associated with specific cellular states, offering insight into potential therapeutic interventions.
+The LINCS L1000 dataset comprises gene expression profiles from human cell lines treated with thousands of chemical and genetic perturbagens. Each perturbation signature is characterized using a reduced set of 978 "landmark genes", from which the remaining transcriptome is computationally inferred. These profiles are systematically collected across multiple time points, doses, and cell types, creating a large-scale resource for connecting gene expression patterns to molecular interventions.
+
+## Application in This Study
+In our study, we applied CMap analysis to investigate drug-response predictions based on transcriptomic differences of MM subtypes. In this study, Connectivity Map (CMap) analysis was applied in two complementary contexts: (i) comparing multiple myeloma (MM) samples with normal plasma cells, and (ii) comparing different molecular subtypes of MM. The first application aimed to identify compounds or perturbagens that may reverse the disease-associated transcriptional state, thereby offering potential therapeutic benefit. In contrast, the second application sought to uncover compounds capable of disrupting subtype-specific expression programs, based on core transcriptomic differences between MM subgroups. This strategy enables the identification of agents that may selectively target distinct biological states within MM. 
+
+Specifically, for each subtype comparison of interest (e.g., IgD vs. other subtypes), we selected the top upregulated and downregulated genes based on differential expression analysis using DESeq2. Typically, the top (maximum at 200 for both ) landmark genes with the strongest fold changes and adjusted p-values were used as input signatures for CMap query submission. A typical workflow is as follows:
+
+
+
+Prepare data:
+
+```{r, echo=TRUE, eval=FALSE}
+# get count
+mmdatasets <- c("jilin", "commpass", "public", "HRA005897")
+count_files <- glue::glue("/cluster/home/jhuang/projects/mm/analysis/{mmdatasets}/human/rnaseq/exp/tables/{mmdatasets}_human_counts.csv")
+total_counts_list <- lapply(count_files[file.exists(count_files)], read_csv)
+names <- mmdatasets[file.exists(count_files)]
+counts_all <- total_counts_list[[1]]
+for (i in 2:length(total_counts_list)) {
+  counts_all <- bind_cols(counts_all, total_counts_list[[i]][, -(1:2)])
+}
+
+# load new gene symbol info 
+hugo_anno <- readr::read_delim("/cluster/home/yjliu_jh/projects/mm/data/hgnc_complete_set.txt",
+                               col_types = cols(intermediate_filament_db = col_character()))
+symbol_anno <- hugo_anno |> separate_rows(prev_symbol, sep = "\\|") |> as.data.frame()
+hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] %>% as.data.frame() 
+colnames(hugo_anno)[2] <- "gene_id"
+
+# prepare counts data
+counts_all <- counts_all[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
+  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
+  column_to_rownames(var = "symbol") %>% as.matrix() %>% round()
+```
+
+
+
+```{r, echo=TRUE, eval=FALSE}
+
+selected_samples <- c(merged_sinfo$sample_id[merged_sinfo$subtypes %in% "IgD" & merged_sinfo$tumor_descriptor %in% "primary"],
+                      merged_sinfo$sample_id[merged_sinfo$tumor_descriptor %in% "normal"])
+counts_sub <- counts_all[, selected_samples]
+sinfo_sub <- merged_sinfo[, c("sample_id", "tumor_descriptor")] %>% as.data.frame()
+rna_lib_large <- read_rds("/cluster/home/yjliu_jh/projects/mm/output/rna_lib_mm_samples.rds")
+sinfo_sub <- left_join(sinfo_sub, rna_lib_large)
+rownames(sinfo_sub) <- sinfo_sub$sample_id
+sinfo_sub <- sinfo_sub[selected_samples, ]
+sinfo_sub$group <- ifelse(sinfo_sub$tumor_descriptor %in% "primary", "IgD", "normal")
+
+dds_igd <- DESeqDataSetFromMatrix(counts_sub, sinfo_sub, ~ rna_type + group)
+keep <- rowSums(counts(dds_igd) >= 5) > ceiling(0.2 * ncol(dds_igd))  
+dds_igd <- dds_igd[keep, ]
+keep2 <- rowSums(counts(dds_igd) == 0) < ceiling(0.5 * ncol(dds_igd))
+dds_igd <- dds_igd[keep2, ]
+dds_igd <- DESeq(dds_igd)
+
+```
+
+
+Prepare input of landmark genes:
+
+```{r, echo=TRUE, eval=FALSE}
+
+symbol_anno <- symbol_anno[, c("symbol", "prev_symbol")] %>% na.omit()
+lincs_genes <- read_delim("/cluster/home/yjliu_jh/projects/leukemia/data/common/GSE92742_Broad_LINCS_gene_info.txt")
+landmark_genes <- lincs_genes$pr_gene_symbol[lincs_genes$pr_is_lm %in% 1]
+landmark_genes_extra <- data.frame(prev_symbol = landmark_genes[landmark_genes %notin% hugo_anno$symbol])
+landmark_genes_extra <- left_join(landmark_genes_extra, symbol_anno)
+landmark_genes_extra$symbol[landmark_genes_extra$prev_symbol %in% "HDGFRP3"] <- "HDGFL3"
+lut0 <- landmark_genes_extra$prev_symbol
+names(lut0) <- landmark_genes_extra$symbol
+```
+
+
+Select up/down regulated genes as clue.io input:
+
+```{r, echo=TRUE, eval=FALSE}
+
+# differential 
+add_col <- function(data){
+  data$gene_name <- rownames(data)
+  data$absFC <- abs(data$log2FoldChange)
+  data <- data[order(data$pvalue), ]
+  data2 <- left_join(as.data.frame(data), hugo_anno[, c("symbol", "gene_id")], by = c("gene_name" = "symbol"))
+  data$ensembl_id <- data2$gene_id
+  data
+}
+
+dres_comp1 <- results(dds_igd, c("group", "IgD", "normal"))
+res1 <- as.data.frame(add_col(dres_comp1))
+res1 <- na.omit(res1[res1$padj < 0.05, ])
+ind1 <- res1$gene_name %in% names(lut0)
+res1_part <- res1[ind1, ] |> mutate(old_symbol = recode(gene_name, !!!lut0))
+res1$gene_name[ind1] <- res1_part$old_symbol
+res1 <- res1[res1$gene_name %in% landmark_genes, ]
+res1 <- res1[order(res1$log2FoldChange, decreasing = T), ]
+
+clue_input <- list(up_genes = data.frame(up = intersect(head(res1$gene_name, 200), res1$gene_name[res1$log2FoldChange > 1])), 
+                   down_genes = data.frame(down = intersect(tail(res1$gene_name, 200), res1$gene_name[res1$log2FoldChange < -1])))
+list2excel(clue_input, "clue_input_new.xlsx")
+
+
+# load drug sensitivity prediction data
+res_names <- read.delim("/cluster/home/yjliu_jh/projects/mm/output/igdlike2/igd_norm_new/arfs/TAG/query_result.gct", skip = 2) |> colnames()
+clu_res <- read.delim("/cluster/home/yjliu_jh/projects/mm/output/igdlike2/igd_norm_new/arfs/TAG/query_result.gct", skip = 3)
+colnames(clu_res) <- res_names
+clu_res_fil <- clu_res[abs(clu_res$norm_cs) > 1.5 & clu_res$fdr_q_nlog10 > 1.5, ]
+
+
+```
+
+
+Another type of clue.io analysis:
+
+```{r, echo=TRUE, eval=FALSE}
+selected_samples2 <- c(merged_sinfo$sample_id[!is.na(merged_sinfo$subtypes) & merged_sinfo$tumor_descriptor %in% "primary"])
+counts_sub2 <- counts_all[, selected_samples2]
+sinfo_sub2 <- merged_sinfo[, c("sample_id", "tumor_descriptor", "batch", "subtypes")] %>% as.data.frame()
+sinfo_sub2$batch[is.na(sinfo_sub2$batch)] <- "public"
+rna_lib_large <- read_rds("/cluster/home/yjliu_jh/projects/mm/output/rna_lib_mm_samples.rds")
+sinfo_sub2 <- left_join(sinfo_sub2, rna_lib_large)
+rownames(sinfo_sub2) <- sinfo_sub2$sample_id
+sinfo_sub2 <- sinfo_sub2[selected_samples2, ]
+sinfo_sub2$group <- ifelse(sinfo_sub2$subtypes %in% "IgD", "IgD", "others")
+
+dds_igd2 <- DESeqDataSetFromMatrix(counts_sub2, sinfo_sub2, ~ rna_type + batch + group)
+keep <- rowSums(counts(dds_igd2) >= 5) > ceiling(0.2 * ncol(dds_igd2))  
+dds_igd2 <- dds_igd2[keep, ]
+keep2 <- rowSums(counts(dds_igd2) == 0) < ceiling(0.5 * ncol(dds_igd2))
+dds_igd2 <- dds_igd2[keep2, ]
+dds_igd2 <- DESeq(dds_igd2)
+
+dres_comp2 <- results(dds_igd2, c("group", "IgD", "others"))
+res2 <- as.data.frame(add_col(dres_comp2))
+res2 <- na.omit(res2[res2$padj < 0.05, ])
+ind1 <- res2$gene_name %in% names(lut0)
+res2_part <- res2[ind1, ] |> mutate(old_symbol = recode(gene_name, !!!lut0))
+res2$gene_name[ind1] <- res2_part$old_symbol
+res2 <- res2[res2$gene_name %in% landmark_genes, ]
+res2 <- res2[order(res2$log2FoldChange, decreasing = T), ]
+
+clue_input2 <- list(up_genes = data.frame(up = intersect(head(res2$gene_name, 200), res2$gene_name[res2$log2FoldChange > 1])), 
+                   down_genes = data.frame(down = intersect(tail(res2$gene_name, 200), res2$gene_name[res2$log2FoldChange < -1])))
+list2excel(clue_input2, "clue_input2_new.xlsx")
+
+
+res_names <- read.delim("/cluster/home/yjliu_jh/projects/mm/output/igdlike2/igd_others_new/arfs/TAG/query_result.gct", skip = 2) |> colnames()
+clu_res2 <- read.delim("/cluster/home/yjliu_jh/projects/mm/output/igdlike2/igd_others_new/arfs/TAG/query_result.gct", skip = 3)
+colnames(clu_res2) <- res_names
+clu_res2_fil <- clu_res2[abs(clu_res2$norm_cs) > 1.5 & clu_res2$fdr_q_nlog10 > 1.5, ]
+
+
+```
+
+
+
+Using the CLUE platform, we computed connectivity scores between these subtype-specific gene signatures and perturbagen profiles in the LINCS database. Compounds with strongly negative connectivity scores (norm_cs in the results) were prioritized, as these are predicted to reverse the transcriptional state associated with the given MM subtype (IgD-enriched), thus potentially counteracting subtype-specific molecular programs. To further interpret the biological relevance of the identified compounds, we compared their associated mechanisms of action (MOAs) with the enriched GO terms and pathways derived from differential expression. The results are discussed below. 
+
+Connectivity Map (CMap) analysis revealed distinct pharmacologic signatures in the IgD-enriched multiple myeloma (MM) subtype. When compared to normal plasma cells, AZD-5438, a potent CDK1/2/9 inhibitor, demonstrated the strongest negative connectivity score (FDR q –log₁₀ ≈ 15), indicating that the IgD subtype may be particularly dependent on CDK-mediated transcriptional and cell-cycle control. Given the known role of CDKs in driving plasma cell proliferation and maintaining transcriptional elongation through phosphorylation of RNA polymerase II, this result suggests that targeting CDK activity could be an effective strategy to disrupt the proliferative core of IgD myeloma. This mechanistic insight corresponds closely to the observed downregulation of immune functions and cell adhesion pathways, which are often sensitive to CDK regulation. By impairing proliferative signaling, CDK inhibition may restore transcriptional balance and partially revive suppressed immune responses.
+
+In a comparison against other MM subtypes, BRD-K98645985, a compound targeting the BAF (SWI/SNF) chromatin remodeling complex, emerged as the top-scoring (anti-correlated) perturbagen. This hinted a possible epigenetic dependency in the IgD subtype, whereby transcriptional homeostasis may be maintained by specific chromatin regulatory circuits, which may also explain the lack of up-regulated marker genes in this subtype. Of additional note, camptothecin, a topoisomerase I inhibitor, also ranked highly in the CMap analysis. This class of agents disrupts DNA replication and transcription by stabilizing DNA–enzyme complexes, leading to replication stress and apoptosis. Notably, HM910, a camptothecin derivative, exhibited potent inhibition of MM cell growth in vitro and xenografts of nude mice. HM910 is currently under clinical investigation in China, which highlights the potential translational relevance of this class of compounds for IgD-subtype MM.
+
+These drug predictions align well with the transcriptional features observed in the IgD subgroup. Functional enrichment analysis revealed marked downregulation of immune-related pathways, including B cell–mediated immunity and immunoglobulin response, along with suppression of cellular processes such as leukocyte migration, angiogenesis, and cell–matrix adhesion. Compared to other MM subtypes, the IgD group also exhibited reduced expression of genes involved in synapse organization, cell junction assembly, and receptor signaling—suggesting a transcriptionally repressed, immune-silent, and microenvironmentally disconnected state.
+
+Together, these findings define the IgD-enriched subtype as a biologically distinct and therapeutically targetable entity, characterized by immune quiescence, epigenetic rigidity, and potential vulnerability to cell cycle, chromatin, and transcriptional perturbation. These results support the rationale for subtype-specific therapeutic strategies, possibly involving rational drug combinations that exploit its converging molecular liabilities.
+
