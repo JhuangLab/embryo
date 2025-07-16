@@ -5,155 +5,201 @@ format: html
 ## Figure 3
 
 
-### Functional relavances of samples in the IgD-enriched subtype
+### 
 
 code:
 
 ```{r, eval = FALSE} 
 
-pkgs <- c("GSVA", "fs", "futile.logger", "configr", "stringr", "ggpubr", 
-          "jhtools", "glue", "ggsci", "patchwork", "tidyverse", "dplyr", 
-          "SummarizedExperiment", "jhuanglabRNAseq", "DESeq2", "maftools", 
-          "matrixStats", "Matrix", "furrr", "ComplexHeatmap", "rstatix",
-          "clusterProfiler", "DOSE", "enrichplot", "org.Hs.eg.db", 
-          "ggthemes", "EnhancedVolcano", "GseaVis", "glmnet", "tidyplots")
-for (pkg in pkgs){
+pkgs <- c("fs", "futile.logger", "configr", "stringr", "ggpubr", "ggthemes", 
+          "jhtools", "glue", "ggsci", "patchwork", "tidyverse", "dplyr", "Seurat", 
+          "paletteer", "cowplot", "ComplexHeatmap", "circlize")  
+for (pkg in pkgs) {
   suppressPackageStartupMessages(library(pkg, character.only = T))
-} 
-
-# set workdir
-setwd("/cluster/home/yjliu_jh/projects/mm/analysis/meta/human/figures/heatmap/check_new_cluster_addsamples/fixed_check")
-
-# get samples
-clusterings <- readxl::read_excel("/cluster/home/jhuang/projects/mm/analysis/meta/human/figures/heatmap/eda/check_new_cluster_addsamples/fixed_samples_3/sampleinfo_0.95.xlsx")
-colnames(clusterings)[1] <- "sample_id"
-
-# get exp data
-mm1330 <- read_rds("~/projects/mm/analysis/meta/human/rnaseq/exp/mm1330.rds") %>% convert_df_plot()
-
-# get rna sequencing type
-pred_rna_lib <- function (dat_mat) {
-  his_genes1 <- c("H4C11", "H2BC3", "H4C4", "H3C12", "H2BC14", 
-                  "H4C6", "H2AC16", "H2AC11", "H2AC12", "H1−5", "H3C2", 
-                  "H3C3", "H3C11", "H2AC17", "H2AC13", "H2BC13", "H2AC4", 
-                  "H2AC14", "H4C9", "H4C1", "H4C2", "H4C13", "H3C7", "H2BC9", 
-                  "H2BC10", "H3C8", "H3C13", "H2BC7", "H2BC18", "H2BC15", 
-                  "H4C14", "H4C8", "H2BC17", "H3C10", "H2BC11", "H4C12", 
-                  "H3C15", "H2BC8", "H2AC8", "H2BC6", "H4C5", "H2AC15", 
-                  "H1−3", "H3C4", "H4−16", "H2AC20", "H2AC21", "H3C1", 
-                  "H2BC5", "H1−4", "H2AC7", "H2BC4", "H1−2", "H2AC6")
-  inter_genes <- intersect(his_genes1, rownames(dat_mat))
-  stopifnot("please make sure histone genes is contained in the data" = length(inter_genes) > 0)
-  dat_mat <- dat_mat[rownames(dat_mat) %in% inter_genes, ]
-  clust <- data.frame(cluster = cutree(hclust(dist(t(dat_mat))), k = 2))
-  diff <- mean(unlist(dat_mat[, clust$cluster %in% 1])) - mean(unlist(dat_mat[, clust$cluster %in% 2]))
-  clust$rna_type <- "mRNA"
-  clust$rna_type[clust$cluster == (2 - sum(diff > 0))] <- "total_RNA"
-  new_dat <- data.frame(sample_id = rownames(clust), rna_type = clust$rna_type)
-  return(new_dat)
 }
-rna_lib_part <- pred_rna_lib(mm1330)
+project <- "collabrators"
+dataset <- "wangwenjie"
+species <- "mouse"
+workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/fig3")
+workdir %>% fs::dir_create() %>% setwd()
 
-# get count
-mmdatasets <- c("jilin", "commpass", "public")
-count_files <- glue::glue("/cluster/home/jhuang/projects/mm/analysis/{mmdatasets}/human/rnaseq/exp/tables/{mmdatasets}_human_counts.csv")
-total_counts_list <- lapply(count_files[file.exists(count_files)], read_csv)
-names <- mmdatasets[file.exists(count_files)]
-counts_all <- total_counts_list[[1]]
-for (i in 2:length(total_counts_list)) {
-  counts_all <- bind_cols(counts_all, total_counts_list[[i]][, -(1:2)])
-}
+yaml_fn <- "/cluster/home/danyang_jh/projects/collabrators/code/wangwenjie/mouse/figures/configs.yaml"
+cols_tissue <- jhtools::show_me_the_colors(config_fn = yaml_fn, "tissue")
 
-# load new gene symbol info 
-hugo_anno <- readr::read_delim("/cluster/home/yjliu_jh/projects/mm/data/hgnc_complete_set.txt",
-                               col_types = cols(intermediate_filament_db = col_character()))
-hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] %>% as.data.frame() 
-colnames(hugo_anno)[2] <- "gene_id"
+my_theme1 <- theme_classic(base_size = 8) + 
+  theme(legend.key.size = unit(3, "mm"), axis.text = element_text(color = "black"), 
+        axis.ticks = element_line(color = "black"), plot.title = element_text(hjust = .5))
 
-# prepare counts data
-counts_all <- counts_all[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
-  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
-  column_to_rownames(var = "symbol") %>% as.matrix() %>% round()
-counts_part <- counts_all[, intersect(clusterings$sample_id, colnames(counts_all))]
+## fig3a-c: human m/z tissue specific markers -----
+mtb_info <- read_rds("~/ref/kegg/human/hsa_mtb_pth_cpd.rds")
+xlsx_fn1 <- 
+  glue("/cluster/home/jhuang/projects/collabrators/data/wangwenjie/human/metabolism/human_adjusted/DZLM2024030584-b2_DZLM2024030572-张进-王文杰-空间代谢组-项目报告/2.定性结果/Qualitative.xlsx")
+neg_anot1 <- readxl::read_excel(xlsx_fn1, sheet = "neg-all") %>% 
+  mutate(mz_id = paste0("neg-", mz)) %>% dplyr::filter(KEGG %in% mtb_info$cpd_id, !is.na(Metabolites))
+pos_anot1 <- readxl::read_excel(xlsx_fn1, sheet = "pos-all") %>% 
+  mutate(mz_id = paste0("pos-", mz)) %>% dplyr::filter(KEGG %in% mtb_info$cpd_id, !is.na(Metabolites))
 
-# prepare anno data
-sinfo_part <- data.frame(sample_id = colnames(counts_part))
-sinfo_part <- left_join(sinfo_part, clusterings[, c("sample_id", "sub_groups")])
-sinfo_part <- left_join(sinfo_part, rna_lib_part)
-merged_sinfo <- read_rds("~/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_commpass.rds")
-sinfo_part <- left_join(sinfo_part, merged_sinfo[, c("sample_id", "batch")])
-rownames(sinfo_part) <- sinfo_part$sample_id
-sinfo_part$group <- ifelse(sinfo_part$sub_groups %in% "G3", "igd_like", "others")
+samples <- c("yao1", "yao2", "yao5")
 
-# construct DESeq2 object
-dds <- DESeqDataSetFromMatrix(counts_part, sinfo_part, ~ batch + rna_type + group)
-keep <- rowSums(counts(dds) >= 5) > ceiling(0.2 * ncol(dds))  
-dds <- dds[keep, ]
-keep2 <- rowSums(counts(dds) == 0) < ceiling(0.5 * ncol(dds))
-dds <- dds[keep2, ]
-dds <- DESeq(dds)
-readr::write_rds(dds, "dds_corrected.rds")
+ord_yao1 <- c("Forebrain", "Midbrain", "Hindbrain", "Spinal cord", "Optic vesicle", 
+              "Jaw and tooth", "Branchial arch", "Somite", "Heart", "Liver", "Gut", 
+              "Embryo membrane")
+ord_yao2 <- c("Forebrain", "Midbrain", "Hindbrain", "Spinal cord", "Optic vesicle", 
+              "Jaw and tooth", "Branchial arch", "Somite", "Heart", "AGM", "Liver", 
+              "Lung", "Gut", "Umbilical cord")
+ord_yao5 <- c("Forebrain","Midbrain","Hindbrain","Diencephalon","Spinal cord","Ear", 
+              "Jaw and tooth","Forelimb","Hindlimb","Cartilage","Muscle","Heart", 
+              "Blood vessel","Liver","Gut")
+ord_lst <- list(yao1 = ord_yao1, yao2 = ord_yao2, yao5 = ord_yao5)
 
-# order and add columns to the results
-add_col <- function(data){
-  data$gene_name <- rownames(data)
-  data$absFC <- abs(data$log2FoldChange)
-  data <- data[order(data$pvalue), ]
-  data2 <- left_join(as.data.frame(data), hugo_anno[, c("symbol", "gene_id")], by = c("gene_name" = "symbol"))
-  data$ensembl_id <- data2$gene_id
-  data
+rds_fn3 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/fig3ac_human_mz_dat_norm_lst.rds"
+dat_norm_lst <- read_rds(rds_fn3)
+for(samp in samples) {
+  dat_norm = dat_norm_lst[[samp]]
+  lvls <- colnames(dat_norm)
+  ## right anot ----
+  nm <- rownames(dat_norm)
+  tst1 = rbind(neg_anot1, pos_anot1) %>% dplyr::filter(mz_id %in% nm) %>%
+    dplyr::select(all_of(c("mz_id", "Metabolites"))) %>% dplyr::distinct() %>%
+    dplyr::group_by(mz_id) %>% 
+    summarise(meta = paste0(Metabolites, collapse = "; ")) 
+  mz_idx <- which(nm %in% tst1$mz_id)
+  lab_mks <- tst1 %>% as.data.frame() %>% column_to_rownames("mz_id") %>% 
+    .[nm[mz_idx], ] %>% str_wrap(., width = 30)
+  right_anot1 <- rowAnnotation(link = anno_mark(at = mz_idx,
+                                                labels = lab_mks,
+                                                labels_gp = gpar(fontsize = 6),
+                                                link_width = unit(3, "mm"),
+                                                link_height = unit(.05, "mm")))
+  top_anot11 <- 
+    ComplexHeatmap::HeatmapAnnotation(tissue = fct(lvls), show_legend = F, 
+                                      show_annotation_name = F, 
+                                      col = list(tissue = cols_tissue))
+  
+  col_fun2 <- colorRamp2(c(-3, 0, 3), c("lightblue", "gray100", "#aa3333"))
+  
+  htp11 <- ComplexHeatmap::Heatmap(as.matrix(dat_norm),
+                                   top_annotation = top_anot11,
+                                   show_column_names = T,
+                                   show_row_names = F, 
+                                   row_names_gp = gpar(fontsize = 3),
+                                   name = "z-score",
+                                   show_row_dend = F, 
+                                   column_names_gp = gpar(fontsize = 6), 
+                                   show_column_dend = F, 
+                                   column_names_side = "top", column_names_rot = 30, 
+                                   right_annotation = right_anot1,
+                                   cluster_columns = F, cluster_rows = F, 
+                                   col = col_fun2, 
+                                   height = unit(10, "cm"), width = unit(6, "cm")
+  )
+  pdf(glue("fig3ac_mz_top15_heatmap_{samp}_v250322.pdf"), width = 5, height = 5)
+  print(htp11)
+  dev.off()
 }
 
-# get result for  comparison
-res_igd <- add_col(results(dds, c("group", "igd_like", "others")))
-GSEAInput_i <- data.frame(rownames(res_igd), res_igd$log2FoldChange)
-colnames(GSEAInput_i) <- c("Symbol", "logFC")
-GSEA2 <- GSEAInput_i$logFC
-names(GSEA2) <- as.character(GSEAInput_i$Symbol)
-GSEA2 <- sort(GSEA2, decreasing = TRUE)
-gseGO_res_i <- gseGO(GSEA2, OrgDb = org.Hs.eg.db, keyType = "SYMBOL", ont = "BP",
-                     minGSSize = 5, maxGSSize = 1000, pvalueCutoff = 0.2)
+## fig3d: human selected tissue specific spatial distribution -----
+rds_fn4 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/human_visium_all_gene_lst.rds"
+hsa_visium_lst = read_rds("../rds/human_visium_all_gene_lst.rds")
+names(hsa_visium_lst) <- c("CS12", "CS14", "CS18")
 
-# volcano function
-quick_volcano <- function (resA, title, col = "gene_name", fc_cutoff = 2, sel_lab = NULL) {
-  if (is.null(sel_lab)) {
-    sel_lab <- unique(c(resA[order(resA$padj), ][1:10, col],
-                        resA[order(resA$absFC, decreasing = T), ][1:10, col]))
+for(samp in c("CS12", "CS14", "CS18")) {
+  obj1 <- hsa_visium_lst[[samp]]
+  if(samp == "CS12") {
+    scale_fct <- 1.8
+    plot_width <- 3
+    plot_height <- 3
+  } else if (samp == "CS14") {
+    scale_fct <- 1.3
+    plot_width <- 4
+    plot_height <- 4
+  } else {
+    scale_fct <- 1.3
+    plot_width <- 8
+    plot_height <- 8
   }
-  p <- EnhancedVolcano(resA, lab = resA[[col]],
-                       title = title, subtitle = NULL, caption = NULL,
-                       legendPosition = "none", 
-                       selectLab = sel_lab,
-                       drawConnectors = TRUE, widthConnectors = 0.3,
-                       x = 'log2FoldChange', y = 'pvalue',
-                       pCutoff = 0.05, FCcutoff = fc_cutoff,
-                       gridlines.major = FALSE,
-                       gridlines.minor = FALSE)
-  p
-} 
-volcano_p <- quick_volcano(as.data.frame(res_igd), "IgD group vs others")
-ggsave("volcano_igd_comparison_altered.pdf", volcano_p, dpi = 300, width = 6, height = 6, units = "in")
+  plst1 <- lapply(c("CNS", "Heart", "Liver", "Somite"), \(sel) {
+    obj1$labels_plot <- case_when(obj1$labels_fig3d %in% sel ~ sel, TRUE ~ "others")
+    Seurat::SpatialDimPlot(obj1, group.by = "labels_plot", label = F, 
+                           pt.size = scale_fct, image.alpha = 0, stroke = NA, 
+                           cols = c(cols_tissue[sel], "gray99")) & 
+      my_theme1 & labs(title = sel) & Seurat::NoLegend() & 
+      theme(plot.title = element_text(size = 8), plot.margin = margin(c(0, 0, 0, 0), unit = "cm")) & 
+      Seurat::NoAxes() & coord_fixed()
+  })
+  plst1 <- plst1 %>% patchwork::wrap_plots(nrow = 1)
+  ggsave(glue("fig3d_human_spatial_tissue_{samp}_v250322.pdf"), plst1, 
+         width = plot_width * 4, height = plot_height, units = "cm")
+}
 
+## fig3g: changes among stages of human metabolites in liver -----
+csv_fn1 <- "/cluster/home/ztao_jh/projects/embryo/analysis/zhangjing/human/rnaseq/new_label/ren_time_point_2/neg/Liver.csv"
+log_fc <- read_csv(csv_fn1)
+log_fc <- log_fc %>% 
+  mutate(stage = case_when(grepl("yao1", name) ~ "CS12", grepl("yao2", name) ~ "CS14", TRUE ~ "CS18")) %>% 
+  mutate(stage = fct(as.character(stage), levels = paste0("CS1", c(2, 4, 8)))) %>% 
+  dplyr::filter(!grepl("Trend7", group))
 
-```
+line1 = ggplot2::ggplot(log_fc, aes(x = stage, y = value, group = feature, color = group)) + 
+  ggplot2::geom_line() + scale_color_manual(values = unname(cols_tissue[1:6])) + 
+  ggplot2::facet_wrap(~ group, ncol = 3) + my_theme1 + 
+  theme(legend.position = "none", axis.line = element_blank(), 
+        panel.border = element_rect(fill = NA, color = "black", linewidth = .5)) + 
+  labs(x = "", y = "Relative abundance")
+ggsave("fig3g_liver_mtb_line1.pdf", line1, width = 6, height = 3)
 
-plot:
-
-```{r, echo = FALSE, fig.cap = "figure temp 3a", fig.align = "center", out.width = "100%"}
-knitr::include_graphics("images/volcano_igd_comparison_label_altered.png")
-```
-
-code:
-
-```{r, eval = FALSE} 
-# gsea result
-pdf("igd_comparison_gsea.pdf", width = 12, height = 9)
-print(dotplot(gseGO_res_i, showCategory = 9, split = ".sign", orderBy = "p.adjust") + facet_grid(.~.sign))
+## fig2h: moran's I changes -----
+csv_fn2 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/fig3h_human_mz_moran_trends.csv"
+outcsv <- read_csv(csv_fn2)
+draw_line <- function(outcsv){
+  sigtissue <- outcsv  %>%
+    dplyr::select(feature, anot1) %>%
+    dplyr::distinct() %>%
+    group_by(anot1) %>%
+    summarise(n = n()) %>%
+    group_by(anot1) %>%
+    dplyr::filter(anot1 != "others") %>%
+    arrange(desc(n)) %>%
+    pull(anot1)
+  outcsv %>% 
+    dplyr::filter(anot1 != "others") %>%
+    mutate(anot1 = factor(anot1, levels = sigtissue)) %>% 
+    ggplot(aes(x = stage, y = value, group = feature, color = anot1)) +
+    geom_line() + scale_color_manual(values = cols_tissue) + 
+    facet_wrap(~anot1) +
+    ylab(label = "Moran's Index") +
+    xlab(label = "Stage") +
+    my_theme1 +
+    theme(legend.position = "none", axis.line = element_blank(), 
+          panel.border = element_rect(linewidth = .5, fill = NA, color = "black"),  
+          axis.text.x = element_text(angle = 90, hjust = 0.5, vjust = 0.5))
+}
+pdf(glue("./fig3h_mz_moran_trend_tissue.pdf"))
+draw_line(outcsv)
 dev.off()
+
+## fig2i: bar plot of each tissue ----
+draw_bar <- function(outcsv){
+  outcsv  %>% 
+    dplyr::select(feature, anot1) %>% 
+    dplyr::distinct() %>% 
+    group_by(anot1) %>% 
+    summarise(n = n()) %>% 
+    arrange(desc(n)) %>% 
+    mutate(label = factor(anot1, levels = anot1)) %>% 
+    ggplot(aes(x = label, y = n, fill = label)) + 
+    geom_bar(stat = "identity") +
+    my_theme1 + scale_fill_manual(values = cols_tissue) + 
+    theme(legend.position = "none", 
+          axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5)) + 
+    labs(x = "", y = "Metabolite Number")
+}
+pdf(glue("./fig3i_human_mz_num_tissue.pdf"))
+draw_bar(outcsv)
+dev.off()
+
 ```
 
-plot:
-
-```{r, echo = FALSE, fig.cap = "figure temp 3b", fig.align = "center", out.width = "100%"}
-knitr::include_graphics("images/igd_comparison_gsea.png")
-```

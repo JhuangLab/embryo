@@ -4,7 +4,6 @@ format: html
 ---
 ## Figure 2
 
-(temp content) mutation status of mm driver genes in coMMpass and Jilin datasets
 
 ### Load Required Packages
 

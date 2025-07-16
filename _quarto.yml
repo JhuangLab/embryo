@@ -29,13 +29,16 @@ book:
         - href: datasets.qmd
           text: Data Sets
 
-
     - part: Data Preprocessing
       chapters:
         - href: qc.qmd
           text: Quality Control
         - href: clustering.qmd
           text: Clustering
+        - href: alignment.qmd
+          text: Alignment
+        - href: alignment.qmd
+          text: Registration
     - part: Unsupervised cluster
       chapters:
 
@@ -58,6 +61,31 @@ book:
           text: "Figure 2"
         - href: fig3.qmd
           text: "Figure 3"
+        - href: fig4.qmd
+          text: "Figure 4"
+        - href: fig5.qmd
+          text: "Figure 5"
+
+        - href: sfig1.qmd
+          text: "Sup Figure 1"
+        - href: sfig2.qmd
+          text: "Sup Figure 2"
+        - href: sfig3.qmd
+          text: "Sup Figure 3"
+        - href: sfig4.qmd
+          text: "Sup Figure 4"
+        - href: sfig5.qmd
+          text: "Sup Figure 5"
+        - href: sfig6.qmd
+          text: "Sup Figure 6"
+        - href: sfig7.qmd
+          text: "Sup Figure 7"
+        - href: sfig8.qmd
+          text: "Sup Figure 8"
+        - href: sfig10.qmd
+          text: "Sup Figure 10"
+        - href: sfig11.qmd
+          text: "Sup Figure 11"
 
     - part: Communication
       chapters:

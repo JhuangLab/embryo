@@ -1,3 +1,10 @@
+---
+title: "alignment"
+format: html
+---
+
+```{r, eval = FALSE} 
+
 library(tidyverse)
 library(FNN)
 library(parallel)
@@ -81,3 +88,5 @@ combined_metabolism <- Y_hat_bestnn$nn.index |>
   pivot_wider(id_cols = ion_peak, names_from = barcode, values_from = intensity) |> 
   column_to_rownames(var = ion_peak) |> 
   as.matrix()
+
+```

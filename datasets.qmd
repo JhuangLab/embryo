@@ -1,15 +1,12 @@
-# Datasets from the first hospital of Jilin University
+---
+title: "Data collection"
+format: html
+---
 
-This dataset was newly curated for the current study and originates from The First Hospital of Jilin University. Sample collection spanned from 2017 through the end of 2023. The dataset includes 156 RNA-seq and 84 whole-genome sequencing (WGS) datasets derived from 135 individuals, and is expected to reflect the characteristics of Chinese or broader Asian populations to some extent.
+## Data sets
 
-Among the collected samples, there are 186 baseline (newly diagnosed) cases, 29 first relapse samples, 17 post-treatment (remission) cases, and 8 others. A total of 202 samples were purified CD138⁺ bone marrow cells, and 38 samples of paired PBMCs were also included, covering multiple clinical timepoints and sample types.
+Data sets were newly curated for the current study and originates from both mouse and human embryos. Murine samples were collected at E9.5 (n = 3), E11.5 (n = 2), and E13.5 (n = 2) from pregnant females. The collection and use of human embryos, which obtained from women who voluntarily terminated their pregnancies in this study were approved by the Clinical Research Ethics Committee of the First Affiliated Hospital of Zhejiang University. Based on size and anatomical characteristics, human embryos were staged as CS12, CS14, CS16, and CS18. And only one sample was representative for each stage.
 
-Following Jonathan J. Keats' recommendation, we sequenced whole-genome sequencing (WGS) data to >90x coverage for tumor samples and >30x for matched normals. Typically, 100 Gb corresponds to just over 30x coverage, which may suffice for copy number variation (CNV) analysis in some myeloma samples but is underpowered for detecting structural variants and mutations. Additionally, for mRNA sequencing, we targeted approximately 100 million reads per patient to account for the fact that ~50% of RNA derives from immunoglobulin production, ensuring robust gene expression profiling.
+After frozen sectioning, serial slides from target embryos were collected and one section stained with hematoxylin and eosin (H&E). Slides approximating the midsagittal plane were mounted onto 10 × Genomics Visium array slides (6.5 × 6.5 mm or 11 × 11 mm area) for spatially resolved transcriptomics with Visium platform following the manufacturer's instructions outlined in the user guides. Another 2 adjacent sections were mounted onto Superfrost Plus slides (Citotest) for AFADESI-MSI, with vacuum-dried at first. Raw data were converted to the standard ‘.imzML’ format using the imzMLConverter software and ion identification was conducted with pySM framework. Spatial transcriptomics and metabolomics data were gained from Ouyi Biological Company. Tissue annotations were manually performed using graphical user interface of Loupe Browser (v8) according to morphological structure from H&E and transcript features of unsupervised clustering. 
 
-
-In addition, we generated single-cell RNA-seq data from two IgD-type MM samples at The First Hospital of Jilin University. These new data were assembled with public single-cell RNA-seq datasets of MM samples from multiple sources. All single-cell datasets were processed using a standardized pipeline to ensure consistent integration and quality control.
-
-<!-- Below are the basic statistics of this dataset: -->
-
-
-
+Additionally, a single-nucleus RNA sequencing dataset (GSE186069) was downloaded from GEO database with its associated annotations, to characterize cell composition within embryonic sample spots. 
