@@ -37,7 +37,7 @@ book:
           text: Clustering
         - href: alignment.qmd
           text: Alignment
-        - href: alignment.qmd
+        - href: registration.qmd
           text: Registration
     - part: Unsupervised cluster
       chapters:
