@@ -1,0 +1,7 @@
+---
+title: "Spatial metabolomics"
+format: html
+---
+## Spatial metabolomics
+
+A custom-built AFADESI-MSI platform equipped with a Q-Exactive Orbitrap mass spectrometer (Thermo Scientific, Bremen, Germany) and an AFADESI ion source were used for spatial metabolomics profiling of embryos. Mass spectrometry imaging was performed in both negative and positive ion modes, scanning a mass range of m/z 70-1000. The spray solvent, a mixture of acetonitrile and water (80:20, v/v), was delivered at a flow rate of 5.0 µL/min. Sprayer voltages were set to 4500 V and -4500 V for positive and negative ion modes, respectively. The extracting gas flow rate of the AFADESI ion source was 45 L/min, and the nebulizing gas (N2) flow rate was set to 0.7 MPa. Imaging analysis involved continuous scanning in the x-direction at a rate of 100 µm/s, with a 100 µm vertical step size in the y-direction. MassImager Pro software was used for background subtraction, image reconstruction, and the calculation of average metabolite expression levels within regions of interest. 

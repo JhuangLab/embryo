@@ -56,13 +56,13 @@ for (i in 2:length(total_counts_list)) {
 }
 hugo_anno <- readr::read_delim("/cluster/home/yjliu_jh/projects/mm/data/hgnc_complete_set.txt",
                                col_types = cols(intermediate_filament_db = col_character()))
-hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] %>% as.data.frame() 
+hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] |> as.data.frame() 
 colnames(hugo_anno)[2] <- "gene_id"
 
 # prepare counts data
-counts_all <- counts_all[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
-  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
-  column_to_rownames(var = "symbol") %>% as.matrix() %>% round()
+counts_all <- counts_all[, -2] |> left_join(hugo_anno) |> na.omit() |> 
+  dplyr::select(-c(gene_id, locus_group)) |> as.data.frame() |> remove_rownames() |> 
+  column_to_rownames(var = "symbol") |> as.matrix() |> round()
 
 # get exp
 pred_rna_lib <- function (dat_mat) {
@@ -91,9 +91,9 @@ Perform paired DE analysis on the first set:
 ```{r, echo=TRUE, eval=FALSE}
 
 counts_mm <- read_csv("/cluster/home/jhuang/projects/mm/analysis/EGAD00001007813/human/rnaseq/exp/tables/EGAD00001007813_human_counts.csv")
-new_counts <- counts_mm[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
-  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
-  column_to_rownames(var = "symbol") %>% as.matrix() %>% round()
+new_counts <- counts_mm[, -2] |> left_join(hugo_anno) |> na.omit() |> 
+  dplyr::select(-c(gene_id, locus_group)) |> as.data.frame() |> remove_rownames() |> 
+  column_to_rownames(var = "symbol") |> as.matrix() |> round()
 new_counts <- new_counts[, all_paired_samples]
 ega_si1 <- data.frame(patient_id = rep(paired_patients, 2), 
                       sample_id = all_paired_samples,
@@ -165,15 +165,15 @@ merged_sinfo <- read_rds("~/projects/mm/docs/meta/sampleinfo/sampleinfo_jilin_co
 
 # in our data
 counts_jilin <- read_csv("/cluster/home/jhuang/projects/mm/analysis/jilin/human/rnaseq/exp/tables/jilin_human_counts.csv")
-counts_jilin <- counts_jilin[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
-  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
-  column_to_rownames(var = "symbol") %>% as.matrix() %>% round()
-sinfo_jilin <- merged_sinfo[merged_sinfo$sample_id %in% colnames(counts_jilin), c("sample_id", "cn_name", "tumor_descriptor")] %>% unique()
+counts_jilin <- counts_jilin[, -2] |> left_join(hugo_anno) |> na.omit() |> 
+  dplyr::select(-c(gene_id, locus_group)) |> as.data.frame() |> remove_rownames() |> 
+  column_to_rownames(var = "symbol") |> as.matrix() |> round()
+sinfo_jilin <- merged_sinfo[merged_sinfo$sample_id %in% colnames(counts_jilin), c("sample_id", "cn_name", "tumor_descriptor")] |> unique()
 sinfo_jilin2 <- sinfo_jilin[sinfo_jilin$tumor_descriptor %notin% "initial_treating", ]
-temp_count <- sinfo_jilin2 %>% group_by(cn_name) %>% summarise(c = length(unique(tumor_descriptor)))
+temp_count <- sinfo_jilin2 |> group_by(cn_name) |> summarise(c = length(unique(tumor_descriptor)))
 temp_patients <- temp_count$cn_name[temp_count$c > 1]
 sinfo_jilin2 <- sinfo_jilin2[sinfo_jilin2$cn_name %in% temp_patients, ]
-sinfo_jilin2 <- sinfo_jilin2[!duplicated(sinfo_jilin2[, 2:3]), ] %>% as.data.frame()
+sinfo_jilin2 <- sinfo_jilin2[!duplicated(sinfo_jilin2[, 2:3]), ] |> as.data.frame()
 sinfo_jilin2 <- sinfo_jilin2[order(sinfo_jilin2$cn_name, sinfo_jilin2$tumor_descriptor), ]
 rownames(sinfo_jilin2) <- sinfo_jilin2$sample_id
 counts_jilin_paired <- counts_jilin[, rownames(sinfo_jilin2)]

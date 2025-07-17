@@ -2,126 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jhuanglab.github.io/embryo/index.html</loc>
-    <lastmod>2025-07-17T01:59:48.526Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.517Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/welcome.html</loc>
-    <lastmod>2025-07-17T01:59:48.555Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.556Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/intro.html</loc>
-    <lastmod>2025-06-14T14:56:25.000Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.519Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/datasets.html</loc>
-    <lastmod>2025-07-16T09:50:23.000Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.484Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/qc.html</loc>
-    <lastmod>2025-07-16T07:47:49.096Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.535Z</lastmod>
   </url>
   <url>
-    <loc>https://jhuanglab.github.io/embryo/clustering.html</loc>
-    <lastmod>2025-07-16T07:48:33.904Z</lastmod>
+    <loc>https://jhuanglab.github.io/embryo/metabolomics.html</loc>
+    <lastmod>2025-07-17T03:49:35.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhuanglab.github.io/embryo/transcriptomics.html</loc>
+    <lastmod>2025-07-17T03:49:35.553Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/registration.html</loc>
-    <lastmod>2025-07-16T09:53:49.395Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.538Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhuanglab.github.io/embryo/alignment.html</loc>
+    <lastmod>2025-07-17T03:49:35.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhuanglab.github.io/embryo/functional_evaluation.html</loc>
+    <lastmod>2025-07-17T03:49:35.514Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/pyscenic.html</loc>
-    <lastmod>2025-07-17T01:59:48.526Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.533Z</lastmod>
   </url>
   <url>
-    <loc>https://jhuanglab.github.io/embryo/drug.html</loc>
-    <lastmod>2025-07-16T07:16:12.798Z</lastmod>
+    <loc>https://jhuanglab.github.io/embryo/moran.html</loc>
+    <lastmod>2025-07-17T03:49:35.527Z</lastmod>
   </url>
   <url>
-    <loc>https://jhuanglab.github.io/embryo/mmyelomap.html</loc>
-    <lastmod>2025-07-16T07:16:12.915Z</lastmod>
+    <loc>https://jhuanglab.github.io/embryo/trend_clustering.html</loc>
+    <lastmod>2025-07-17T03:49:35.554Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhuanglab.github.io/embryo/deconvolution.html</loc>
+    <lastmod>2025-07-17T03:49:35.485Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/fig1.html</loc>
-    <lastmod>2025-07-17T01:59:48.518Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.495Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/fig2.html</loc>
-    <lastmod>2025-07-17T01:59:48.519Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.499Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/fig3.html</loc>
-    <lastmod>2025-07-17T01:59:48.520Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.504Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/fig4.html</loc>
-    <lastmod>2025-07-17T01:59:48.521Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.508Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/fig5.html</loc>
-    <lastmod>2025-07-17T01:59:48.523Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.511Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig1.html</loc>
-    <lastmod>2025-07-17T01:59:48.528Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.540Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig2.html</loc>
-    <lastmod>2025-07-17T01:59:48.530Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.545Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig3.html</loc>
-    <lastmod>2025-07-17T01:59:48.533Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.546Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig4.html</loc>
-    <lastmod>2025-07-17T01:59:48.535Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.547Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig5.html</loc>
-    <lastmod>2025-07-17T01:59:48.547Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.547Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig6.html</loc>
-    <lastmod>2025-07-17T01:59:48.552Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.548Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig7.html</loc>
-    <lastmod>2025-07-17T01:59:48.553Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.549Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig8.html</loc>
-    <lastmod>2025-07-17T01:59:48.554Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.551Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig10.html</loc>
-    <lastmod>2025-07-17T01:59:48.529Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.541Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig11.html</loc>
-    <lastmod>2025-07-17T01:59:48.529Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.542Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/faq.html</loc>
-    <lastmod>2025-06-14T14:56:25.000Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.493Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/contactus.html</loc>
-    <lastmod>2025-07-16T12:18:15.326Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.483Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/functions.html</loc>
-    <lastmod>2025-07-17T01:59:48.525Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.516Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/acknowledgement.html</loc>
-    <lastmod>2025-06-23T02:28:02.767Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.481Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/final.html</loc>
-    <lastmod>2025-07-17T01:59:48.524Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.512Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/references.html</loc>
-    <lastmod>2025-06-23T02:28:02.932Z</lastmod>
+    <lastmod>2025-07-17T03:49:35.537Z</lastmod>
   </url>
 </urlset>

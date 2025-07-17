@@ -37,9 +37,9 @@ heatmap_genes <- "~/projects/mm/analysis/meta/human/rnaseq/figures/heatmap/step1
   readxl::read_xlsx(sheet = "heatmapeGenes")
 dat_exp <- dat_raw[heatmap_genes$gene_name, ] |> t()
 
-sampleinfo <- sampleinfo_raw %>%
-  filter(sample_id %in% rownames(dat_exp)) %>%
-  arrange(match(sample_id, rownames(dat_exp))) %>%
+sampleinfo <- sampleinfo_raw |>
+  filter(sample_id %in% rownames(dat_exp)) |>
+  arrange(match(sample_id, rownames(dat_exp))) |>
   select(sample_id, subtypes)
 
 col_subt <- c("Low_purity" = "black", "MS" = "#ebb415",

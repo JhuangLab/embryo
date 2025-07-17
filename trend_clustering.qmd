@@ -1,0 +1,6 @@
+---
+title: "Trend Clustering"
+format: html
+---
+
+## Trend Clustering

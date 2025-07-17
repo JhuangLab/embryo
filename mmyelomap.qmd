@@ -50,11 +50,11 @@ mm1330 <- read_rds("~/projects/mm/analysis/meta/human/rnaseq/exp/mm1330.rds")
 # load new gene symbol info 
 hugo_anno <- readr::read_delim("/cluster/home/yjliu_jh/projects/mm/data/hgnc_complete_set.txt",
                                col_types = cols(intermediate_filament_db = col_character()))
-hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] %>% as.data.frame() 
+hugo_anno <- hugo_anno[, c("symbol", "ensembl_gene_id", "locus_group")] |> as.data.frame() 
 colnames(hugo_anno)[2] <- "gene_id"
-exp_mm <- mm1330[, -2] %>% left_join(hugo_anno) %>% na.omit() %>% 
-  dplyr::select(-c(gene_id, locus_group)) %>% as.data.frame() %>% remove_rownames() %>% 
-  column_to_rownames(var = "symbol") %>% as.matrix()
+exp_mm <- mm1330[, -2] |> left_join(hugo_anno) |> na.omit() |> 
+  dplyr::select(-c(gene_id, locus_group)) |> as.data.frame() |> remove_rownames() |> 
+  column_to_rownames(var = "symbol") |> as.matrix()
 
 # select primary samples and divide them based on recurrence
 sinfo_commpass <- merged_sinfo[merged_sinfo$batch %in% "commpass", ]
@@ -64,12 +64,12 @@ dup_patients <- intersect(sinfo_c_fil$patient_id[sinfo_c_fil$tumor_descriptor %i
 sinfo_commpass2 <- sinfo_c_fil[sinfo_c_fil$patient_id %in% dup_patients, c("sample_id", "patient_id", "tumor_descriptor")]
 sinfo_commpass2 <- sinfo_commpass2[sinfo_commpass2$tumor_descriptor %in% "primary", ]
 
-sinfo_jilin <- merged_sinfo[merged_sinfo$batch %in% "jilin", c("sample_id", "cn_name", "tumor_descriptor")] %>% unique()
+sinfo_jilin <- merged_sinfo[merged_sinfo$batch %in% "jilin", c("sample_id", "cn_name", "tumor_descriptor")] |> unique()
 sinfo_jilin2 <- sinfo_jilin[sinfo_jilin$tumor_descriptor %notin% "initial_treating", ]
-temp_count <- sinfo_jilin2 %>% group_by(cn_name) %>% summarise(c = length(unique(tumor_descriptor)))
+temp_count <- sinfo_jilin2 |> group_by(cn_name) |> summarise(c = length(unique(tumor_descriptor)))
 temp_patients <- temp_count$cn_name[temp_count$c > 1]
 sinfo_jilin2 <- sinfo_jilin2[sinfo_jilin2$cn_name %in% temp_patients & sinfo_jilin2$tumor_descriptor %in% "primary", ]
-sinfo_jilin3 <- sinfo_jilin2[!duplicated(sinfo_jilin2[, 2:3]), ] %>% as.data.frame()
+sinfo_jilin3 <- sinfo_jilin2[!duplicated(sinfo_jilin2[, 2:3]), ] |> as.data.frame()
 sinfo_jilin3 <- sinfo_jilin3[order(sinfo_jilin3$cn_name, sinfo_jilin3$tumor_descriptor), ]
 jilin_extra <- anti_join(sinfo_jilin2, sinfo_jilin3)$sample_id
 
@@ -90,7 +90,7 @@ baseline_samples <- sample(all_baseline_samples, 800)
 remaining_baseline <- setdiff(all_baseline_samples, baseline_samples)
 
 exp_mm_fil <- exp_mm[, c(baseline_samples, relapse_samples)]
-exp_mm_fil <- as.data.frame(exp_mm_fil) %>% dplyr::arrange(desc(rowVars(exp_mm_fil)))
+exp_mm_fil <- as.data.frame(exp_mm_fil) |> dplyr::arrange(desc(rowVars(exp_mm_fil)))
 hvg <- rownames(exp_mm_fil)[1:750]
 exp_diff <- rowMeans(exp_mm_fil[, baseline_samples]) - rowMeans(exp_mm_fil[, relapse_samples])
 dfg <- names(tail(sort(abs(exp_diff)), 250))
@@ -118,7 +118,7 @@ rf_model <- ranger::ranger(  ## may go further on parameter selection
   num.trees = 2000
 )
 
-# test_other <- merged_sinfo$sample_id[merged_sinfo$datasets %in% "bmc" & merged_sinfo$tumor_descriptor %in% "primary"] %>% sample(10)
+# test_other <- merged_sinfo$sample_id[merged_sinfo$datasets %in% "bmc" & merged_sinfo$tumor_descriptor %in% "primary"] |> sample(10)
 exp_new <- exp_mm[, intersect(c(remaining_samples, remaining_baseline), colnames(exp_mm))]
 
 exp_new_t <- as.data.frame(t(exp_new))

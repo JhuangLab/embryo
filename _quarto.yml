@@ -33,23 +33,28 @@ book:
       chapters:
         - href: qc.qmd
           text: Quality Control
-        - href: clustering.qmd
-          text: Clustering
+        - href: metabolomics.qmd
+          text: Spatial Metabolomics
+        - href: transcriptomics.qmd
+          text: Spatial Transcriptomics
         - href: registration.qmd
           text: Registration
-    - part: TF Activity
-      chapters:
-
-        - href: pyscenic.qmd
-          text: Pyscenic
 
     - part: Analysis
       chapters:
+        - href: alignment.qmd
+          text: Alignment
+        - href: functional_evaluation.qmd
+          text: Functional evaluation with ST data
+        - href: pyscenic.qmd
+          text: Pyscenic
+        - href: moran.qmd
+          text: Moran’s I Trend
+        - href: trend_clustering.qmd
+          text: Trend Clustering
+        - href: deconvolution.qmd
+          text: Deconvolution
 
-        - href: drug.qmd
-          text: Treatment
-        - href: mmyelomap.qmd
-          text: The Mmyelomap
 
     - part: Visualization
       chapters:

@@ -1,0 +1,8 @@
+---
+title: "Spatial Transcriptomics (ST) "
+format: html
+---
+## Spatial Transcriptomics
+
+Sequence alignment to the corresponding reference genomes (GRCh38 for human samples and GRCm38 for mouse samples) was performed using the embedded STAR software [PMID: 23104886] within SpaceRanger (v3.0, 10x Genomics) under default settings. Additional preprocessing steps, including UMI counting and spot barcode filtering, were also executed using SpaceRanger. The resulting ‘.cloupe’ files and ‘filtered_feature_bc_matrix’ directories were used for subsequent analyses.
+For each species, the output files from the ‘filtered_feature_bc_matrix’ directory were imported into R (v4.3.0, https://cran.r-project.org) using Seurat (v5.0.1) [PMID: 37231261]. Normalization, scaling, and the identification of highly variable features were performed for each sample using the SCT (v2) algorithm [PMID: 35042561; PMID: 31870423] implemented within Seurat. Dimensionality reduction with PCA was conducted, with number of principal components setting as 100. Top 30 components were then utilized for non-linear process of UMAP. Samples from different stages were merged to analyze gene expression similarities across developmental stages using the same processing pipeline.
