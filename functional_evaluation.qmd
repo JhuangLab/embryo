@@ -3,4 +3,49 @@ title: "Functional evaluation with ST data"
 format: html
 ---
 
-## Functional evaluation with ST data
+## Functional evaluation
+
+Pathway information was retrieved from the KEGG database (v110.0) using the `KEGGREST` package (v1.46.0). Single-sample gene set enrichment analysis (ssGSEA), implemented in the `GSVA` package (v1.52.3), was performed to estimate functional profiles at each spot.
+
+```{r, eval = FALSE} 
+library(GSVA)
+library(tidyverse)
+library(KEGGREST)
+
+## demo of kegg info downloading -----
+pth_id <- KEGGREST::keggList("pathway", "mmu")
+kegg_info_lst <- list()
+for(idx in 241:length(pth_id)) {
+  lst1 = KEGGREST::keggGet(names(pth_id)[idx])[[1]]
+  if("GENE" %in% names(lst1)) {
+    str1 <- lst1$GENE |> grep("^[A-Z]+", ., value = T) |> 
+      str_split("; ", simplify = T) |> as.data.frame() |> 
+      dplyr::rename("gene_name" = "V1", "description" = "V2")
+    str2 <- lst1$GENE |> grep("^[0-9]+", ., value = T)
+    kegg_info_lst[[names(pth_id)[idx]]] <- 
+      data.frame(path_id = names(pth_id)[idx], path_name = pth_id[idx]) |> 
+      data.frame(., str1)
+  }
+}
+kegg_pth_info = kegg_info_lst |> bind_rows() |> 
+  mutate(path_name = case_when(grepl("Mus mus", path_name) ~ str_sub(path_name, end = -30), 
+                               TRUE ~ path_name))
+write_csv(kegg_pth_info, "kegg_mmu_all_pth_genes.csv")
+
+## read the kegg pathway info and perform ssGSEA -----
+kegg_info <- read_csv("kegg_mmu_all_pth_genes.csv")
+kegg_lst <- lapply(unique(kegg_info$pth_name), function(x) {
+  kegg_info |> dplyr::filter(pth_name == x) |> pull(gene_name)
+}) |> setNames(nm = unique(kegg_info$pth_name))
+
+rds_fn4 <- "st_seu_obj.rds"
+seu_lst <- read_rds(rds_fn4)
+ssgsea_score <- lapply(names(seu_lst), function(nm) {
+  seu2 <- seu_lst[[nm]]
+  cnt <- JoinLayers(seu2[["Spatial"]]) |> LayerData(layer = "counts") |> as.matrix()
+  ssgsea_param <- GSVA::ssgseaParam(cnt, kegg_lst)
+  ssgsea_score <- GSVA::gsva(ssgsea_param)
+}) |> setNames(nm = names(seu_lst))
+write_rds(ssgsea_score, "ssgsea_score_lst.rds")
+
+```
