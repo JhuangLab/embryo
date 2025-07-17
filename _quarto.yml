@@ -48,6 +48,8 @@ book:
           text: Moran’s I Trend
         - href: trend_clustering.qmd
           text: Trend Clustering
+        - href: enrich_sp_metabolomics.qmd
+          text: Enrichment Metabolomics
         - href: deconvolution.qmd
           text: Deconvolution
 

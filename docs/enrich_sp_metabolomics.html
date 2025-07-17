@@ -8,7 +8,7 @@
 
 <meta name="author" content="Jinyan Huang">
 
-<title>1&nbsp; Data collection – Mammalian Organogenesis</title>
+<title>9&nbsp; Enrichment analysis for spatial metabolomics – Mammalian Organogenesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./metabolomics.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./deconvolution.html" rel="next">
+<link href="./trend_clustering.html" rel="prev">
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -84,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datasets.html">Data Collection</a></li><li class="breadcrumb-item"><a href="./datasets.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Sets</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./functional_evaluation.html">Analysis</a></li><li class="breadcrumb-item"><a href="./enrich_sp_metabolomics.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Enrichment Metabolomics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -146,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./datasets.html" class="sidebar-item-text sidebar-link active">
+  <a href="./datasets.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
   </div>
 </li>
@@ -216,7 +251,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./enrich_sp_metabolomics.html" class="sidebar-item-text sidebar-link">
+  <a href="./enrich_sp_metabolomics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Enrichment Metabolomics</span></span></a>
   </div>
 </li>
@@ -397,16 +432,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data-sets" id="toc-data-sets" class="nav-link active" data-scroll-target="#data-sets"><span class="header-section-number">1.1</span> Data sets</a></li>
+  <li><a href="#enrichment-analysis-for-spatial-metabolomics-data" id="toc-enrichment-analysis-for-spatial-metabolomics-data" class="nav-link active" data-scroll-target="#enrichment-analysis-for-spatial-metabolomics-data"><span class="header-section-number">9.1</span> Enrichment analysis for spatial metabolomics data</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datasets.html">Data Collection</a></li><li class="breadcrumb-item"><a href="./datasets.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Sets</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./functional_evaluation.html">Analysis</a></li><li class="breadcrumb-item"><a href="./enrich_sp_metabolomics.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Enrichment Metabolomics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data collection</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Enrichment analysis for spatial metabolomics</span></h1>
 </div>
 
 
@@ -423,11 +458,73 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="data-sets" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="data-sets"><span class="header-section-number">1.1</span> Data sets</h2>
-<p>Data sets were newly curated for the current study and originates from both mouse and human embryos. Murine samples were collected at E9.5 (n = 3), E11.5 (n = 2), and E13.5 (n = 2) from pregnant females. The collection and use of human embryos, which obtained from women who voluntarily terminated their pregnancies in this study were approved by the Clinical Research Ethics Committee of the First Affiliated Hospital of Zhejiang University. Based on size and anatomical characteristics, human embryos were staged as CS12, CS14, CS16, and CS18. And only one sample was representative for each stage.</p>
-<p>After frozen sectioning, serial slides from target embryos were collected and one section stained with hematoxylin and eosin (H&amp;E). Slides approximating the midsagittal plane were mounted onto 10 × Genomics Visium array slides (6.5 × 6.5 mm or 11 × 11 mm area) for spatially resolved transcriptomics with Visium platform following the manufacturer’s instructions outlined in the user guides. Another 2 adjacent sections were mounted onto Superfrost Plus slides (Citotest) for AFADESI-MSI, with vacuum-dried at first. Raw data were converted to the standard ‘.imzML’ format using the imzMLConverter software and ion identification was conducted with pySM framework. Spatial transcriptomics and metabolomics data were gained from Ouyi Biological Company. Tissue annotations were manually performed using graphical user interface of Loupe Browser (v8) according to morphological structure from H&amp;E and transcript features of unsupervised clustering.</p>
-<p>Additionally, a single-nucleus RNA sequencing dataset (GSE186069) was downloaded from GEO database with its associated annotations, to characterize cell composition within embryonic sample spots.</p>
+<section id="enrichment-analysis-for-spatial-metabolomics-data" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="enrichment-analysis-for-spatial-metabolomics-data"><span class="header-section-number">9.1</span> Enrichment analysis for spatial metabolomics data</h2>
+<p>FELLA, a holistic graph-based method using KEGG database, was applied. The input items consist of all potential KEGG compound IDs of each ion. Utilizing a KEGG graph, all the methods, including diffusion, PageRank and hypergeometric algorithm, were employed and metabolism related pathways of top 5 smallest p-value were shown as the most significant for each tissue.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FELLA)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## build graph and data -----</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_create</span>(<span class="st">"~/ref/fella/"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## mouse ----</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> <span class="fu">buildGraphFromKEGGREST</span>(<span class="at">organism =</span> <span class="st">"mmu"</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">filter.path =</span> <span class="fu">c</span>(<span class="st">"01100"</span>, <span class="st">"01200"</span>, <span class="st">"01210"</span>, <span class="st">"01212"</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                                <span class="st">"01230"</span>, <span class="st">"01232"</span>, <span class="st">"01250"</span>, <span class="st">"01240"</span>, <span class="st">"01220"</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(graph, <span class="st">"~/ref/fella/kegg_mmu_graph.rds"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>tmpdir <span class="ot">&lt;-</span> <span class="st">"~/ref/fella/kegg/mmu"</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Mke sure the database does not exist from a former vignette build</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Otherwise the vignette will rise an error</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># because FELLA will not overwrite an existing database</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">buildDataFromGraph</span>(<span class="at">keggdata.graph =</span> graph, <span class="at">databaseDir =</span> tmpdir, <span class="at">internalDir =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">matrices =</span> <span class="fu">c</span>(<span class="st">"hypergeom"</span>, <span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>), </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">normality =</span> <span class="fu">c</span>(<span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>), <span class="at">niter =</span> <span class="dv">200</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="do">## perform enrichment analysis -----</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>fella.data <span class="ot">&lt;-</span> <span class="fu">loadKEGGdata</span>(<span class="at">databaseDir =</span> tmpdir, <span class="at">internalDir =</span> <span class="cn">FALSE</span>, <span class="at">loadMatrix =</span> <span class="st">"diffusion"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>xlsx_fn1 <span class="ot">&lt;-</span> <span class="st">"Qualitative.xlsx"</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(samp <span class="cf">in</span> samples) {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(<span class="fu">glue</span>(<span class="st">"{workdir}/{samp}"</span>))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  mz_tbl <span class="ot">&lt;-</span> <span class="fu">rbind</span>(neg_mks_lst[[samp]], pos_mks_lst[[samp]]) <span class="sc">|&gt;</span> <span class="fu">tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(avg_log2FC <span class="sc">&gt;</span> <span class="dv">0</span>, p_val_adj <span class="sc">&lt;</span> .<span class="dv">01</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mz2 =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(gene, <span class="at">start =</span> <span class="dv">5</span>)) <span class="sc">|&gt;</span> <span class="fu">sprintf</span>(<span class="at">fmt =</span> <span class="st">"%.5f"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">gene2 =</span> <span class="fu">paste0</span>(<span class="fu">str_sub</span>(gene, <span class="at">end =</span> <span class="dv">4</span>), mz2))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    anot_neg <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(xlsx_fn1, <span class="at">sheet =</span> <span class="st">"neg-all"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">gene =</span> <span class="fu">paste0</span>(<span class="st">"neg-"</span>, mz))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    anot_pos <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(xlsx_fn1, <span class="at">sheet =</span> <span class="st">"pos-all"</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">gene =</span> <span class="fu">paste0</span>(<span class="st">"pos-"</span>, mz))</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  anot_tbl <span class="ot">&lt;-</span> <span class="fu">rbind</span>(anot_neg, anot_pos) <span class="sc">|&gt;</span> <span class="fu">tibble</span>()</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  tissues <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"liver"</span>, <span class="st">"heart"</span>, <span class="st">"forebrain"</span>, <span class="st">"midbrain"</span>, <span class="st">"hindbrain"</span>)[<span class="fu">c</span>(<span class="st">"liver"</span>, <span class="st">"heart"</span>, <span class="st">"forebrain"</span>, <span class="st">"midbrain"</span>, <span class="st">"hindbrain"</span>) <span class="sc">%in%</span> mz_tbl<span class="sc">$</span>cluster]</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  tst_lst <span class="ot">&lt;-</span> <span class="fu">lapply</span>(tissues, \(tissue){</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>      genes <span class="ot">&lt;-</span> mz_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(cluster <span class="sc">==</span> tissue, <span class="fu">grepl</span>(<span class="st">"^neg-"</span>, gene)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(gene)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="fu">length</span>(genes) <span class="sc">&gt;</span> <span class="dv">10</span>){</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        kegg_ids <span class="ot">=</span> anot_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(gene <span class="sc">%in%</span> genes) <span class="sc">|&gt;</span> <span class="fu">pull</span>(KEGG) <span class="sc">|&gt;</span> <span class="fu">na.omit</span>() <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      keg_id <span class="ot">&lt;-</span> kegg_ids</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      anls <span class="ot">&lt;-</span> <span class="fu">enrich</span>(<span class="at">compounds =</span> keg_id, <span class="at">data =</span> fella.data, </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="fu">c</span>(<span class="st">"hypergeom"</span>, <span class="st">"diffusion"</span>, <span class="st">"pagerank"</span>), <span class="at">approx =</span> <span class="st">"normality"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">getExcluded</span>(anls)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      res_tbl <span class="ot">&lt;-</span> <span class="fu">generateResultsTable</span>(<span class="at">method =</span> <span class="st">"diffusion"</span>, <span class="at">threshold =</span> <span class="fl">0.2</span>, <span class="at">capPscores =</span> <span class="dv">0</span>, </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">object =</span> anls, <span class="at">data =</span> fella.data, <span class="at">clusterLengthAtPlot =</span> <span class="dv">100</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      res_tbl2 <span class="ot">&lt;-</span> <span class="fu">generateResultsTable</span>(<span class="at">method =</span> <span class="st">"pagerank"</span>, <span class="at">threshold =</span> <span class="fl">0.2</span>, <span class="at">capPscores =</span> <span class="dv">0</span>, </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">object =</span> anls, <span class="at">data =</span> fella.data, <span class="at">clusterLengthAtPlot =</span> <span class="dv">100</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      res_tbl3 <span class="ot">&lt;-</span> <span class="fu">generateResultsTable</span>(<span class="at">method =</span> <span class="st">"hypergeom"</span>, <span class="at">threshold =</span> <span class="fl">0.2</span>, <span class="at">capPscores =</span> <span class="dv">0</span>,  </span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">object =</span> anls, <span class="at">data =</span> fella.data, <span class="at">clusterLengthAtPlot =</span> <span class="dv">100</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>      res_lst <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">diffusion =</span> res_tbl, <span class="at">pagerank =</span> res_tbl2, <span class="at">hypergeom =</span> res_tbl3)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      res_lst <span class="ot">&lt;-</span> res_lst[<span class="sc">!</span><span class="fu">unlist</span>(<span class="fu">lapply</span>(res_lst, is.null))]</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span>(idx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(res_lst)) {</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        res_lst[[idx]][[<span class="st">"KEGG.name"</span>]] <span class="ot">&lt;-</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>          stringr<span class="sc">::</span><span class="fu">str_split</span>(res_lst[[idx]][[<span class="st">"KEGG.name"</span>]], <span class="st">" - Mus"</span>, <span class="at">simplify =</span> T)[, <span class="dv">1</span>]</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>      writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(res_lst, <span class="fu">glue</span>(<span class="st">"fella_enrich_up_res_{tissue}_neg_true.xlsx"</span>))</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -834,13 +931,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      <a href="./trend_clustering.html" class="pagination-link" aria-label="Trend Clustering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Trend Clustering</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./metabolomics.html" class="pagination-link" aria-label="Spatial Metabolomics">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Spatial Metabolomics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./deconvolution.html" class="pagination-link" aria-label="Deconvolution">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deconvolution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
