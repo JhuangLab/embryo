@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -84,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metabolomics.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metabolomics.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./spatial_transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -169,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./transcriptomics.html" class="sidebar-item-text sidebar-link active">
+  <a href="./spatial_transcriptomics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></span></a>
   </div>
 </li>
@@ -397,14 +432,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#spatial-transcriptomics" id="toc-spatial-transcriptomics" class="nav-link active" data-scroll-target="#spatial-transcriptomics"><span class="header-section-number">3.1</span> Spatial Transcriptomics</a></li>
+  <li><a href="#spatial-transcriptomics" id="toc-spatial-transcriptomics" class="nav-link active" data-scroll-target="#spatial-transcriptomics"><span class="header-section-number">3.1</span> Spatial transcriptomics</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metabolomics.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metabolomics.html">Data Preprocessing</a></li><li class="breadcrumb-item"><a href="./spatial_transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics (ST)</span></h1>
 </div>
@@ -424,8 +459,33 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="spatial-transcriptomics" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="spatial-transcriptomics"><span class="header-section-number">3.1</span> Spatial Transcriptomics</h2>
-<p>Sequence alignment to the corresponding reference genomes (GRCh38 for human samples and GRCm38 for mouse samples) was performed using the embedded STAR software [PMID: 23104886] within SpaceRanger (v3.0, 10x Genomics) under default settings. Additional preprocessing steps, including UMI counting and spot barcode filtering, were also executed using SpaceRanger. The resulting ‘.cloupe’ files and ‘filtered_feature_bc_matrix’ directories were used for subsequent analyses. For each species, the output files from the ‘filtered_feature_bc_matrix’ directory were imported into R (v4.3.0, https://cran.r-project.org) using Seurat (v5.0.1) [PMID: 37231261]. Normalization, scaling, and the identification of highly variable features were performed for each sample using the SCT (v2) algorithm [PMID: 35042561; PMID: 31870423] implemented within Seurat. Dimensionality reduction with PCA was conducted, with number of principal components setting as 100. Top 30 components were then utilized for non-linear process of UMAP. Samples from different stages were merged to analyze gene expression similarities across developmental stages using the same processing pipeline.</p>
+<h2 data-number="3.1" class="anchored" data-anchor-id="spatial-transcriptomics"><span class="header-section-number">3.1</span> Spatial transcriptomics</h2>
+<p>The sequencing sequences were aligned to the corresponding reference genome (GRCh38 for human samples and GRCm38 for mouse samples) by SpaceRanger (v3.0, 10x Genomics). Additional preprocessing steps, including UMI counting and spot barcode filtering, were performed using SpaceRanger. The resulting ‘.cloupe’ files and ‘filtered_feature_bc_matrix’ directories were used for subsequent analyses.</p>
+<p>The clean data generated by SpaceRanger were used for analyzing. Seurat (v5.0.1) was used to generate analysis object within the R environment (v4.3.0, https://cran.r-project.org). SCT (v2) algorithm was used to normalization, scaling, and the identification of highly variable features PCA embedding was performed using “RunPCA”, with number of principal components (PCs) setting as 100. Top 30 PCs were then utilized for non-linear process of UMAP. Samples from different stages were merged to analyze gene expression similarities across developmental stages using the same processing pipeline. Tissue-unique features were calculated with ‘FindAllMarkers’ function along with the manual annotations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>seu_lst <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">"E9.5"</span>, <span class="st">"E11.5"</span>, <span class="st">"E13.5"</span>), <span class="cf">function</span>(stg) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  dir <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">"data/{stg}"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  seu <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">Load10X_Spatial</span>(<span class="at">data.dir =</span> dir)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  csv_fn <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">"data/{stg}_tissuetype.csv"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  tissuetype <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csv_fn)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  seu<span class="sc">$</span>stage <span class="ot">&lt;-</span> stg</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  seu<span class="sc">$</span>tissuetype <span class="ot">&lt;-</span> tissuetype<span class="sc">$</span>tissuetype</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  seu <span class="ot">&lt;-</span> seu <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">SCTransform</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">RunPCA</span>(<span class="at">npcs =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Seurat<span class="sc">::</span><span class="fu">RunUMAP</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Idents</span>(seu) <span class="ot">&lt;-</span> seu<span class="sc">$</span>tissuetype</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  mks <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">FindAllMarkers</span>(seu, <span class="at">logfc.threshold =</span> <span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(mks, <span class="fu">glue</span>(<span class="st">"{stg}_tissuetypes_mks.csv"</span>))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(seu)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">setNames</span>(<span class="at">nm =</span> <span class="fu">c</span>(<span class="st">"E9.5"</span>, <span class="st">"E11.5"</span>, <span class="st">"E13.5"</span>))</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>mrg_seu <span class="ot">&lt;-</span> <span class="fu">merge</span>(seu_lst[[<span class="dv">1</span>]], seu_lst[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>mrg_seu2 <span class="ot">&lt;-</span> mrg_seu <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">SCTransform</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">RunPCA</span>(<span class="at">npcs =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  Seurat<span class="sc">::</span><span class="fu">RunUMAP</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

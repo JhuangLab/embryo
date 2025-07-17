@@ -1,0 +1,78 @@
+---
+title: "Enrichment spatial metabolomics"
+format: html
+---
+
+## Enrichment analysis for spatial metabolomics data
+
+To enrich the metabolomics data and identify key metabolic pathways associated with tissue-specific ion profiles, we employed FELLA, an R package designed for holistic graph-based enrichment analysis of metabolomics datasets using the Kyoto Encyclopedia of Genes and Genomes (KEGG) database. FELLA leverages a knowledge graph representation of KEGG to integrate and prioritize biological entities, offering a more nuanced understanding of metabolic networks compared to traditional over-representation analyses. The input for FELLA comprised all potential KEGG compound IDs annotated to each detected ion, derived from our qualitative metabolomics annotations, ensuring comprehensive coverage of possible metabolites without filtering based on ambiguity.
+
+We first constructed a curated KEGG graph using FELLA's buildGraphFromKEGGREST function, which retrieves and assembles the latest KEGG release via its REST API to form a connected network encompassing compounds, reactions, enzymes, modules, and pathways. Within this graph framework, we applied all available enrichment methods provided by FELLA—namely, the diffusion algorithm (which propagates impact across the network based on node connectivity), PageRank (which ranks nodes by their centrality and influence within the graph), and the hypergeometric test (for statistical over-representation)—to identify perturbed subgraphs and infer biologically relevant enrichments. These methods were run in combination to capture both local and global network effects, enhancing the robustness of the results against noise in metabolomics data.
+
+For each tissue, the metabolism-related pathways with the top 5 smallest p-values (adjusted for multiple testing where applicable) were selected and visualized as the most significant, highlighting key metabolic shifts and potential functional implications. This approach not only pinpointed enriched pathways but also facilitated the extraction of subnetworks for downstream interpretation, such as plotting relevant KEGG graph components to illustrate tissue-specific metabolic dynamics.
+
+```{r  eval=FALSE}
+library(FELLA)
+library(igraph)
+library(tidyverse)
+
+## build graph and data -----
+fs::dir_create("~/ref/fella/")
+## mouse ----
+graph <- buildGraphFromKEGGREST(organism = "mmu", 
+                                filter.path = c("01100", "01200", "01210", "01212", 
+                                                "01230", "01232", "01250", "01240", "01220"))
+write_rds(graph, "~/ref/fella/kegg_mmu_graph.rds")
+tmpdir <- "~/ref/fella/kegg/mmu" 
+# Mke sure the database does not exist from a former vignette build
+# Otherwise the vignette will rise an error
+# because FELLA will not overwrite an existing database
+buildDataFromGraph(keggdata.graph = graph, databaseDir = tmpdir, internalDir = FALSE, 
+                   matrices = c("hypergeom", "diffusion", "pagerank"), 
+                   normality = c("diffusion", "pagerank"), niter = 200)
+rm(list = ls())
+gc()
+
+## perform enrichment analysis -----
+fella.data <- loadKEGGdata(databaseDir = tmpdir, internalDir = FALSE, loadMatrix = "diffusion")
+
+xlsx_fn1 <- "Qualitative.xlsx"
+for(samp in samples) {
+  setwd(glue("{workdir}/{samp}"))
+  mz_tbl <- rbind(neg_mks_lst[[samp]], pos_mks_lst[[samp]]) |> tibble() |> 
+    dplyr::filter(avg_log2FC > 0, p_val_adj < .01) |> 
+    mutate(mz2 = as.numeric(str_sub(gene, start = 5)) |> sprintf(fmt = "%.5f")) |> 
+    mutate(gene2 = paste0(str_sub(gene, end = 4), mz2))
+    anot_neg <- readxl::read_excel(xlsx_fn1, sheet = "neg-all") |> mutate(gene = paste0("neg-", mz))
+    anot_pos <- readxl::read_excel(xlsx_fn1, sheet = "pos-all") |> mutate(gene = paste0("pos-", mz))
+  anot_tbl <- rbind(anot_neg, anot_pos) |> tibble()
+
+  tissues <- c("liver", "heart", "forebrain", "midbrain", "hindbrain")[c("liver", "heart", "forebrain", "midbrain", "hindbrain") %in% mz_tbl$cluster]
+  tst_lst <- lapply(tissues, \(tissue){
+      genes <- mz_tbl |> dplyr::filter(cluster == tissue, grepl("^neg-", gene)) |> pull(gene)
+      if(length(genes) > 10){
+        kegg_ids = anot_tbl |> dplyr::filter(gene %in% genes) |> pull(KEGG) |> na.omit() |> unique()
+      keg_id <- kegg_ids
+      anls <- enrich(compounds = keg_id, data = fella.data, 
+                     method = c("hypergeom", "diffusion", "pagerank"), approx = "normality")
+      getExcluded(anls)
+      res_tbl <- generateResultsTable(method = "diffusion", threshold = 0.2, capPscores = 0, 
+                                      object = anls, data = fella.data, clusterLengthAtPlot = 100)
+      res_tbl2 <- generateResultsTable(method = "pagerank", threshold = 0.2, capPscores = 0, 
+                                       object = anls, data = fella.data, clusterLengthAtPlot = 100)
+      res_tbl3 <- generateResultsTable(method = "hypergeom", threshold = 0.2, capPscores = 0,  
+                                       object = anls, data = fella.data, clusterLengthAtPlot = 100)
+      
+      res_lst <- list(diffusion = res_tbl, pagerank = res_tbl2, hypergeom = res_tbl3)
+      res_lst <- res_lst[!unlist(lapply(res_lst, is.null))]
+      for(idx in 1:length(res_lst)) {
+        res_lst[[idx]][["KEGG.name"]] <-
+          stringr::str_split(res_lst[[idx]][["KEGG.name"]], " - Mus", simplify = T)[, 1]
+      }
+      writexl::write_xlsx(res_lst, glue("fella_enrich_up_res_{tissue}_neg_true.xlsx"))
+
+    }
+  })
+}
+
+```

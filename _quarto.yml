@@ -33,7 +33,7 @@ book:
       chapters:
         - href: metabolomics.qmd
           text: Spatial Metabolomics
-        - href: transcriptomics.qmd
+        - href: spatial_transcriptomics.qmd
           text: Spatial Transcriptomics
         - href: registration.qmd
           text: Registration
