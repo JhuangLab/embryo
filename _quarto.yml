@@ -35,8 +35,6 @@ book:
           text: Quality Control
         - href: clustering.qmd
           text: Clustering
-        - href: alignment.qmd
-          text: Alignment
         - href: registration.qmd
           text: Registration
     - part: TF Activity
