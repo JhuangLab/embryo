@@ -1,0 +1,16 @@
+---
+title: "ST-seq Experimental Method"
+format: html
+---
+
+## ST-seq Experimental Method
+
+### Spatial Transcriptomic Sequencing Library Construction
+
+Freshly collected tissues were dissected into appropriately sized blocks, with surface residual liquid absorbed using cleanroom wipers. The tissues were then embedded in OCT Medium (SAKURA, cat. no. 4583), snap-frozen on dry ice, and stored at -80°C until further processing. The OCT-embedded samples were shipped to Shanghai OE Biotech Co., Ltd. (Shanghai, China) for spatial transcriptomic library preparation, sequencing, and initial data analysis. Briefly, frozen sections of 10 μm thickness were prepared using a Leica CM1950 Microtome Cryostat (Leica Microsystems, Germany) at -20°C. These tissue sections underwent methanol fixation, hematoxylin and eosin (H&E) staining, imaging, and destaining in accordance with the 10x Genomics recommended protocol (CG000614). Following the 10x Genomics workflow (CG000495), probe hybridization and release were performed, with the released probes transferred to the 10x Genomics Visium CytAssist slide. Library construction was subsequently carried out using the Visium CytAssist Spatial Gene Expression for FFPE kit (PN-1000520 for Human, 6.5 mm; PN-1000521 for Mouse, 6.5 mm; PN-1000522 for Human, 11 mm; PN-1000523 for Mouse, 11 mm). The resulting libraries were sequenced on the BGI DNBSEQ-T7 platform in paired-end 100 (PE100) mode.
+
+## ST-seq Analysis Process
+
+### Spatial Transcriptomic Sequencing Data Processing
+
+The raw FASTQ files were processed and aligned to the GRCh38 human reference genome using Space Ranger software (version 2.0.1) from 10x Genomics, with unique molecular identifier (UMI) counts aggregated for each spatial barcode. To differentiate tissue-covered spots from background noise, tissue-overlaid spots were identified based on the corresponding histological images. The filtered UMI count matrix was then subjected to downstream analysis using the Seurat R package (version 4.1.0). Data normalization and identification of the top 3,000 highly variable genes (HVGs) were performed using the SCTransform method. Principal component analysis (PCA) was applied to reduce dimensionality on the log-transformed gene-barcode matrices derived from these HVGs. Batch effects were subsequently corrected using the RunHarmony function from the harmony R package (version 1.0). Graph-based clustering was conducted to group spots according to their gene expression profiles via the FindClusters function. For visualization, spots were projected into a 2-dimensional space using the Uniform Manifold Approximation and Projection (UMAP) algorithm implemented in the RunUMAP function. Marker genes for each cluster were identified using the FindAllMarkers function with the 'bimod' test. Differentially expressed genes (DEGs) between clusters or conditions were determined using the FindMarkers function with the 'presto' test. P-values were adjusted for multiple testing via Bonferroni correction, with significance thresholds set at P < 0.05 and |log2(fold change)| > 0.58. Gene Ontology (GO) enrichment and Kyoto Encyclopedia of Genes and Genomes (KEGG) pathway analyses of the DEGs were performed in R using hypergeometric distribution-based tests to elucidate biological functions and pathways associated with spatial gene expression patterns.

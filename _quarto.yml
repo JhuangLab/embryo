@@ -28,6 +28,10 @@ book:
       chapters:
         - href: datasets.qmd
           text: Data Sets
+        - href: exp_metabolomics.qmd
+          text: Spatial Metabolomics
+        - href: exp_transcriptomics.qmd
+          text: Spatial Transcriptomics
 
     - part: Data Preprocessing
       chapters:

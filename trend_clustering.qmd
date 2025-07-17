@@ -4,3 +4,182 @@ format: html
 ---
 
 ## Trend Clustering
+
+We calculated the abundance variation trends of different indicators at various time points, including spatial transcriptomics, spatial metabolomics, and transcription factor activity scores, etc. The specific calculation steps are described in the "Method" section. Here, we describe the temporal variation trends of ion peak intensities under the anion mode of spatial metabolomics.
+
+A brief description of the process: first, we removed metabolites and genes that were below the detection limit at all time points. The data were then subjected to standardization. We calculated the Spearman correlations between different metabolites, converted these correlations into distances, and subsequently performed hierarchical clustering using hclust.The clustering results were pruned to identify different metabolite modules. Linear regression was used to fit the variation trends of metabolites within different modules.
+
+```{r eval = FALSE}
+
+pkgs <- c("ggpubr", "ggthemes", "jhtools", "glue", "ggsci", "patchwork", "Seurat",
+          "tidyverse", "ggrepel","SummarizedExperiment", "ComplexHeatmap", "circlize",
+          "jhuanglabRNAseq","limma")
+for (pkg in pkgs){
+  suppressPackageStartupMessages(library(pkg, character.only = T))
+}
+project <- "embryo"
+dataset <- "zhangjing"
+species <- "human"
+workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/rnaseq") |> checkdir()
+setwd(workdir)
+
+neg_pdata <- "/pth/to/neg_mrg_metadata.rds" |> read_rds
+neg_intensity <- "/pth/to/neg_mrg_mz_cnt.rds" |> read_rds
+
+draw_line <- function(summary_neg_i, selected_feature, tissue = "Forebrain", pth = ".", time_point = c("me9_5a", "E11.5", "E13.5"), logvalue = T){
+  if(logvalue){
+    filted_summary_sub_neg_intensity <- summary_neg_i |> 
+      dplyr::filter(feature %in% selected_feature) |> 
+      dplyr::filter(tissue == {{tissue}}) |> 
+      mutate(value = log(value + 1)) |> 
+      pivot_wider(id_cols = feature, names_from = run, values_from = value) |> 
+      column_to_rownames(var = "feature") |> 
+      t() |> 
+      scale |> 
+      t() |> 
+      as.data.frame()|> 
+      na.omit()
+  }else{
+    filted_summary_sub_neg_intensity <- summary_neg_i |> 
+      dplyr::filter(feature %in% selected_feature) |> 
+      dplyr::filter(tissue == {{tissue}}) |> 
+      pivot_wider(id_cols = feature, names_from = run, values_from = value) |> 
+      column_to_rownames(var = "feature") |> 
+      t() |> 
+      scale |> 
+      t() |> 
+      as.data.frame() |> 
+      na.omit()
+  }
+
+  hc <- hclust(as.dist(1-cor(t(filted_summary_sub_neg_intensity), method = "spearman")), method = "ward.D2")
+  groupv <- cutree(hc, k = 7)
+  fc <- filted_summary_sub_neg_intensity |>
+    rownames_to_column(var = "feature") |> 
+    left_join(
+      tibble(
+        feature = names(groupv),
+        group = groupv
+      )
+    ) 
+  long_fc <- fc |> 
+    pivot_longer(cols = -c(feature, group)) |> 
+    mutate(name = factor(name, levels = time_point)) |> 
+    mutate(group = paste0("Trend", group))
+  
+  p <- ggplot(long_fc, aes(x = name, y = value, group = feature, color =group )) +
+    geom_line(show.legend = F) +
+    facet_wrap(~group) +
+    theme_few()
+  
+  checkdir(pth)
+  pdf(glue("{pth}/{tissue}.pdf"), width = 12)
+  print(p)
+  dev.off()
+  groupv <- long_fc$group |> unique()
+  lm_eqn <- function(df, groupv){
+    lapply(groupv, function(groupi){
+      subdf <- df |> dplyr::filter(group == groupi)
+      subdf$name <- as.numeric(subdf$name)
+      m <- lm(value ~ name, subdf)
+      eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                       list(a = format(unname(coef(m)[1]), digits = 2),
+                            b = format(unname(coef(m)[2]), digits = 2),
+                            r2 = format(summary(m)$r.squared, digits = 3)))
+      as.character(as.expression(eq))
+    }) |> unlist()
+  }
+  ps <- ggplot() +
+    geom_line(data = long_fc, mapping = aes(x = name, y = value, group = feature),show.legend = F, color = "grey") + 
+    geom_smooth(data = long_fc, se = F, method = "lm", mapping =aes(x = name, y = value, group = group), color = "red", linetype = "dashed") +
+    geom_text(data = tibble(label = lm_eqn(df = long_fc |> group_by(group,name) |> summarise(value = mean(value)) |> ungroup(), groupv),
+                            group = groupv),
+              parse = TRUE, mapping = aes(x=2,y=1,label = label), nudge_y = 1, nudge_x = 0)+
+    facet_wrap(~group) +
+    theme_few()
+  pdf(glue("{pth}/{tissue}_smooth.pdf"), width = 12)
+  print(ps)
+  dev.off()
+  ht <- Heatmap(filted_summary_sub_neg_intensity, 
+                col = colorRamp2(c(-1, 0, 1), c("#0098ff", "white", "#ff446c")),
+                cluster_columns = F,
+                cluster_rows = T,
+                clustering_method_columns = "ward.D2", 
+                clustering_method_rows = "ward.D2",
+                show_column_names = T,
+                show_row_names = F,
+                show_heatmap_legend = F,
+                border = T,
+                row_gap =  unit(0, "mm"),
+                row_split = factor(fc$group, levels = c(1,2,3,4,5,6,7)))
+  
+  rd0 <- row_order(ht)
+  rd <- rd0 |> unlist()
+  dev.off()
+  ht <- Heatmap(filted_summary_sub_neg_intensity[rd,][,time_point], 
+                col = colorRamp2(c(-1, 0, 1), c("#0098ff", "white", "#ff446c")),
+                cluster_columns = F,
+                cluster_rows = F,
+                clustering_method_columns = "ward.D2", 
+                clustering_method_rows = "ward.D2",
+                show_column_names = T,
+                show_row_names = F,
+                show_heatmap_legend = F,
+                border = T,
+                row_gap =  unit(0, "mm"),
+                column_gap = unit(0, "mm"),
+                row_split = factor(fc$group, levels = c(1,2,3,4,5,6,7))[rd],
+                column_split = 1:3,
+                column_title = NULL
+                )
+  pdf(glue("{pth}/{tissue}_heatmap.pdf"), width = 5)
+  draw(ht)
+  dev.off()
+  write_csv(long_fc, glue("{pth}/{tissue}.csv"))
+  
+  
+  lapply(1:length(rd0), function(cluster_i){
+    hti <- Heatmap(filted_summary_sub_neg_intensity[rd0[[cluster_i]],][,time_point], 
+                  col = colorRamp2(c(-1, 0, 1), c("#0098ff", "white", "#ff446c")),
+                  cluster_columns = F,
+                  cluster_rows = F,
+                  clustering_method_columns = "ward.D2", 
+                  clustering_method_rows = "ward.D2",
+                  show_column_names = T,
+                  show_row_names = F,
+                  show_heatmap_legend = F,
+                  border = T,
+                  row_gap =  unit(0, "mm"),
+                  column_gap = unit(0, "mm"),
+                  column_split = 1:3,
+                  column_title = NULL
+    )
+    pdf(glue("{pth}/{tissue}_cluster{cluster_i}_heatmap.pdf"), width = 5)
+    draw(hti)
+    dev.off()
+  })
+}
+
+ft <- neg_pdata$run %in% time_point & neg_pdata$tissue %in% tissue_point
+sub_neg_pdata <- neg_pdata[ft,]
+sub_neg_intensity <- neg_intensity[,ft]
+long_sub_neg_intensity <- sub_neg_intensity |> 
+  as.matrix() |>  
+  as.data.frame() |> 
+  rownames_to_column(var = "feature") |>
+  pivot_longer(-feature, names_to = "pixel_id") |> 
+  left_join(sub_neg_pdata |> 
+              dplyr::select(pixel_id, run, tissue))
+
+summary_neg_i <- long_sub_neg_intensity |> 
+  group_by(feature, run, tissue) |> 
+  summarise(value = mean(value)) |> 
+  ungroup()
+selected_feature <- unique(summary_neg_i$feature[summary_neg_i$value > 1])
+
+draw_line(summary_neg_i, selected_feature, tissue = "Forebrain", pth = "/pth/to/neg", time_point = time_point)
+draw_line(summary_neg_i, selected_feature, tissue = "Hindbrain", pth = "/pth/to/neg", time_point = time_point)
+draw_line(summary_neg_i, selected_feature, tissue = "Heart", pth = "/pth/to/neg", time_point = time_point)
+draw_line(summary_neg_i, selected_feature, tissue = "Liver", pth = "/pth/to/neg", time_point = time_point)
+
+```

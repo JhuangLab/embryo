@@ -8,7 +8,7 @@
 
 <meta name="author" content="Jinyan Huang">
 
-<title>29&nbsp; Contact us – Mammalian Organogenesis</title>
+<title>3&nbsp; ST-seq Experimental Method – Mammalian Organogenesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./functions.html" rel="next">
-<link href="./faq.html" rel="prev">
+<link href="./metabolomics.html" rel="next">
+<link href="./exp_metabolomics.html" rel="prev">
 <link href="./cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./faq.html">Communication</a></li><li class="breadcrumb-item"><a href="./contactus.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Contact us</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datasets.html">Data Collection</a></li><li class="breadcrumb-item"><a href="./exp_transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./exp_transcriptomics.html" class="sidebar-item-text sidebar-link">
+  <a href="./exp_transcriptomics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></span></a>
   </div>
 </li>
@@ -358,7 +358,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contactus.html" class="sidebar-item-text sidebar-link active">
+  <a href="./contactus.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Contact us</span></span></a>
   </div>
 </li>
@@ -404,15 +404,28 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#st-seq-experimental-method" id="toc-st-seq-experimental-method" class="nav-link active" data-scroll-target="#st-seq-experimental-method"><span class="header-section-number">3.1</span> ST-seq Experimental Method</a>
+  <ul class="collapse">
+  <li><a href="#spatial-transcriptomic-sequencing-library-construction" id="toc-spatial-transcriptomic-sequencing-library-construction" class="nav-link" data-scroll-target="#spatial-transcriptomic-sequencing-library-construction"><span class="header-section-number">3.1.1</span> Spatial Transcriptomic Sequencing Library Construction</a></li>
+  </ul></li>
+  <li><a href="#st-seq-analysis-process" id="toc-st-seq-analysis-process" class="nav-link" data-scroll-target="#st-seq-analysis-process"><span class="header-section-number">3.2</span> ST-seq Analysis Process</a>
+  <ul class="collapse">
+  <li><a href="#spatial-transcriptomic-sequencing-data-processing" id="toc-spatial-transcriptomic-sequencing-data-processing" class="nav-link" data-scroll-target="#spatial-transcriptomic-sequencing-data-processing"><span class="header-section-number">3.2.1</span> Spatial Transcriptomic Sequencing Data Processing</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./faq.html">Communication</a></li><li class="breadcrumb-item"><a href="./contactus.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Contact us</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./datasets.html">Data Collection</a></li><li class="breadcrumb-item"><a href="./exp_transcriptomics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spatial Transcriptomics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Contact us</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">ST-seq Experimental Method</span></h1>
 </div>
 
 
@@ -429,15 +442,22 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>We welcome inquiries and collaboration to maximize the impact of our research. To ensure your questions are directed to the most appropriate team member, please use the following contact guidelines:</p>
-<ul>
-<li><p>Wet Lab and Experimental Questions: For questions about sample preparation, library preparation, functional assays, or other experimental methodologies, please reach out to Prof.&nbsp;Jin Zhang.</p></li>
-<li><p>Bioinformatics and Computational Questions: For assistance with bioinformatics troubleshooting, methodology, or replicating our analytical pipelines, please contact me directly at <a href="mailto:hiekeen@gmail.com">hiekeen@gmail.com</a>.</p></li>
-<li><p>Clinical Questions: For inquiries related to clinical implications, diagnostic applications, or patient management, please contact Prof.&nbsp;Jianhua Qian.</p></li>
-</ul>
-<p>General Inquiries or Collaborative Opportunities: For all other questions, including data access, interdisciplinary collaborations, or feedback on the project, we encourage you to email Prof.&nbsp;Jin Zhang, and me collectively. We are deeply invested in enabling others to explore and build upon this dataset.</p>
+<section id="st-seq-experimental-method" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="st-seq-experimental-method"><span class="header-section-number">3.1</span> ST-seq Experimental Method</h2>
+<section id="spatial-transcriptomic-sequencing-library-construction" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="spatial-transcriptomic-sequencing-library-construction"><span class="header-section-number">3.1.1</span> Spatial Transcriptomic Sequencing Library Construction</h3>
+<p>Freshly collected tissues were dissected into appropriately sized blocks, with surface residual liquid absorbed using cleanroom wipers. The tissues were then embedded in OCT Medium (SAKURA, cat. no. 4583), snap-frozen on dry ice, and stored at -80°C until further processing. The OCT-embedded samples were shipped to Shanghai OE Biotech Co., Ltd.&nbsp;(Shanghai, China) for spatial transcriptomic library preparation, sequencing, and initial data analysis. Briefly, frozen sections of 10 μm thickness were prepared using a Leica CM1950 Microtome Cryostat (Leica Microsystems, Germany) at -20°C. These tissue sections underwent methanol fixation, hematoxylin and eosin (H&amp;E) staining, imaging, and destaining in accordance with the 10x Genomics recommended protocol (CG000614). Following the 10x Genomics workflow (CG000495), probe hybridization and release were performed, with the released probes transferred to the 10x Genomics Visium CytAssist slide. Library construction was subsequently carried out using the Visium CytAssist Spatial Gene Expression for FFPE kit (PN-1000520 for Human, 6.5 mm; PN-1000521 for Mouse, 6.5 mm; PN-1000522 for Human, 11 mm; PN-1000523 for Mouse, 11 mm). The resulting libraries were sequenced on the BGI DNBSEQ-T7 platform in paired-end 100 (PE100) mode.</p>
+</section>
+</section>
+<section id="st-seq-analysis-process" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="st-seq-analysis-process"><span class="header-section-number">3.2</span> ST-seq Analysis Process</h2>
+<section id="spatial-transcriptomic-sequencing-data-processing" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="spatial-transcriptomic-sequencing-data-processing"><span class="header-section-number">3.2.1</span> Spatial Transcriptomic Sequencing Data Processing</h3>
+<p>The raw FASTQ files were processed and aligned to the GRCh38 human reference genome using Space Ranger software (version 2.0.1) from 10x Genomics, with unique molecular identifier (UMI) counts aggregated for each spatial barcode. To differentiate tissue-covered spots from background noise, tissue-overlaid spots were identified based on the corresponding histological images. The filtered UMI count matrix was then subjected to downstream analysis using the Seurat R package (version 4.1.0). Data normalization and identification of the top 3,000 highly variable genes (HVGs) were performed using the SCTransform method. Principal component analysis (PCA) was applied to reduce dimensionality on the log-transformed gene-barcode matrices derived from these HVGs. Batch effects were subsequently corrected using the RunHarmony function from the harmony R package (version 1.0). Graph-based clustering was conducted to group spots according to their gene expression profiles via the FindClusters function. For visualization, spots were projected into a 2-dimensional space using the Uniform Manifold Approximation and Projection (UMAP) algorithm implemented in the RunUMAP function. Marker genes for each cluster were identified using the FindAllMarkers function with the ‘bimod’ test. Differentially expressed genes (DEGs) between clusters or conditions were determined using the FindMarkers function with the ‘presto’ test. P-values were adjusted for multiple testing via Bonferroni correction, with significance thresholds set at P &lt; 0.05 and |log2(fold change)| &gt; 0.58. Gene Ontology (GO) enrichment and Kyoto Encyclopedia of Genes and Genomes (KEGG) pathway analyses of the DEGs were performed in R using hypergeometric distribution-based tests to elucidate biological functions and pathways associated with spatial gene expression patterns.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -841,13 +861,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./faq.html" class="pagination-link" aria-label="FAQ">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">FAQ</span></span>
+      <a href="./exp_metabolomics.html" class="pagination-link" aria-label="Spatial Metabolomics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Spatial Metabolomics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./functions.html" class="pagination-link" aria-label="Functions">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Functions</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./metabolomics.html" class="pagination-link" aria-label="Spatial Metabolomics">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Spatial Metabolomics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -859,7 +879,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -1,6 +1,61 @@
 ---
-title: "Deconvolution of ST data"
+title: "Deconvolution"
 format: html
 ---
 
 ## Deconvolution of ST data
+
+A single-nucleus RNA sequencing dataset for mice, [`GSE186069`](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE186069), was retrieved along with its associated annotations. Cells from embryonic stages E9.5, E11.5, and E13.5 were selected and merged. Deconvolution was performed using the `RCTD` function implemented in the `spacexr` package (v2.2.1).
+
+For the whole embryo, due to the large number of cells (n = 691,652), 5% of the total cells were randomly sampled, and rare cell types (fewer than 35 cells) were excluded. The remaining data served as the reference, with the ‘major_trajectory’ column in the metadata used as labels. In the liver region, cell type frequencies were ranked in descending order, and minority cell types (proportion \< 2%) were excluded from further analysis. Reference construction involved a 20% random sampling of the majority cell types with detailed annotations from the `celltype_update` column.
+
+```{r, eval=FALSE}
+## read the rds and integration ----
+library(spacexr)
+library(Seurat)
+
+## build reference ----
+rds_fn1 <- glue("ref/E9.5.rds")
+rds_fn2 <- glue("ref/E11.5.rds")
+rds_fn3 <- glue("ref/E13.5.rds")
+
+e9.5 <- read_rds(rds_fn1)
+e11.5 <- read_rds(rds_fn2)
+e13.5 <- read_rds(rds_fn3)
+
+ref_lst <- list(e9.5, e11.5, e13.5)
+mrg_seu <- merge(ref_lst[[1]], ref_lst[-1])
+
+samp_df <- mrg_seu@meta.data |> dplyr::slice_sample(by = major_trajectory, prop = 0.05) |> 
+  dplyr::filter(!major_trajectory %in% c("Oligodendrocytes", "T_cells", "Testis_and_adrenal", 
+                                        "Mast_cells", "B_cells", "Intestine")) # exclude those of minority
+
+ref <- mrg_seu[, rownames(samp_df)]
+ref[["RNA"]] <- JoinLayers(ref[["RNA"]])
+counts <- ref[["RNA"]]$counts
+cluster <- as.factor(ref$major_trajectory)
+names(cluster) <- colnames(ref)
+nUMI <- ref$nCount_RNA
+names(nUMI) <- colnames(ref)
+reference <- Reference(counts, cluster, nUMI, min_UMI = 35, n_max_cells = 1e5)
+write_rds(reference, "reference_tissue.rds")
+
+## get visium object lists ----
+rds_fn <- "st_seu_obj.rds"
+seu_lst <- read_rds(rds_fn)
+rctd_lst2 <- lapply(1:4, \(idx) {
+  stg = names(seu_lst)[idx]
+  visium <- seu_lst[[stg]]
+  counts <- visium[["Spatial"]]$counts
+  coords <- GetTissueCoordinates(visium)
+  colnames(coords) <- c("x", "y")
+  coords[is.na(colnames(coords))] <- NULL
+  query <- SpatialRNA(coords, counts, colSums(counts))
+  write_rds(query, glue("rctd_query_obj_{stg}.rds"))
+  RCTD <- create.RCTD(query, reference, max_cores = 16)
+  RCTD <- run.RCTD(RCTD, doublet_mode = "doublet")
+  return(RCTD)
+})
+write_rds(rctd_lst2, "rctd_res_lst.rds")
+
+```

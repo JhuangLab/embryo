@@ -1,0 +1,26 @@
+---
+title: "Spatial Metabolomics data"
+format: html
+---
+
+## Chemicals and Reagents
+
+MS-grade acetonitrile was purchased from Thermo Fisher (Thermo Fisher, U.S.A). Purified water was obtained from Watsons (Hongkong, China). Formic acid was provided by Merck (Merck, Germany), the tissue freezing medium was obtained from Leica (Leica Microsystem, Germany), Eosin Y-solution 0.5% aqueous and Hematoxylin was purchased from Sigma-Aldrich (St. Louis, MO, USA).
+
+## Sample Preparation
+
+The embedded samples were stored at -80 °C before being sectioned. The samples were cut into consecutive sagittal slices 10 μm about 10 slices by a cryostat microtome (Leica CM 1950, Leica Microsystem, Germany) and were thaw-mounted on positive charge desorption plate (Thermo Scientific, U.S.A). Sections were stored at -80 °C before further analysis. They were desiccated at -20 °C for 1 h and then at room temperature for 2 h before mass spectrometry imaging (MSI) analysis. Meanwhile, an adjacent slice was left for hematoxylin-eosin (H&E) staining.
+
+## Data Acquisition and MSI Analysis
+
+The analyses was performed as previously reported 1. In brief, this experiment was carried out with an AFADESI-MSI platform (Beijing Victor Technology Co., LTD, Beijing, China) in tandem with a Q-Orbitrap mass spectrometer (Q Exactive, Thermo Scientific, U.S.A.). Here, the solvent formula was acetonitrile (ACN) /H2O (8:2) at negative mode and ACN/H2O (8:2) at positive mode and the solvent flow rate was 5 μL/min, the transporting gas flow rate was 45 L/min, the spray voltage was set at 7 kV, and the distance between the sample surface and the sprayer was 3 mm as was the distance from the sprayer to the ion transporting tube. The MS resolution was set at 70,000, the mass range was 70-1000 Da, the automated gain control (AGC) target was 2E6, the maximum injection time was set to 200 ms, the S-lens voltage was 55 V, and the capillary temperature was 350 °C. The MSI experiment was carried out with a constant rate of 0.2 mm/s continuously scanning the surface of the sample section in the x direction and a 100 μm vertical step in the y direction.
+
+## Data Processing
+
+The collected .raw files were converted into .imzML format using imzMLConverter 2 and then imported into MSiReader (an open-source interface to view and analyze high resolving power MS imaging files on Matlab platform) for ion image reconstructions after background subtraction using the Cardinal 3 software package. All MS images were normalized using total ion count normalization (TIC) in each pixel 4. Region-specific MS profiles were precisely extracted by matching high-spatial resolution H&E images. The discriminating endogenous molecules of different tissue microregions were screened by a supervised statistical analytical method: orthogonal partial least squares discrimination analysis (OPLS-DA). Variable Importance of Projection (VIP) values obtained from the OPLS-DA model were used to rank the overall contribution of each variable to group discrimination. The VIP value reflects the importance degree on the classification of sample categories with respect to the first two principal components of the OPLS-DA model, which indicates that this variable has a significant effect if the VIP is greater than 1. A two-tailed Student’s T-test was further used to verify whether the metabolites of difference between groups were significant. Differential metabolites were selected with VIP values greater than 1.0 and p-values less than 0.05.
+
+Additionally, for the special data structure obtained from the MSI analysis, we also performed T-distributed stochastic neighbor embedding (t-SNE) and uniform manifold approximation and projection for dimension reduction (UMAP) on the MS data in each pixels for dimensionality reduction, respectively. The Spatial shrunken centroids clustering (SSCC) was applied for MSI data clustering to separate the sample based on the differences abundance of ions in each pixels.
+
+## Analyte Identification
+
+The ions detected by AFADESI were annotated by the pySM 5 pipeline and an in-house SmetDB database (Lumingbio, Shanghai, China).

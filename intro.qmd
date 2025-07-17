@@ -1,2 +1,3 @@
 # Introduction {.unnumbered}
-To begin, I assume that you have read through our paper. In the chapters of this book, I present the key components of this study, encompassing the full analytical workflow from data collection to result interpretation. Particular emphasis is placed on the major findings of the research. I hope this book offers useful insights for readers and also contributes, in a small way, to the broader reproducibility community.
+
+This paper outlines a comprehensive analysis of embryonic development, detailing the complete analytical workflow from data acquisition to interpretation. We present the key aspects of this study, highlighting the major research findings across the subsequent chapters. Our aim is to offer valuable insights to readers and contribute to the broader scientific pursuit of reproducibility.
