@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jhuanglab.github.io/embryo/alignment.html</loc>
-    <lastmod>2025-07-16T16:09:46.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jhuanglab.github.io/embryo/sfig6.html</loc>
-    <lastmod>2025-07-17T01:59:48.552Z</lastmod>
-  </url>
-  <url>
     <loc>https://jhuanglab.github.io/embryo/index.html</loc>
     <lastmod>2025-07-17T01:59:48.526Z</lastmod>
   </url>
@@ -87,6 +79,10 @@
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig5.html</loc>
     <lastmod>2025-07-17T01:59:48.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhuanglab.github.io/embryo/sfig6.html</loc>
+    <lastmod>2025-07-17T01:59:48.552Z</lastmod>
   </url>
   <url>
     <loc>https://jhuanglab.github.io/embryo/sfig7.html</loc>
