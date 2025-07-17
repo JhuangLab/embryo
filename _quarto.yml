@@ -31,8 +31,6 @@ book:
 
     - part: Data Preprocessing
       chapters:
-        - href: qc.qmd
-          text: Quality Control
         - href: metabolomics.qmd
           text: Spatial Metabolomics
         - href: transcriptomics.qmd
@@ -42,12 +40,10 @@ book:
 
     - part: Analysis
       chapters:
-        - href: alignment.qmd
-          text: Alignment
         - href: functional_evaluation.qmd
           text: Functional evaluation
         - href: pyscenic.qmd
-          text: Pyscenic
+          text: TF Activity
         - href: moran.qmd
           text: Moran’s I Trend
         - href: trend_clustering.qmd
