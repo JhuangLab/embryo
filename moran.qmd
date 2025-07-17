@@ -2,4 +2,47 @@
 title: "Moran’s I Trend Analysis"
 format: html
 ---
-## Moran’s I Trend Analysis
+
+## Moran’s I Trend
+
+In embryonic development, tissues are composed of a series of similar cells, which often exhibit spatial continuity in their spatial arrangement. Therefore, we calculated the Moran's Index for spatial transcriptomics, transcription factor activity scores derived from spatial transcriptomics, and spatial metabolomics.
+
+We hypothesize that during embryonic development, certain factors (including gene expression, metabolite clustering, etc.) gradually accumulate in specific regions over time, suggesting their potential involvement in the development of corresponding organs. To test this, we calculated Moran’s Index for these factors across different time points and anatomical regions. Statistical analysis was focused on organs exhibiting high Moran’s Index values in the final developmental stage. Detailed results are presented in the "Results" section.
+
+Moran's Index was calculated using the RunMoransI function in the Seurat package. Here, the part related to calculating the Moran's Index for transcription factor activity scores is presented. The code is identical
+to that in the "pyscenic" section.
+
+```{r eval=FALSE}
+molI_frame <- parallel::mclapply(c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5"), function(sample_id){
+  # SCENIC score
+  SCENIC <- glue::glue("/input/pth/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- mouseobjlist[[sample_id]]
+  SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  SCENIC <- SCENIC[SCENIC$Cell %in% colnames(obj),]
+  # get coordinates
+  pos <- obj@images[[1]]@coordinates[,c("imagerow", "imagecol")]
+  # Run MoransI
+  molI <- Seurat::RunMoransI(scale(SCENIC[-1]) %>% t(), pos = pos)
+  molI
+}, mc.cores = 4L)
+names(molI_frame) <- c("ME9.5", "ME11.5x1", "ME11.5x2", "ME13.5")
+
+molI_frame_hu <- parallel::mclapply(c("yao1", "yao2", "yao5", "yao6"), function(sample_id){
+  # SCENIC score
+  SCENIC <- glue::glue("/input/pth/{sample_id}/{sample_id}_SCENIC.csv") %>% 
+    read_csv()
+  obj <- humanobjlist[[sample_id]]
+  SCENIC <- SCENIC[,c(T, colSums(SCENIC[-1]) > 0)]
+  SCENIC <- SCENIC[SCENIC$Cell %in% colnames(obj),]
+  # get coordinates
+  pos <- obj@images[[1]]@coordinates[,c("imagerow", "imagecol")]
+  # Run MoransI
+  molI <- Seurat::RunMoransI(SCENIC[-1] %>% scale() %>% t(), pos = pos)
+  molI
+}, mc.cores = 4L)
+names(molI_frame_hu) <- c("yao1", "yao2", "yao5", "yao6")
+
+write_rds(molI_frame, file = glue::glue("/output/pth/mouse/mouse_MoransI.rds") )
+write_rds(molI_frame_hu, file = glue::glue("/output/pth/human/human_MoransI.rds") )
+```

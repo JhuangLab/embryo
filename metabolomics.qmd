@@ -2,6 +2,86 @@
 title: "Spatial metabolomics"
 format: html
 ---
+
 ## Spatial metabolomics
 
-A custom-built AFADESI-MSI platform equipped with a Q-Exactive Orbitrap mass spectrometer (Thermo Scientific, Bremen, Germany) and an AFADESI ion source were used for spatial metabolomics profiling of embryos. Mass spectrometry imaging was performed in both negative and positive ion modes, scanning a mass range of m/z 70-1000. The spray solvent, a mixture of acetonitrile and water (80:20, v/v), was delivered at a flow rate of 5.0 µL/min. Sprayer voltages were set to 4500 V and -4500 V for positive and negative ion modes, respectively. The extracting gas flow rate of the AFADESI ion source was 45 L/min, and the nebulizing gas (N2) flow rate was set to 0.7 MPa. Imaging analysis involved continuous scanning in the x-direction at a rate of 100 µm/s, with a 100 µm vertical step size in the y-direction. MassImager Pro software was used for background subtraction, image reconstruction, and the calculation of average metabolite expression levels within regions of interest. 
+The ‘.imzML’ files were then imported into the Cardinal package (v3.6) within R-4.3.0. Intensities and coordinates of each pixel were extracted and utilized to generate a Seurat object. After restriction of spatial transcriptomics and metabolomics data, ion intensities and corresponding metadata were used to construct new Seurat objects. Only spots retained in both MSI- and MSI+ alignment were included, producing a combined dataset of both modes. Then data from all stages were merged into a single object.
+
+Procedures including normalization with centered log-ratio transformation, scaling, dimensional reduction with PCA and UMAP were completed. Markers of tissues for each stage were identified with ‘FindAllMarkers’ function. Top 20 features were extracted to produce heatmaps with ‘ComplexHeatmap’ and ‘circlize’ packages. Features with an average log2 fold change (avg_log2FC) \> 0 and an adjusted p-value (p_val_adj) \< 0.2 were selected for enrichment analysis.
+
+```{r eval=FALSE}
+library(Cardinal)
+library(Seurat)
+library(tidyverse)
+
+crdn_dir <- "data/sp_metabolomics"
+pdata_pos <- read_csv("data/labeled_tissue_pos.csv") # annotation by manual, with imzMLReader
+pdata_neg <- read_csv("data/labeled_tissue_neg.csv") # annotation by manual, with imzMLReader
+
+samples <- c("E11.5", "E13.5", "S2E9-1")
+neg_lst1 <- lapply(samples, \(samp) {
+  obj <- Cardinal::readMSIData(glue("{crdn_dir}/{samp}-neg.imzML"))
+  obj2 <- obj |> Cardinal::subsetPixels(colSums(spectra(obj)) > 0)
+  pData(obj2)$pixel_id <- paste0(coord(obj2)$x, "_", coord(obj2)$y)
+  pData(obj2)$labeled_tissue <- pdata_neg |> dplyr::filter(grepl(samp, run)) |> pull(labeled_tissue)
+  return(obj2)
+}) |> setNames(nm = samples)
+
+pos_lst1 <- lapply(samples, \(samp) {
+  obj <- Cardinal::readMSIData(glue("{crdn_dir}/{samp}-pos.imzML"))
+  obj2 <- obj |> Cardinal::subsetPixels(colSums(spectra(obj)) > 0) # discard those of 0 intensity
+  pData(obj2)$pixel_id <- paste0(coord(obj2)$x, "_", coord(obj2)$y)
+  pData(obj2)$labeled_tissue <- pdata_pos |> dplyr::filter(grepl(samp, run)) |> pull(labeled_tissue)
+  return(obj2)
+}) |> setNames(nm = samples)
+
+stages2 <- c("S2E9-1" = "ME9.5", "E11.5" = "ME11.5", "E13.5" = "ME13.5")
+for (samp in samples) {
+  glue("{stages2[samp]}") |> fs::dir_create() |> setwd()
+  neg_cnt <- neg_lst1[[samp]] |> Cardinal::spectra() |> as.matrix() |> as(., "dgCMatrix")
+  neg_fdata <- neg_lst1[[samp]] |> fData() |> as.data.frame() |> mutate(mode = "neg") |> 
+    mutate(feat_id = paste0(mode, "-", sprintf(fmt = "%.5f", mz)))
+  neg_pdata <- neg_lst1[[samp]] |> pData() |> as.data.frame() |> 
+    mutate(stage = case_when(samp == "S2E9-1" ~ "ME9.5", samp == "E11.5" ~ "ME11.5", 
+                             samp == "E13.5" ~ "ME13.5", TRUE ~ "unknown")) |> 
+    mutate(pixel_id = paste0(run, "_", x, "_", y), mode = str_sub(run, start = -3))
+  colnames(neg_cnt) <- neg_pdata$pixel_id
+  rownames(neg_cnt) <- neg_fdata$feat_id
+  write_rds(neg_cnt, glue("{stages2[samp]}/neg_cnt.rds"))
+  write_rds(neg_fdata, glue("{stages2[samp]}/neg_fdata.rds"))
+  write_rds(neg_pdata, glue("{stages2[samp]}/neg_pdata.rds"))
+  ## seurat object building ----
+  neg_seu <- Seurat::CreateSeuratObject(counts = neg_cnt, meta.data = neg_pdata, 
+                                        project = unique(neg_pdata$stage))
+  write_rds(neg_seu, glue("neg_seu_obj_orig_{unique(neg_pdata$stage)}.rds"))
+  neg_seu2 <- neg_seu |> Seurat::NormalizeData(normalization.method = "CLR") |> 
+    Seurat::FindVariableFeatures() |> Seurat::ScaleData() |> Seurat::RunPCA(npcs = 100) |> 
+    Seurat::RunUMAP(dims = 1:30) 
+  write_rds(neg_seu2, glue("neg_seu_obj_processed_{unique(neg_pdata$stage)}.rds"))
+  
+  pos_cnt <- pos_lst1[[samp]] |> Cardinal::spectra() |> as.matrix() |> as(., "dgCMatrix")
+  pos_fdata <- pos_lst1[[samp]] |> fData() |> as.data.frame() |> mutate(mode = "pos") |> 
+    mutate(feat_id = paste0(mode, "-", sprintf(fmt = "%.5f", mz)))
+  pos_pdata <- pos_lst1[[samp]] |> pData() |> as.data.frame() |> 
+    mutate(stage = case_when(samp == "S2E9-1" ~ "ME9.5", samp == "E11.5" ~ "ME11.5", 
+                             samp == "E13.5" ~ "ME13.5", TRUE ~ "unknown")) |> 
+    mutate(pixel_id = paste0(run, "_", x, "_", y), mode = str_sub(run, start = -3))
+  colnames(pos_cnt) <- pos_pdata$pixel_id
+  rownames(pos_cnt) <- pos_fdata$feat_id
+  write_rds(pos_cnt, glue("{stages2[samp]}/pos_cnt.rds"))
+  write_rds(pos_fdata, glue("{stages2[samp]}/pos_fdata.rds"))
+  write_rds(pos_pdata, glue("{stages2[samp]}/pos_pdata.rds"))
+  ## seurat object building ----
+  pos_seu <- Seurat::CreateSeuratObject(counts = pos_cnt, meta.data = pos_pdata, 
+                                        project = unique(pos_pdata$stage))
+  write_rds(pos_seu, glue("{stages2[samp]}/pos_seu_obj_orig_{unique(pos_pdata$stage)}.rds"))
+  pos_seu2 <- pos_seu |> Seurat::NormalizeData(normalization.method = "CLR") |> 
+    Seurat::FindVariableFeatures() |> Seurat::ScaleData() |> Seurat::RunPCA(npcs = 100) |> 
+    Seurat::RunUMAP(dims = 1:30) 
+  write_rds(pos_seu2, glue("{stages2[samp]}/pos_seu_obj_processed_{unique(pos_pdata$stage)}.rds"))
+  
+  pos_mks <- Seurat::FindAllMarkers(pos_seu2, logfc.threshold = 0, only.pos = TRUE)
+  write_csv(pos_mks, , glue("{stages2[samp]}/pos_seu_obj_mks.csv"))
+}
+
+```

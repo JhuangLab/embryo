@@ -112,7 +112,7 @@ format:
     theme:
       - cosmo
       - mm.scss
-    code-link: true
+    code-link: false
     code-exec-button: false
     author-meta: "Jinyan Huang"
     callout-appearance: simple

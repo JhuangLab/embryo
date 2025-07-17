@@ -1,5 +1,0 @@
----
-title: "qc"
-format: html
----
-

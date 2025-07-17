@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -391,7 +426,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#morans-i-trend-analysis" id="toc-morans-i-trend-analysis" class="nav-link active" data-scroll-target="#morans-i-trend-analysis"><span class="header-section-number">7.1</span> Moran’s I Trend Analysis</a></li>
+  <li><a href="#morans-i-trend" id="toc-morans-i-trend" class="nav-link active" data-scroll-target="#morans-i-trend"><span class="header-section-number">7.1</span> Moran’s I Trend</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://jhuanglab.github.io/embryo/issues/new" class="toc-action"><i class="bi bi-git"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -417,8 +452,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="morans-i-trend-analysis" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="morans-i-trend-analysis"><span class="header-section-number">7.1</span> Moran’s I Trend Analysis</h2>
+<section id="morans-i-trend" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="morans-i-trend"><span class="header-section-number">7.1</span> Moran’s I Trend</h2>
+<p>In embryonic development, tissues are composed of a series of similar cells, which often exhibit spatial continuity in their spatial arrangement. Therefore, we calculated the Moran’s Index for spatial transcriptomics, transcription factor activity scores derived from spatial transcriptomics, and spatial metabolomics.</p>
+<p>We hypothesize that during embryonic development, certain factors (including gene expression, metabolite clustering, etc.) gradually accumulate in specific regions over time, suggesting their potential involvement in the development of corresponding organs. To test this, we calculated Moran’s Index for these factors across different time points and anatomical regions. Statistical analysis was focused on organs exhibiting high Moran’s Index values in the final developmental stage. Detailed results are presented in the “Results” section.</p>
+<p>Moran’s Index was calculated using the RunMoransI function in the Seurat package. Here, the part related to calculating the Moran’s Index for transcription factor activity scores is presented. The code is identical to that in the “pyscenic” section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>molI_frame <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">mclapply</span>(<span class="fu">c</span>(<span class="st">"ME9.5"</span>, <span class="st">"ME11.5x1"</span>, <span class="st">"ME11.5x2"</span>, <span class="st">"ME13.5"</span>), <span class="cf">function</span>(sample_id){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># SCENIC score</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"/input/pth/{sample_id}/{sample_id}_SCENIC.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_csv</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> mouseobjlist[[sample_id]]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> SCENIC[,<span class="fu">c</span>(T, <span class="fu">colSums</span>(SCENIC[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>)]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> SCENIC[SCENIC<span class="sc">$</span>Cell <span class="sc">%in%</span> <span class="fu">colnames</span>(obj),]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get coordinates</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> obj<span class="sc">@</span>images[[<span class="dv">1</span>]]<span class="sc">@</span>coordinates[,<span class="fu">c</span>(<span class="st">"imagerow"</span>, <span class="st">"imagecol"</span>)]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run MoransI</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  molI <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">RunMoransI</span>(<span class="fu">scale</span>(SCENIC[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">%&gt;%</span> <span class="fu">t</span>(), <span class="at">pos =</span> pos)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  molI</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}, <span class="at">mc.cores =</span> <span class="dv">4</span>L)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(molI_frame) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ME9.5"</span>, <span class="st">"ME11.5x1"</span>, <span class="st">"ME11.5x2"</span>, <span class="st">"ME13.5"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>molI_frame_hu <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">mclapply</span>(<span class="fu">c</span>(<span class="st">"yao1"</span>, <span class="st">"yao2"</span>, <span class="st">"yao5"</span>, <span class="st">"yao6"</span>), <span class="cf">function</span>(sample_id){</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># SCENIC score</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"/input/pth/{sample_id}/{sample_id}_SCENIC.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_csv</span>()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> humanobjlist[[sample_id]]</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> SCENIC[,<span class="fu">c</span>(T, <span class="fu">colSums</span>(SCENIC[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>)]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  SCENIC <span class="ot">&lt;-</span> SCENIC[SCENIC<span class="sc">$</span>Cell <span class="sc">%in%</span> <span class="fu">colnames</span>(obj),]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get coordinates</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  pos <span class="ot">&lt;-</span> obj<span class="sc">@</span>images[[<span class="dv">1</span>]]<span class="sc">@</span>coordinates[,<span class="fu">c</span>(<span class="st">"imagerow"</span>, <span class="st">"imagecol"</span>)]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run MoransI</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  molI <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">RunMoransI</span>(SCENIC[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="fu">scale</span>() <span class="sc">%&gt;%</span> <span class="fu">t</span>(), <span class="at">pos =</span> pos)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  molI</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}, <span class="at">mc.cores =</span> <span class="dv">4</span>L)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(molI_frame_hu) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"yao1"</span>, <span class="st">"yao2"</span>, <span class="st">"yao5"</span>, <span class="st">"yao6"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(molI_frame, <span class="at">file =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"/output/pth/mouse/mouse_MoransI.rds"</span>) )</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(molI_frame_hu, <span class="at">file =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"/output/pth/human/human_MoransI.rds"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

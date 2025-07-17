@@ -1,10 +1,13 @@
 ---
-title: "Registration"
+title: "Spatial Transcriptomics and Spatial Metabolomics Alignment"
 ---
 
 ## Registration
 
-To calculate the correlation between gene expression and metabolite abundance, we align the coordinates of the spatial transcriptome and the spatial transcriptome. The specific calculation methods have been described in the Method section. After centralizing the coordinates of the spatial transcriptome spots, we performed scaling, rotation, and translation transformations to make the spatial transcriptome spots as close as possible to the spatial transcriptome pixels. Since spatial transcriptomics and spatial metabolomics are from different omics, we only use the tissue shape for alignment. Although the alignment process was automated, manual validation was still required.
+To calculate the correlation between gene expression and metabolite abundance, we aligned the coordinates of the spatial transcriptomics spots with those of the spatial metabolomics pixels. The detailed alignment algorithm and computational methods are described in the Methods section. Briefly, we first centralized the coordinates of the spatial transcriptomics spots to establish a common reference frame. Subsequently, we applied scaling, rotation, and translation transformations to minimize the spatial discrepancy, ensuring that the transcriptomics spots overlapped as closely as possible with the metabolomics pixels. Given that spatial transcriptomics and spatial metabolomics represent distinct omics layers, we relied solely on the overall tissue morphology and outline for alignment, rather than molecular features, to avoid introducing biases from inter-omics variability. 
+
+This shape-based approach enhances robustness across heterogeneous datasets. Although the alignment process was primarily automated using optimization techniques such as iterative closest point (ICP) matching, manual validation by domain experts was essential to confirm accuracy, address edge cases like tissue deformations, and refine transformations where automated results showed minor misalignments. This hybrid strategy ensured high-fidelity spatial registration, enabling reliable downstream correlation analyses between gene expression profiles and metabolite levels.
+
 
 ```{r eval=FALSE}
 library(tidyverse)

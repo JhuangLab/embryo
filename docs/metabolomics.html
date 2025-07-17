@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -419,7 +454,83 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="spatial-metabolomics" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="spatial-metabolomics"><span class="header-section-number">2.1</span> Spatial metabolomics</h2>
-<p>A custom-built AFADESI-MSI platform equipped with a Q-Exactive Orbitrap mass spectrometer (Thermo Scientific, Bremen, Germany) and an AFADESI ion source were used for spatial metabolomics profiling of embryos. Mass spectrometry imaging was performed in both negative and positive ion modes, scanning a mass range of m/z 70-1000. The spray solvent, a mixture of acetonitrile and water (80:20, v/v), was delivered at a flow rate of 5.0 µL/min. Sprayer voltages were set to 4500 V and -4500 V for positive and negative ion modes, respectively. The extracting gas flow rate of the AFADESI ion source was 45 L/min, and the nebulizing gas (N2) flow rate was set to 0.7 MPa. Imaging analysis involved continuous scanning in the x-direction at a rate of 100 µm/s, with a 100 µm vertical step size in the y-direction. MassImager Pro software was used for background subtraction, image reconstruction, and the calculation of average metabolite expression levels within regions of interest.</p>
+<p>The ‘.imzML’ files were then imported into the Cardinal package (v3.6) within R-4.3.0. Intensities and coordinates of each pixel were extracted and utilized to generate a Seurat object. After restriction of spatial transcriptomics and metabolomics data, ion intensities and corresponding metadata were used to construct new Seurat objects. Only spots retained in both MSI- and MSI+ alignment were included, producing a combined dataset of both modes. Then data from all stages were merged into a single object.</p>
+<p>Procedures including normalization with centered log-ratio transformation, scaling, dimensional reduction with PCA and UMAP were completed. Markers of tissues for each stage were identified with ‘FindAllMarkers’ function. Top 20 features were extracted to produce heatmaps with ‘ComplexHeatmap’ and ‘circlize’ packages. Features with an average log2 fold change (avg_log2FC) &gt; 0 and an adjusted p-value (p_val_adj) &lt; 0.2 were selected for enrichment analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Cardinal)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>crdn_dir <span class="ot">&lt;-</span> <span class="st">"data/sp_metabolomics"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pdata_pos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/labeled_tissue_pos.csv"</span>) <span class="co"># annotation by manual, with imzMLReader</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pdata_neg <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/labeled_tissue_neg.csv"</span>) <span class="co"># annotation by manual, with imzMLReader</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"E11.5"</span>, <span class="st">"E13.5"</span>, <span class="st">"S2E9-1"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>neg_lst1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(samples, \(samp) {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> Cardinal<span class="sc">::</span><span class="fu">readMSIData</span>(<span class="fu">glue</span>(<span class="st">"{crdn_dir}/{samp}-neg.imzML"</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  obj2 <span class="ot">&lt;-</span> obj <span class="sc">|&gt;</span> Cardinal<span class="sc">::</span><span class="fu">subsetPixels</span>(<span class="fu">colSums</span>(<span class="fu">spectra</span>(obj)) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pData</span>(obj2)<span class="sc">$</span>pixel_id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">coord</span>(obj2)<span class="sc">$</span>x, <span class="st">"_"</span>, <span class="fu">coord</span>(obj2)<span class="sc">$</span>y)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pData</span>(obj2)<span class="sc">$</span>labeled_tissue <span class="ot">&lt;-</span> pdata_neg <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">grepl</span>(samp, run)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(labeled_tissue)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(obj2)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">setNames</span>(<span class="at">nm =</span> samples)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>pos_lst1 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(samples, \(samp) {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> Cardinal<span class="sc">::</span><span class="fu">readMSIData</span>(<span class="fu">glue</span>(<span class="st">"{crdn_dir}/{samp}-pos.imzML"</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  obj2 <span class="ot">&lt;-</span> obj <span class="sc">|&gt;</span> Cardinal<span class="sc">::</span><span class="fu">subsetPixels</span>(<span class="fu">colSums</span>(<span class="fu">spectra</span>(obj)) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="co"># discard those of 0 intensity</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pData</span>(obj2)<span class="sc">$</span>pixel_id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">coord</span>(obj2)<span class="sc">$</span>x, <span class="st">"_"</span>, <span class="fu">coord</span>(obj2)<span class="sc">$</span>y)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pData</span>(obj2)<span class="sc">$</span>labeled_tissue <span class="ot">&lt;-</span> pdata_pos <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">grepl</span>(samp, run)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(labeled_tissue)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(obj2)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span> <span class="fu">setNames</span>(<span class="at">nm =</span> samples)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>stages2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"S2E9-1"</span> <span class="ot">=</span> <span class="st">"ME9.5"</span>, <span class="st">"E11.5"</span> <span class="ot">=</span> <span class="st">"ME11.5"</span>, <span class="st">"E13.5"</span> <span class="ot">=</span> <span class="st">"ME13.5"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (samp <span class="cf">in</span> samples) {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glue</span>(<span class="st">"{stages2[samp]}"</span>) <span class="sc">|&gt;</span> fs<span class="sc">::</span><span class="fu">dir_create</span>() <span class="sc">|&gt;</span> <span class="fu">setwd</span>()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  neg_cnt <span class="ot">&lt;-</span> neg_lst1[[samp]] <span class="sc">|&gt;</span> Cardinal<span class="sc">::</span><span class="fu">spectra</span>() <span class="sc">|&gt;</span> <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span> <span class="fu">as</span>(., <span class="st">"dgCMatrix"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  neg_fdata <span class="ot">&lt;-</span> neg_lst1[[samp]] <span class="sc">|&gt;</span> <span class="fu">fData</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">mode =</span> <span class="st">"neg"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">feat_id =</span> <span class="fu">paste0</span>(mode, <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="at">fmt =</span> <span class="st">"%.5f"</span>, mz)))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  neg_pdata <span class="ot">&lt;-</span> neg_lst1[[samp]] <span class="sc">|&gt;</span> <span class="fu">pData</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">case_when</span>(samp <span class="sc">==</span> <span class="st">"S2E9-1"</span> <span class="sc">~</span> <span class="st">"ME9.5"</span>, samp <span class="sc">==</span> <span class="st">"E11.5"</span> <span class="sc">~</span> <span class="st">"ME11.5"</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                             samp <span class="sc">==</span> <span class="st">"E13.5"</span> <span class="sc">~</span> <span class="st">"ME13.5"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"unknown"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pixel_id =</span> <span class="fu">paste0</span>(run, <span class="st">"_"</span>, x, <span class="st">"_"</span>, y), <span class="at">mode =</span> <span class="fu">str_sub</span>(run, <span class="at">start =</span> <span class="sc">-</span><span class="dv">3</span>))</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(neg_cnt) <span class="ot">&lt;-</span> neg_pdata<span class="sc">$</span>pixel_id</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(neg_cnt) <span class="ot">&lt;-</span> neg_fdata<span class="sc">$</span>feat_id</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(neg_cnt, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/neg_cnt.rds"</span>))</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(neg_fdata, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/neg_fdata.rds"</span>))</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(neg_pdata, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/neg_pdata.rds"</span>))</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="do">## seurat object building ----</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  neg_seu <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">CreateSeuratObject</span>(<span class="at">counts =</span> neg_cnt, <span class="at">meta.data =</span> neg_pdata, </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">project =</span> <span class="fu">unique</span>(neg_pdata<span class="sc">$</span>stage))</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(neg_seu, <span class="fu">glue</span>(<span class="st">"neg_seu_obj_orig_{unique(neg_pdata$stage)}.rds"</span>))</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  neg_seu2 <span class="ot">&lt;-</span> neg_seu <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">NormalizeData</span>(<span class="at">normalization.method =</span> <span class="st">"CLR"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">FindVariableFeatures</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">ScaleData</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">RunPCA</span>(<span class="at">npcs =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">RunUMAP</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(neg_seu2, <span class="fu">glue</span>(<span class="st">"neg_seu_obj_processed_{unique(neg_pdata$stage)}.rds"</span>))</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  pos_cnt <span class="ot">&lt;-</span> pos_lst1[[samp]] <span class="sc">|&gt;</span> Cardinal<span class="sc">::</span><span class="fu">spectra</span>() <span class="sc">|&gt;</span> <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span> <span class="fu">as</span>(., <span class="st">"dgCMatrix"</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  pos_fdata <span class="ot">&lt;-</span> pos_lst1[[samp]] <span class="sc">|&gt;</span> <span class="fu">fData</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">mode =</span> <span class="st">"pos"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">feat_id =</span> <span class="fu">paste0</span>(mode, <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="at">fmt =</span> <span class="st">"%.5f"</span>, mz)))</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  pos_pdata <span class="ot">&lt;-</span> pos_lst1[[samp]] <span class="sc">|&gt;</span> <span class="fu">pData</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">stage =</span> <span class="fu">case_when</span>(samp <span class="sc">==</span> <span class="st">"S2E9-1"</span> <span class="sc">~</span> <span class="st">"ME9.5"</span>, samp <span class="sc">==</span> <span class="st">"E11.5"</span> <span class="sc">~</span> <span class="st">"ME11.5"</span>, </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                             samp <span class="sc">==</span> <span class="st">"E13.5"</span> <span class="sc">~</span> <span class="st">"ME13.5"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"unknown"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pixel_id =</span> <span class="fu">paste0</span>(run, <span class="st">"_"</span>, x, <span class="st">"_"</span>, y), <span class="at">mode =</span> <span class="fu">str_sub</span>(run, <span class="at">start =</span> <span class="sc">-</span><span class="dv">3</span>))</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(pos_cnt) <span class="ot">&lt;-</span> pos_pdata<span class="sc">$</span>pixel_id</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(pos_cnt) <span class="ot">&lt;-</span> pos_fdata<span class="sc">$</span>feat_id</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(pos_cnt, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_cnt.rds"</span>))</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(pos_fdata, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_fdata.rds"</span>))</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(pos_pdata, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_pdata.rds"</span>))</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="do">## seurat object building ----</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  pos_seu <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">CreateSeuratObject</span>(<span class="at">counts =</span> pos_cnt, <span class="at">meta.data =</span> pos_pdata, </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">project =</span> <span class="fu">unique</span>(pos_pdata<span class="sc">$</span>stage))</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(pos_seu, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_seu_obj_orig_{unique(pos_pdata$stage)}.rds"</span>))</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  pos_seu2 <span class="ot">&lt;-</span> pos_seu <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">NormalizeData</span>(<span class="at">normalization.method =</span> <span class="st">"CLR"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">FindVariableFeatures</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">ScaleData</span>() <span class="sc">|&gt;</span> Seurat<span class="sc">::</span><span class="fu">RunPCA</span>(<span class="at">npcs =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">RunUMAP</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) </span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(pos_seu2, <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_seu_obj_processed_{unique(pos_pdata$stage)}.rds"</span>))</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  pos_mks <span class="ot">&lt;-</span> Seurat<span class="sc">::</span><span class="fu">FindAllMarkers</span>(pos_seu2, <span class="at">logfc.threshold =</span> <span class="dv">0</span>, <span class="at">only.pos =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(pos_mks, , <span class="fu">glue</span>(<span class="st">"{stages2[samp]}/pos_seu_obj_mks.csv"</span>))</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
