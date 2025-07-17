@@ -45,7 +45,7 @@ book:
         - href: alignment.qmd
           text: Alignment
         - href: functional_evaluation.qmd
-          text: Functional evaluation with ST data
+          text: Functional evaluation
         - href: pyscenic.qmd
           text: Pyscenic
         - href: moran.qmd
