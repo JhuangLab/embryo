@@ -87,6 +87,8 @@ book:
           text: "Sup Figure 7"
         - href: sfig8.qmd
           text: "Sup Figure 8"
+        - href: sfig9.qmd
+          text: "Sup Figure 9"
         - href: sfig10.qmd
           text: "Sup Figure 10"
         - href: sfig11.qmd

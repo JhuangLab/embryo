@@ -1,0 +1,142 @@
+---
+title: "Supplemental Figure 9"
+format: html
+---
+
+## Extended Data Fig. 9
+
+```{r, eval=FALSE}
+## sfig9: loading the required packages -----
+pkgs <- c("fs", "futile.logger", "configr", "stringr", "ggpubr", "ggthemes", 
+          "glue", "ggsci", "patchwork", "tidyverse", "dplyr", "viridis", "Seurat")  
+for (pkg in pkgs) {
+  suppressPackageStartupMessages(library(pkg, character.only = T))
+}
+project <- "collabrators"
+dataset <- "wangwenjie"
+species <- "mouse"
+workdir <- glue("~/projects/{project}/analysis/{dataset}/{species}/figures/sfig9")
+workdir |> fs::dir_create() |> setwd()
+
+```
+
+### sfig9a: mouse regulon activity score of Gata1, Tal1 and Sox2
+
+```{r, eval=FALSE}
+### sfig9a: mouse regulon activity scoring -----
+csv_fn1 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/fig4a_tf_mouseobj_full_frame.csv"
+mouseobj_full_frame <- read_csv(csv_fn1)
+setis <- c("Gata1(+)", "Tal1(+)", "Sox2(+)")
+parallel::mclapply(setis, function(seti){
+  p <- mouseobj_full_frame |>
+    dplyr::filter(name == {{seti}}) |>
+    ggplot(aes(x = imagecol, y = imagerow, color = value)) +
+    geom_point(size = 0.1) +
+    scale_color_viridis_c() +
+    my_theme1 + 
+    facet_wrap(~ tissue, ncol = 3) +
+    coord_fixed() +
+    ggtitle(seti) +
+    Seurat::DarkTheme() + NoGrid() + NoAxes()
+  ggsave(glue("./sfig9a_mouse_tf_{seti}.pdf"), width = 7, height = 3)
+}, mc.cores = 3)
+
+```
+
+### sfig9b: TF in human embryos
+
+```{r, eval=FALSE}
+setis <- c("GATA1(+)", "TAL1(+)", "SOX2(+)")
+csv_fn2 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/fig4b_tf_humanobj_full_frame.csv"
+humanobj_full_frame <- read_csv(csv_fn2)
+parallel::mclapply(setis, function(seti){
+  p <- humanobj_full_frame |>
+    dplyr::filter(name == {{seti}}) |>
+    ggplot(aes(x = imagecol, y = imagerow, color = value)) +
+    geom_point(size = 0.01) +
+    scale_color_viridis_c() +
+    my_theme1 + 
+    facet_wrap(~ tissue, nrow = 1) +
+    coord_fixed() + 
+    ggtitle(seti) + 
+    Seurat::DarkTheme() + NoGrid() + NoAxes()
+  ggsave(glue("./sfig9b_human_tf_{seti}.pdf"), width = 7, height = 3, unit = "in")
+}, mc.cores = 3)
+
+```
+
+### sfig9c: Lin28a expression in mouse embryo
+
+```{r, eval=FALSE}
+rds_fn2 <- 
+  "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/fig4a_tf_mouseobj.rds"
+seu_obj <- read_rds(rds_fn2)
+
+rds_fn2 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/mmu_visium_lst.rds"
+mmu_visium_lst <- read_rds(rds_fn2)
+
+plst1 <- lapply(paste0("E", c(9.5, 11.5, 13.5)), \(stg) {
+  if(stg == "E9.5") {
+    scale_fct <- 4.5
+    plot_width <- 3
+    plot_height <- 3
+    sel_img <- "slice1"
+  } else if (stg == "E11.5") {
+    scale_fct <- 2.4
+    plot_width <- 3
+    plot_height <- 3
+    sel_img <- "slice1.3"
+  } else {
+    scale_fct <- 4.5
+    plot_width <- 3
+    plot_height <- 3
+    sel_img <- "slice1.2"
+  }
+  DefaultAssay(seu_obj) <- "SCT"
+  p1 <- Seurat::SpatialFeaturePlot(seu_lst[[stg]], features = "Lin28a", ncol = 1, 
+                                   pt.size.factor = scale_fct, images = sel_img) & my_theme1 & 
+    Seurat::NoAxes() & coord_fixed()
+})
+pdf("sfig9c_Lin28a_featplot.pdf", width = 2, height = 2)
+print(plst1)
+dev.off()
+
+```
+
+
+### sfig9d: LIN28A expression in human embryo
+
+```{r, eval=FALSE}
+rds_fn1 <- "/cluster/home/danyang_jh/projects/collabrators/analysis/wangwenjie/mouse/figures/rds/hsa_visium_obj_lst.rds"
+seu_lst <- read_rds(rds_fn1)
+
+plst1 <- lapply(paste0("yao", c(1, 2, 5)), \(stg) {
+  if(stg == "yao1") {
+    scale_fct <- 3
+    plot_width <- 3
+    plot_height <- 3
+  } else if (stg == "yao2") {
+    scale_fct <- 1.8
+    plot_width <- 3
+    plot_height <- 3
+  } else {
+    scale_fct <- 1.2
+    plot_width <- 3
+    plot_height <- 3
+  }
+  
+  feats <- genes_lst1[[stg]]
+  p1 <- Seurat::SpatialFeaturePlot(seu_lst[[stg]], features = "LIN28A", 
+                                   pt.size.factor = scale_fct, stroke = NA, 
+                                   ) & my_theme1 & 
+    Seurat::NoAxes() & coord_fixed() & viridis::scale_fill_viridis()
+})
+pdf("sfig9d_LIN28A_featplot.pdf", width = 2, height = 2)
+print(plst1)
+dev.off()
+
+
+```
+
